@@ -23,4 +23,6 @@ public interface Space {
 	 */
 	public boolean canLead(Card card);
 
+	public void setCards(List<Card> list, Suite suite);
+
 }

@@ -86,4 +86,13 @@ public class DefaultSpace implements Space {
 		}
 		return result;
 	}
+
+	@Override
+	public void setCards(List<Card> list, Suite suite) {
+		List<Card> tmp = new ArrayList<>();
+		for (Card c : list) {
+			tmp.add(c);
+		}
+		space.put(suite, tmp);
+	}
 }

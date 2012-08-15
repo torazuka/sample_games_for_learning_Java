@@ -111,7 +111,7 @@ public class View {
 	 * 場札を表示する
 	 */
 	public void putSpace(Space space) {
-		logger.info("> 現在の場札");
+		logger.info("> 場札");
 		StringBuilder sb = new StringBuilder();
 
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);

@@ -15,7 +15,7 @@ public class DefaultTurn implements Turn {
 	Space currentSpace;
 	View view;
 
-	public DefaultTurn(Space space, DefaultPlayer player) {
+	public DefaultTurn(Space space, Player player) {
 		view = new View();
 
 		currentPlayer = player;
@@ -32,6 +32,11 @@ public class DefaultTurn implements Turn {
 	@Override
 	public Player getCurrentPlayer() {
 		return currentPlayer;
+	}
+
+	@Override
+	public Space getCurrentSpace() {
+		return currentSpace;
 	}
 
 }

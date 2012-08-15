@@ -91,12 +91,19 @@ public class Game {
 		dispatch(new DefaultGameEvent(GameEventKinds.beginTurn, this, turn));
 
 		turn.execute(space, status);
+		status.registerRecord(turn);
 
 		dispatch(new DefaultGameEvent(GameEventKinds.endTurn, this, turn));
 	}
 
 	protected void endGame() {
 		status.viewGameResult();
+
+		view.putInteraction("ゲームの様子を再生しますか？ (y: する)");
+		String doReplay = read();
+		if (doReplay.equals("y")) {
+			status.playback();
+		}
 	}
 
 	/**

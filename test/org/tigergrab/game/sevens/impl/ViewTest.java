@@ -1,6 +1,8 @@
 package org.tigergrab.game.sevens.impl;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +86,7 @@ public class ViewTest {
 		View view = new View(logger);
 		view.putSpace(game.space);
 
-		verify(logger, times(1)).info("> 現在の場札");
+		verify(logger, times(1)).info("> 場札");
 		verify(logger, times(1))
 				.info(">                         [S-05]                                                \n"
 						+ ">       [H-02]                                                                  \n"

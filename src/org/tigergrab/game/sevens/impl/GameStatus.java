@@ -1,10 +1,12 @@
 package org.tigergrab.game.sevens.impl;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 
 import org.tigergrab.game.sevens.Player;
+import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 
@@ -193,4 +195,33 @@ public class GameStatus implements Status {
 		}
 	}
 
+	@Override
+	public void playback() {
+		for (Turn turn : gameRecord) {
+			System.out.println(turn.getCurrentPlayer().getScreenName());
+			view.putSpace(turn.getCurrentSpace());
+		}
+	}
+
+	@Override
+	public void registerRecord(Turn turn) {
+
+		Space tmpSpace = turn.getCurrentSpace();
+
+		Space currentSpace = new DefaultSpace();
+		EnumSet<Suite> allSuites = EnumSet.allOf(Suite.class);
+		for (Suite s : allSuites) {
+			List<Card> cardsBySuite = tmpSpace.getCardsBySuite(s);
+			if (cardsBySuite != null) {
+				List<Card> tmp = new ArrayList<>();
+				for (Card card : cardsBySuite) {
+					tmp.add(card);
+				}
+				currentSpace.setCards(tmp, s);
+			}
+		}
+
+		Turn thisTurn = new DefaultTurn(currentSpace, turn.getCurrentPlayer());
+		gameRecord.add(thisTurn);
+	}
 }

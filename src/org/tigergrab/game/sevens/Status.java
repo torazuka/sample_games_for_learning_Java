@@ -51,4 +51,7 @@ public interface Status {
 
 	public void viewGameResult();
 
+	public void playback();
+
+	public void registerRecord(Turn turn);
 }
