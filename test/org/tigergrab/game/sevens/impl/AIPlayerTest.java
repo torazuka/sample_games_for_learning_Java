@@ -1,12 +1,15 @@
 package org.tigergrab.game.sevens.impl;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.slf4j.Logger;
 import org.tigergrab.game.sevens.Space;
 
 public class AIPlayerTest {
@@ -166,6 +169,20 @@ public class AIPlayerTest {
 		AIPlayer player = new AIPlayer(1);
 		assertEquals("PlayerID1のAIPlayerの表示名は、「プレイヤーID 1 さん」", "プレイヤーID 1 さん",
 				player.getScreenName());
+	}
+	
+	@Test
+	public void testShowHand() throws Exception {
+		AIPlayer player = new AIPlayer(1);
+		List<Card> cardList = new ArrayList<>();
+		cardList.add(new Card(Suite.Spade, 3));
+		player.setHand(cardList);
+
+		Logger logger = mock(Logger.class);
+		player.view = new View(logger);
+		
+		player.showHand();
+		verify(logger).debug("  [S-03]");
 	}
 
 }

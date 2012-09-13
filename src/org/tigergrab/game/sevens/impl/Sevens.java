@@ -10,24 +10,21 @@ import org.tigergrab.game.sevens.Turn;
  * 
  */
 public class Sevens {
-
+	
 	public static void main(String[] args) {
 		Game game = new Game();
-
-		game.addListener(new GameEventListener() {
+		game.addListener(getTurnListener());
+		game.execute();
+	}
+	
+	protected static GameEventListener getTurnListener(){
+		return new GameEventListener() {
 
 			@Override
 			public void beginTurn(GameEvent event) {
-				Game game = event.getGame();
 				Turn turn = event.getTurn();
-
-				// プレイヤーがコンピュータの場合は、手札をユーザに見せない
 				Player currentPlayer = turn.getCurrentPlayer();
-				if (currentPlayer instanceof AIPlayer) {
-					game.view.putHandForDebug(currentPlayer);
-				} else {
-					game.view.putHand(currentPlayer);
-				}
+				currentPlayer.showHand();
 			}
 
 			@Override
@@ -48,7 +45,6 @@ public class Sevens {
 				// TODO Auto-generated method stub
 
 			}
-		});
-		game.execute();
+		};
 	}
 }

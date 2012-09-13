@@ -121,4 +121,9 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		return result;
 	}
 
+	@Override
+	public void showHand() {
+		view.putHand(this);		
+	}
+
 }

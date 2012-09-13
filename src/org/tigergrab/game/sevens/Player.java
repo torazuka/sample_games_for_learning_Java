@@ -26,4 +26,6 @@ public interface Player {
 	public void leadCard(Space space, Status status, Card card);
 
 	public boolean isInHand(Card card);
+
+	public void showHand();
 }

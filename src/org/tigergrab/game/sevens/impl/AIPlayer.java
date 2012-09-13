@@ -137,4 +137,10 @@ public class AIPlayer extends DefaultPlayer implements Player {
 		return result;
 	}
 
+	@Override
+	public void showHand() {
+		// 手札をユーザに見せない
+		view.putHandForDebug(this);
+	}
+
 }
