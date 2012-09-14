@@ -2,10 +2,10 @@ package org.tigergrab.game.sevens.impl;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.tigergrab.game.sevens.Player;
+import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
@@ -19,13 +19,13 @@ public class GameStatus implements Status {
 	Player currentPlayer;
 
 	/** 生存プレイヤー */
-	List<Player> livePlayers;
+	PlayerState players;
 
 	/** 脱落プレイヤー */
-	List<Player> deadPlayers;
+	PlayerState losers;
 
 	/** 勝利プレイヤー */
-	List<Player> winners;
+	PlayerState gainers;
 
 	/** ターンの記録 */
 	List<Turn> gameRecord;
@@ -34,12 +34,13 @@ public class GameStatus implements Status {
 
 	public GameStatus() {
 		turnCounter = 0;
-		livePlayers = new ArrayList<>();
-		deadPlayers = new ArrayList<>();
-		winners = new ArrayList<>();
 
-		gameRecord = new ArrayList<>(); // TODO どう使うか未定
+		gameRecord = new ArrayList<>();
 		view = new View();
+
+		players = new DefaultState();
+		gainers = new GainerState();
+		losers = new LoserState();
 	}
 
 	/**
@@ -49,106 +50,86 @@ public class GameStatus implements Status {
 	public void createPlayers(int numPlayer) {
 
 		Player user = new HumanPlayer(0);
-		setLivePlayer(user);
+		players.add(user);
 
 		for (int i = 1; i < numPlayer; i++) {
 			Player p = new AIPlayer(i);
-			setLivePlayer(p);
+			players.add(p);
 		}
 	}
 
 	/**
-	 * カードをプレイヤーに均等に配る。事前条件として、プレイヤーのリストがすでに作成されていること。
+	 * 山札の初期配布。事前条件として、プレイヤーのリストがすでに作成されていること。
 	 */
 	@Override
 	public void initHands() {
 		Deck deck = new Deck();
-
-		// 山札をプレイヤー人数に分ける
-		List<List<Card>> dealed = deck.initDeal(getLivePlayersNum());
-
-		// 分けたカードを個々のプレイヤーと関連づける
-		Iterator<Player> playersIte = getLivePlayers().iterator();
-		Iterator<List<Card>> dealedIte = dealed.iterator();
-		for (; playersIte.hasNext() && dealedIte.hasNext();) {
-			Player player = playersIte.next();
-			player.setHand(dealedIte.next());
-		}
-	}
-
-	@Override
-	public void setLivePlayers(List<Player> players) {
-		if (players != null) {
-			for (Player p : players) {
-				livePlayers.add(p);
-			}
-		}
+		deck.init(players);
 	}
 
 	public void setLivePlayer(Player player) {
-		if (player != null) {
-			livePlayers.add(player);
-		}
+		players.add(player);
 	}
 
 	@Override
-	public void moveToWinner(Player player) {
-		if (livePlayers.remove(player)) {
-			winners.add(player);
+	public void moveToGainer(Player player) {
+		if (players.remove(player)) {
+			gainers.add(player);
 			view.putDescription("{}が勝利しました。", player.getScreenName());
 		}
-		if (1 < livePlayers.size()) {
+		if (players.isGameOver() != false) {
 			view.putDescription("全員の順位が決まるまで、ゲームを続行します。");
 		}
 	}
 
 	@Override
-	public void moveToDead(Player player) {
-		if (livePlayers.remove(player)) {
-			deadPlayers.add(player);
+	public void moveToLoser(Player player) {
+		if (players.remove(player)) {
+			losers.add(player);
 			view.putDescription("{}がゲームから脱落しました。", player.getScreenName());
 		}
 	}
 
 	@Override
 	public boolean isGameOver() {
-		return getLivePlayersNum() <= 1;
+		return getPlayersNum() <= 1;
 	}
 
 	@Override
-	public List<Player> getLivePlayers() {
-		return livePlayers;
+	public List<Player> getPlayers() {
+		return players.getPlayers();
 	}
 
 	@Override
-	public List<Player> getDeadPlayers() {
-		return deadPlayers;
+	public List<Player> getLosers() {
+		return losers.getPlayers();
 	}
 
 	@Override
-	public List<Player> getWinners() {
-		return winners;
+	public List<Player> getGainers() {
+		return gainers.getPlayers();
 	}
 
 	@Override
-	public int getLivePlayersNum() {
-		return livePlayers.size();
+	public int getPlayersNum() {
+		return players.getPlayers().size();
 	}
 
 	@Override
-	public int getDeadPlayersNum() {
-		return deadPlayers.size();
+	public int getLosersNum() {
+		return losers.getPlayers().size();
 	}
 
 	@Override
-	public int getWinnersNum() {
-		return winners.size();
+	public int getGainersNum() {
+		return gainers.getPlayers().size();
 	}
 
 	@Override
 	public Player getLivePlayer(int id) {
-		if (livePlayers != null) {
-			for (Player player : livePlayers) {
+		List<Player> playerList = players.getPlayers();
+		if (playerList != null) {
+			for (Player player : playerList) {
 				if (player.getId() == id) {
 					return player;
 				}
@@ -161,25 +142,24 @@ public class GameStatus implements Status {
 	public List<Player> getPlayersRank() {
 		List<Player> result = new ArrayList<>();
 
-		if (winners != null && 0 < winners.size()) {
-			for (int i = 0; i < winners.size(); i++) {
-				Player one = winners.get(i);
-				result.add(one);
+		List<Player> gainerRanking = gainers.getRanking();
+		if (gainerRanking != null) {
+			for (Player player : gainerRanking) {
+				result.add(player);
 			}
 		}
 
-		if (livePlayers != null && 0 < livePlayers.size()) {
-			for (int i = 0; i < livePlayers.size(); i++) {
-				Player one = livePlayers.get(i);
-				result.add(one);
+		List<Player> playerRanking = players.getRanking();
+		if (playerRanking != null) {
+			for (Player player : playerRanking) {
+				result.add(player);
 			}
 		}
 
-		// 脱落リストは逆順に辿る
-		if (deadPlayers != null && 0 < deadPlayers.size()) {
-			for (int i = deadPlayers.size() - 1; -1 < i; i--) {
-				Player one = deadPlayers.get(i);
-				result.add(one);
+		List<Player> loserRanking = losers.getRanking();
+		if (loserRanking != null) {
+			for (Player player : loserRanking) {
+				result.add(player);
 			}
 		}
 		return result;

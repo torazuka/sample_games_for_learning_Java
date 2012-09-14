@@ -35,14 +35,14 @@ public class DefaultPlayerTest {
 		Status status = mock(GameStatus.class);
 
 		player.pass(status);
-		verify(status, times(0)).moveToDead(player);
+		verify(status, times(0)).moveToLoser(player);
 		player.pass(status);
-		verify(status, times(0)).moveToDead(player);
+		verify(status, times(0)).moveToLoser(player);
 		player.pass(status);
-		verify(status, times(0)).moveToDead(player);
+		verify(status, times(0)).moveToLoser(player);
 
 		// 4回目のパスでリタイアになる
 		player.pass(status);
-		verify(status, times(1)).moveToDead(player);
+		verify(status, times(1)).moveToLoser(player);
 	}
 }

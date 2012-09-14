@@ -13,41 +13,38 @@ public interface Status {
 	/** 単一のプレイヤーを生存リストに設定する */
 	public void setLivePlayer(Player player);
 
-	/** 複数のプレイヤーを生存リストに設定する */
-	public void setLivePlayers(List<Player> players);
-
 	/** プレイヤーを生存リストから勝利リストへ移動する */
-	public void moveToWinner(Player player);
+	public void moveToGainer(Player player);
 
 	/** プレイヤーを生存リストから脱落リストへ移動する */
-	public void moveToDead(Player player);
+	public void moveToLoser(Player player);
 
 	/** ゲーム終了かどうかを判定する */
 	public boolean isGameOver();
 
 	/** 生存リストを返す */
-	public List<Player> getLivePlayers();
+	public List<Player> getPlayers();
 
 	/** idで指定した生存リストのプレイヤーを返す */
 	public Player getLivePlayer(int id);
 
 	/** 生存リストの人数を返す */
-	public int getLivePlayersNum();
+	public int getPlayersNum();
 
 	/** 脱落リストを返す */
-	public List<Player> getDeadPlayers();
+	public List<Player> getLosers();
 
 	/** プレイヤーをゲーム結果順位の昇順で返す */
 	public List<Player> getPlayersRank();
 
 	/** 脱落リストの人数を返す */
-	public int getDeadPlayersNum();
+	public int getLosersNum();
 
 	/** 勝利リストを返す */
-	public List<Player> getWinners();
+	public List<Player> getGainers();
 
 	/** 勝利リストの人数を返す */
-	public int getWinnersNum();
+	public int getGainersNum();
 
 	public void viewGameResult();
 

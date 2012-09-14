@@ -84,7 +84,7 @@ public class GameTest {
 		Card heartSeven = new Card(Suite.Heart, 7);
 		Card diaSeven = new Card(Suite.Dia, 7);
 		Card clubSeven = new Card(Suite.Club, 7);
-		List<Player> livePlayers = game.status.getLivePlayers();
+		List<Player> livePlayers = game.status.getPlayers();
 		for (Player player : livePlayers) {
 			List<Card> list = player.getHand();
 			assertEquals("手札にSpadeの7は残っていない。", -1, list.indexOf(spadeSeven));
@@ -98,27 +98,12 @@ public class GameTest {
 	public void testGetNextPlayer() throws Exception {
 		Game game = new Game();
 		game.status.createPlayers(3);
-		List<Player> livePlayers = game.status.getLivePlayers();
+		List<Player> livePlayers = game.status.getPlayers();
 
 		assertEquals("id==0のユーザの次のユーザは、id==1。", 1,
 				game.getNextPlayer(livePlayers.get(0)).getId());
 		assertEquals("id==2のユーザの次のユーザは、id==0。", 0,
 				game.getNextPlayer(livePlayers.get(2)).getId());
-	}
-
-	@Test
-	public void testGetPlayerRank() throws Exception {
-		Game game = new Game();
-		game.status.createPlayers(3);
-
-		game.status.moveToDead(new HumanPlayer(0));
-		game.status.moveToDead(new AIPlayer(2));
-
-		List<Player> playerRank = game.status.getPlayersRank();
-		assertEquals(3, playerRank.size());
-		assertEquals("プレイヤーID 1 さん", playerRank.get(0).getScreenName());
-		assertEquals("プレイヤーID 2 さん", playerRank.get(1).getScreenName());
-		assertEquals("あなた", playerRank.get(2).getScreenName());
 	}
 
 }

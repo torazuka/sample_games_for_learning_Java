@@ -15,9 +15,9 @@ public class GameStatusTest {
 		Status status = new GameStatus();
 		status.createPlayers(3);
 
-		assertEquals("生成されたユーザリストの要素は3個。", 3, status.getLivePlayersNum());
+		assertEquals("生成されたユーザリストの要素は3個。", 3, status.getPlayersNum());
 
-		List<Player> livePlayers = status.getLivePlayers();
+		List<Player> livePlayers = status.getPlayers();
 		Player player0 = livePlayers.get(0);
 		assertEquals("1人目のプレイヤーは、ユーザ。", true, player0 instanceof HumanPlayer);
 		Player player1 = livePlayers.get(1);
@@ -32,9 +32,9 @@ public class GameStatusTest {
 		status.createPlayers(2);
 
 		status.initHands();
-		assertEquals("手札リストは2つ。", 2, status.getLivePlayersNum());
+		assertEquals("手札リストは2つ。", 2, status.getPlayersNum());
 
-		List<Player> livePlayers = status.getLivePlayers();
+		List<Player> livePlayers = status.getPlayers();
 		for (Player p : livePlayers) {
 			List<Card> list = p.getHand();
 			assertEquals("個々の手札は26枚。", 26, list.size());
@@ -52,7 +52,22 @@ public class GameStatusTest {
 		assertEquals("生存プレイヤーリストに2人いるとき、ゲームはまだ終了しない。", false,
 				status.isGameOver());
 
-		status.moveToDead(player0);
+		status.moveToLoser(player0);
 		assertEquals("生存プレイヤーリストに1人しかいないとき、ゲーム終了する。", true, status.isGameOver());
+	}
+
+	@Test
+	public void testGetPlayerRank() throws Exception {
+		Status status = new GameStatus();
+		status.createPlayers(3);
+
+		status.moveToLoser(new HumanPlayer(0));
+		status.moveToLoser(new AIPlayer(2));
+
+		List<Player> playerRank = status.getPlayersRank();
+		assertEquals(3, playerRank.size());
+		assertEquals("プレイヤーID 1 さん", playerRank.get(0).getScreenName());
+		assertEquals("プレイヤーID 2 さん", playerRank.get(1).getScreenName());
+		assertEquals("あなた", playerRank.get(2).getScreenName());
 	}
 }

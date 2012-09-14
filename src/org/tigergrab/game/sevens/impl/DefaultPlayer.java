@@ -46,7 +46,7 @@ public abstract class DefaultPlayer implements Player {
 			view.putResourceDescription("tell.numPass", String.valueOf(numPass));
 		} else {
 			view.putResourceDescription("tell.retire");
-			status.moveToDead(this);
+			status.moveToLoser(this);
 		}
 	}
 
@@ -95,7 +95,7 @@ public abstract class DefaultPlayer implements Player {
 
 		// 手札がなくなった場合、プレイヤーを勝利者リストに移動
 		if (this.getHand().size() == 0) {
-			status.moveToWinner(this);
+			status.moveToGainer(this);
 		}
 	}
 

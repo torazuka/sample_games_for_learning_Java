@@ -80,11 +80,11 @@ public class DeckTest {
 	@Test
 	public void testInitDeal() throws Exception {
 		Deck deck1 = new Deck();
-		List<List<Card>> dealed = deck1.initDeal(4);
+		List<List<Card>> dealed = deck1.divideCards(4);
 		assertEquals("52枚を4人に配ったら、1人（目）の手札は13枚。", 13, dealed.get(0).size());
 
 		Deck deck2 = new Deck();
-		List<List<Card>> dealed1 = deck2.initDeal(5);
+		List<List<Card>> dealed1 = deck2.divideCards(5);
 		assertEquals("52枚を5人に配ったら、1人目の手札は11枚。", 11, dealed1.get(0).size());
 	}
 

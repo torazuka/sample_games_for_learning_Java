@@ -80,7 +80,7 @@ public class Game {
 		view.putResourceDescription("init.leads");
 
 		if (logger.isDebugEnabled()) {
-			List<Player> livePlayers = status.getLivePlayers();
+			List<Player> livePlayers = status.getPlayers();
 			for (Player player : livePlayers) {
 				view.putHandForDebug(player);
 			}
@@ -115,7 +115,7 @@ public class Game {
 
 		view.putDescription("すべてのプレイヤーは、7のカードが手札にある場合、場に出します。");
 
-		List<Player> livePlayers = status.getLivePlayers();
+		List<Player> livePlayers = status.getPlayers();
 		for (Player player : livePlayers) {
 
 			Card spade7 = new Card(Suite.Spade, 7);
@@ -149,7 +149,7 @@ public class Game {
 
 	protected Player getNextPlayer(Player current) {
 		int id = current.getId();
-		if (id < status.getLivePlayersNum() - 1) {
+		if (id < status.getPlayersNum() - 1) {
 			id++;
 		} else {
 			id = 0;
