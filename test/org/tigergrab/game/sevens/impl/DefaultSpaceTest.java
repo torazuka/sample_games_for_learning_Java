@@ -23,7 +23,7 @@ public class DefaultSpaceTest {
 		Card temp = space.searchCard(card);
 		assertNotNull(temp);
 		assertEquals(Suite.Spade, temp.suite);
-		assertEquals(7, temp.rank);
+		assertEquals(7, temp.rank.getRank());
 	}
 
 	@Test

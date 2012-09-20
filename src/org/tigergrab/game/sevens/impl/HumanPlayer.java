@@ -34,7 +34,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		List<Card> result = new ArrayList<>();
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
 		for (Suite s : allSuite) {
-			for (int i = Card.RANK_MIN; i < Card.RANK_MAX + 1; i++) {
+			for (int i = Rank.MIN; i <= Rank.MAX; i++) {
 				Card c = new Card(s, i);
 				result.add(c);
 			}
@@ -123,7 +123,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	@Override
 	public void showHand() {
-		view.putHand(this);		
+		view.putHand(this);
 	}
 
 }

@@ -86,11 +86,11 @@ public class AIPlayer extends DefaultPlayer implements Player {
 			SuiteLimit limit = suiteLimit.get(suite);
 			int max = limit.getMax();
 			int min = limit.getMin();
-			if (max != Card.RANK_MAX) {
+			if (max != Rank.MAX) {
 				Card card = new Card(suite, max + 1);
 				result.add(card);
 			}
-			if (min != Card.RANK_MIN) {
+			if (min != Rank.MIN) {
 				Card card = new Card(suite, min - 1);
 				result.add(card);
 			}
@@ -116,14 +116,14 @@ public class AIPlayer extends DefaultPlayer implements Player {
 						continue;
 					} else {
 						if (max == 0 && min == 0) {
-							max = card.rank;
+							max = card.rank.getRank();
 							min = max;
 						} else {
-							if (card.rank < min) {
-								min = card.rank;
+							if (card.rank.getRank() < min) {
+								min = card.rank.getRank();
 							}
-							if (max < card.rank) {
-								max = card.rank;
+							if (max < card.rank.getRank()) {
+								max = card.rank.getRank();
 							}
 						}
 					}

@@ -26,7 +26,7 @@ public class DefaultSpace implements Space {
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
 		for (Suite s : allSuite) {
 			List<Card> cardList = new ArrayList<>();
-			for (int i = 0; i < Card.RANK_MAX; i++) {
+			for (int i = 0; i < Rank.MAX; i++) {
 				cardList.add(null);
 			}
 			space.put(s, cardList);
@@ -42,7 +42,7 @@ public class DefaultSpace implements Space {
 	public void putCard(Card card) {
 		if (searchCard(card) == null) {
 			List<Card> list = space.get(card.suite);
-			list.set(card.rank - 1, card);
+			list.set(card.rank.getRank() - 1, card);
 			space.put(card.suite, list);
 		} else {
 			logger.warn("{} は、すでに場に出ている。", card.toShortString());
@@ -56,7 +56,7 @@ public class DefaultSpace implements Space {
 	public Card searchCard(Card card) {
 		List<Card> cardList = this.getCardsBySuite(card.suite);
 		if (cardList != null) {
-			Card target = cardList.get(card.rank - 1);
+			Card target = cardList.get(card.rank.getRank() - 1);
 			if (target != null) {
 				return target;
 			}
@@ -75,11 +75,11 @@ public class DefaultSpace implements Space {
 
 		Card right = null;
 		Card left = null;
-		if (card.rank != Card.RANK_MAX) {
-			right = searchCard(new Card(card.suite, card.rank + 1));
+		if (card.rank.getRank() != Rank.MAX) {
+			right = searchCard(new Card(card.suite, card.rank.getRank() + 1));
 		}
-		if (card.rank != Card.RANK_MIN) {
-			left = searchCard(new Card(card.suite, card.rank - 1));
+		if (card.rank.getRank() != Rank.MIN) {
+			left = searchCard(new Card(card.suite, card.rank.getRank() - 1));
 		}
 		if (right != null || left != null) {
 			result = true;

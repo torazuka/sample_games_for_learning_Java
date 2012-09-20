@@ -7,12 +7,10 @@ import java.util.EnumSet;
  */
 public class Card implements Comparable<Card> {
 	Suite suite;
-	int rank;
+	Rank rank;
 	static final String EMPTY = "      ";
 
 	static int CARD_MAX = 52;
-	static int RANK_MAX = 13;
-	static int RANK_MIN = 1;
 
 	public Card(Suite s, int i) {
 		boolean isSuite = false;
@@ -23,14 +21,9 @@ public class Card implements Comparable<Card> {
 			}
 		}
 
-		boolean isRank = false;
-		if (RANK_MIN - 1 < i && i < RANK_MAX + 1) {
-			isRank = true;
-		}
-
-		if (isSuite && isRank) {
+		if (isSuite) {
 			suite = s;
-			rank = i;
+			rank = new Rank(i);
 		} else {
 			throw new IllegalArgumentException("[" + s + "-"
 					+ String.valueOf(i) + "] は、トランプに存在しないカードです。");
@@ -39,33 +32,15 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public String toString() {
-		String rankStr = String.valueOf(rank);
-		if (rank == 1) {
-			rankStr = "Ace";
-		} else if (rank == 11) {
-			rankStr = "Jack";
-		} else if (rank == 12) {
-			rankStr = "Queen";
-		} else if (rank == 13) {
-			rankStr = "King";
-		}
-		return "[" + suite.name() + "-" + rankStr + "]";
+		return "[" + suite.name() + "-" + rank.toLongString() + "]";
 	}
 
 	public String toShortString() {
-		String tmpRank = String.valueOf(rank);
-		if (rank < 10) {
-			tmpRank = "0" + tmpRank;
-		}
-		return "[" + suite.toShortString() + "-" + tmpRank + "]";
+		return "[" + suite.toShortString() + "-" + rank.toShortString() + "]";
 	}
 
 	public String toMiniString() {
-		String tmpRank = String.valueOf(rank);
-		if (rank < 10) {
-			tmpRank = "0" + tmpRank;
-		}
-		return suite.toShortString() + "-" + tmpRank;
+		return suite.toShortString() + "-" + rank.toShortString();
 	}
 
 	@Override
@@ -73,7 +48,7 @@ public class Card implements Comparable<Card> {
 		int result = this.suite.compareTo(c.suite);
 		// Suiteが同じ場合だけ、ランクを比較する
 		if (result == 0) {
-			result = Integer.compare(this.rank, c.rank);
+			result = rank.compareTo(c.rank);
 		}
 		return result;
 	}
@@ -82,17 +57,24 @@ public class Card implements Comparable<Card> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + rank;
+		result = prime * result + ((rank == null) ? 0 : rank.hashCode());
 		result = prime * result + ((suite == null) ? 0 : suite.hashCode());
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+
 		if (obj instanceof Card) {
 			return this.compareTo((Card) obj) == 0;
 		}
-		return false;
+		return true;
 	}
 
 }

@@ -25,8 +25,8 @@ public class Deck {
 
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
 		for (Suite s : allSuite) {
-			for (int i = 0; i < Card.RANK_MAX; i++) {
-				cards.add(new Card(s, i + 1));
+			for (int i = Rank.MIN; i <= Rank.MAX; i++) {
+				cards.add(new Card(s, i));
 			}
 		}
 	}
