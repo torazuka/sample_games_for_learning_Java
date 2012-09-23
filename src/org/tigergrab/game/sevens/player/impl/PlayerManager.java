@@ -3,12 +3,9 @@ package org.tigergrab.game.sevens.player.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tigergrab.game.sevens.PlayerState;
-import org.tigergrab.game.sevens.impl.DefaultState;
-import org.tigergrab.game.sevens.impl.GainerState;
-import org.tigergrab.game.sevens.impl.LoserState;
 import org.tigergrab.game.sevens.impl.View;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.PlayerState;
 
 /**
  * プレイヤーを管理します．各プレイヤーは、生存、脱落、勝利のいずれかの状態に属します．

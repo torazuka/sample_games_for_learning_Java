@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.PlayerState;
 import org.tigergrab.game.sevens.player.impl.PlayerManager;
 
 public class GameStatus implements Status {

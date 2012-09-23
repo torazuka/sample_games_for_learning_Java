@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Rank;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.PlayerState;
 
 /**
  * 山札と，山札に関する操作を表わす． 七並べではゲーム開始時点にだけ山札が存在するため、このクラスはゲーム開始時に行う処理を持つ．

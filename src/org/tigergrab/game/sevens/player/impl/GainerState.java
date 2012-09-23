@@ -1,11 +1,15 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens.player.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.PlayerState;
 
+/**
+ * 勝利条件を満たしたプレイヤーを管理します．
+ * 
+ */
 public class GainerState implements PlayerState {
 
 	protected List<Player> gainers;

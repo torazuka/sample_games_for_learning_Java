@@ -1,8 +1,7 @@
-package org.tigergrab.game.sevens;
+package org.tigergrab.game.sevens.player;
 
 import java.util.List;
 
-import org.tigergrab.game.sevens.player.Player;
 
 public interface PlayerState {
 	void add(Player player);

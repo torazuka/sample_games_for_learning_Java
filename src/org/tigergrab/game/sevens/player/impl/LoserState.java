@@ -1,13 +1,17 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens.player.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.PlayerState;
 
+/**
+ * 脱落したプレイヤーを管理します．
+ * 
+ */
 public class LoserState implements PlayerState {
 
 	protected List<Player> losers;

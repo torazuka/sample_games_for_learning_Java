@@ -1,4 +1,4 @@
-package org.tigergrab.game.sevens;
+package org.tigergrab.game.sevens.player;
 
 import static org.junit.Assert.assertEquals;
 
