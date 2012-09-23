@@ -118,32 +118,9 @@ public class AIPlayer extends DefaultPlayer implements Player {
 		EnumSet<Suite> allSuites = EnumSet.allOf(Suite.class);
 		for (Suite suite : allSuites) {
 			List<Card> list = space.getCardsBySuite(suite);
-
-			Card maxCard = null;
-			Card minCard = null;
 			if (list != null && 0 < list.size()) {
-				for (Card card : list) {
-					if (card == null) {
-						// そのランクの札が場にまだ出ていない
-						continue;
-					} else {
-						if (maxCard == null && minCard == null) {
-							maxCard = card;
-							minCard = card;
-						} else {
-							if (card.compareTo(minCard) < 0) {
-								minCard = card;
-							}
-							if (0 < card.compareTo(maxCard)) {
-								maxCard = card;
-							}
-						}
-					}
-				}
-				if (maxCard != null || minCard != null) {
-					SuiteLimit limits = new SuiteLimit(minCard, maxCard);
-					result.put(suite, limits);
-				}
+				SuiteLimit sl = new SuiteLimit(list);
+				result.put(suite, sl);
 			}
 		}
 		return result;
