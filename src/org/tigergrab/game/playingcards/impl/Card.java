@@ -1,4 +1,4 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.playingcards.impl;
 
 import java.util.EnumSet;
 
@@ -8,7 +8,7 @@ import java.util.EnumSet;
 public class Card implements Comparable<Card> {
 	Suite suite;
 	Rank rank;
-	static final String EMPTY = "      ";
+	public static final String EMPTY = "      ";
 
 	static int CARD_MAX = 52;
 
@@ -30,6 +30,24 @@ public class Card implements Comparable<Card> {
 		}
 	}
 
+	public Card(Suite s, Rank r) {
+		boolean isSuite = false;
+		EnumSet<Suite> allSuites = EnumSet.allOf(Suite.class);
+		for (Suite suite : allSuites) {
+			if (s == suite) {
+				isSuite = true;
+			}
+		}
+
+		if (isSuite) {
+			suite = s;
+			rank = r;
+		} else {
+			throw new IllegalArgumentException("[" + s.toShortString() + "-"
+					+ r.toShortString() + "] は、トランプに存在しないカードです。");
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "[" + suite.name() + "-" + rank.toLongString() + "]";
@@ -41,6 +59,29 @@ public class Card implements Comparable<Card> {
 
 	public String toMiniString() {
 		return suite.toShortString() + "-" + rank.toShortString();
+	}
+
+	public Card getNextBig() {
+		Rank tmp = rank.getNextBig();
+		if (tmp != null) {
+			return new Card(this.suite, tmp);
+		}
+		return null;
+	}
+
+	public Card getNextSmall() {
+		Rank tmp = rank.getNextSmall();
+		if (tmp != null) {
+			return new Card(this.suite, tmp);
+		}
+		return null;
+	}
+
+	public boolean filter(Suite s) {
+		if (suite.equals(s)) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override

@@ -1,11 +1,11 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.playingcards.impl;
 
 public class Rank implements Comparable<Rank> {
 
 	protected final int rank;
 
-	static int MAX = 13;
-	static int MIN = 1;
+	public static int MAX = 13;
+	public static int MIN = 1;
 
 	public Rank(int num) {
 		if (isRank(num) == false) {
@@ -24,6 +24,20 @@ public class Rank implements Comparable<Rank> {
 			return true;
 		}
 		return false;
+	}
+
+	public Rank getNextBig() {
+		if (rank < MAX) {
+			return new Rank(rank + 1);
+		}
+		return null;
+	}
+
+	public Rank getNextSmall() {
+		if (MIN < rank) {
+			return new Rank(rank - 1);
+		}
+		return null;
 	}
 
 	public String toShortString() {

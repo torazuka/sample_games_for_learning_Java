@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
@@ -91,15 +93,16 @@ public class AIPlayer extends DefaultPlayer implements Player {
 		Set<Suite> keySet = suiteLimit.keySet();
 		for (Suite suite : keySet) {
 			SuiteLimit limit = suiteLimit.get(suite);
-			int max = limit.getMax();
-			int min = limit.getMin();
-			if (max != Rank.MAX) {
-				Card card = new Card(suite, max + 1);
-				result.add(card);
+			Card maxCard = limit.getMax();
+			Card minCard = limit.getMin();
+
+			Card tmpMax = maxCard.getNextBig();
+			if (tmpMax != null) {
+				result.add(tmpMax);
 			}
-			if (min != Rank.MIN) {
-				Card card = new Card(suite, min - 1);
-				result.add(card);
+			Card tmpMin = minCard.getNextSmall();
+			if (tmpMin != null) {
+				result.add(tmpMin);
 			}
 		}
 		return result;
@@ -114,29 +117,30 @@ public class AIPlayer extends DefaultPlayer implements Player {
 		EnumSet<Suite> allSuites = EnumSet.allOf(Suite.class);
 		for (Suite suite : allSuites) {
 			List<Card> list = space.getCardsBySuite(suite);
-			int max = 0;
-			int min = 0;
+
+			Card maxCard = null;
+			Card minCard = null;
 			if (list != null && 0 < list.size()) {
 				for (Card card : list) {
 					if (card == null) {
 						// そのランクの札が場にまだ出ていない
 						continue;
 					} else {
-						if (max == 0 && min == 0) {
-							max = card.rank.getRank();
-							min = max;
+						if (maxCard == null && minCard == null) {
+							maxCard = card;
+							minCard = card;
 						} else {
-							if (card.rank.getRank() < min) {
-								min = card.rank.getRank();
+							if (card.compareTo(minCard) < 0) {
+								minCard = card;
 							}
-							if (max < card.rank.getRank()) {
-								max = card.rank.getRank();
+							if (0 < card.compareTo(maxCard)) {
+								maxCard = card;
 							}
 						}
 					}
 				}
-				if (max != 0 || min != 0) {
-					SuiteLimit limits = new SuiteLimit(min, max);
+				if (maxCard != null || minCard != null) {
+					SuiteLimit limits = new SuiteLimit(minCard, maxCard);
 					result.put(suite, limits);
 				}
 			}

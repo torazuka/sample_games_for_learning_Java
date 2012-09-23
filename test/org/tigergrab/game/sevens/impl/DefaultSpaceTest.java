@@ -5,6 +5,8 @@ import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 
 public class DefaultSpaceTest {
 
@@ -22,8 +24,8 @@ public class DefaultSpaceTest {
 
 		Card temp = space.searchCard(card);
 		assertNotNull(temp);
-		assertEquals(Suite.Spade, temp.suite);
-		assertEquals(7, temp.rank.getRank());
+		assertEquals(true, temp.filter(Suite.Spade));
+		assertEquals(new Card(Suite.Spade, 6), temp.getNextSmall());
 	}
 
 	@Test

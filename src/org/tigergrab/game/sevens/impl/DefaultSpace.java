@@ -1,13 +1,12 @@
 package org.tigergrab.game.sevens.impl;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Space;
 
 public class DefaultSpace implements Space {
@@ -15,22 +14,13 @@ public class DefaultSpace implements Space {
 	private final static Logger logger = LoggerFactory
 			.getLogger(DefaultSpace.class);
 
-	Map<Suite, List<Card>> space;
+	protected List<Card> space;
 
 	protected View view;
 
 	public DefaultSpace() {
 		view = new View();
-		space = new HashMap<Suite, List<Card>>();
-
-		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
-		for (Suite s : allSuite) {
-			List<Card> cardList = new ArrayList<>();
-			for (int i = 0; i < Rank.MAX; i++) {
-				cardList.add(null);
-			}
-			space.put(s, cardList);
-		}
+		space = new ArrayList<>();
 	}
 
 	@Override
@@ -40,13 +30,11 @@ public class DefaultSpace implements Space {
 
 	@Override
 	public void putCard(Card card) {
-		if (searchCard(card) == null) {
-			List<Card> list = space.get(card.suite);
-			list.set(card.rank.getRank() - 1, card);
-			space.put(card.suite, list);
-		} else {
+		if (searchCard(card) != null) {
 			logger.warn("{} は、すでに場に出ている。", card.toShortString());
+			return;
 		}
+		space.add(card);
 	}
 
 	/**
@@ -54,45 +42,39 @@ public class DefaultSpace implements Space {
 	 */
 	@Override
 	public Card searchCard(Card card) {
-		List<Card> cardList = this.getCardsBySuite(card.suite);
-		if (cardList != null) {
-			Card target = cardList.get(card.rank.getRank() - 1);
-			if (target != null) {
-				return target;
-			}
+		if (space.contains(card)) {
+			return card;
 		}
 		return null;
 	}
 
 	@Override
 	public List<Card> getCardsBySuite(Suite suite) {
-		return space.get(suite);
+		if (space != null && 0 < space.size()) {
+			List<Card> result = new ArrayList<>();
+			for (Card card : space) {
+				if (card.filter(suite)) {
+					result.add(card);
+				}
+			}
+			return result;
+		}
+		return null;
 	}
 
 	@Override
 	public boolean canLead(Card card) {
-		boolean result = false;
+		if (space.contains(card)) {
+			return false;
+		}
 
-		Card right = null;
-		Card left = null;
-		if (card.rank.getRank() != Rank.MAX) {
-			right = searchCard(new Card(card.suite, card.rank.getRank() + 1));
+		Card right = card.getNextBig();
+		Card left = card.getNextSmall();
+		if ((right != null && space.contains(right))
+				|| (left != null && space.contains(left))) {
+			return true;
 		}
-		if (card.rank.getRank() != Rank.MIN) {
-			left = searchCard(new Card(card.suite, card.rank.getRank() - 1));
-		}
-		if (right != null || left != null) {
-			result = true;
-		}
-		return result;
+		return false;
 	}
 
-	@Override
-	public void setCards(List<Card> list, Suite suite) {
-		List<Card> tmp = new ArrayList<>();
-		for (Card c : list) {
-			tmp.add(c);
-		}
-		space.put(suite, tmp);
-	}
 }

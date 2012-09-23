@@ -1,19 +1,21 @@
 package org.tigergrab.game.sevens.impl;
 
+import org.tigergrab.game.playingcards.impl.Card;
+
 public class SuiteLimit {
-	int max;
-	int min;
+	Card maxCard;
+	Card minCard;
 
-	public SuiteLimit(int mi, int ma) {
-		min = mi;
-		max = ma;
+	public SuiteLimit(Card min, Card max) {
+		minCard = min;
+		maxCard = max;
 	}
 
-	public int getMax() {
-		return max;
+	public Card getMax() {
+		return maxCard;
 	}
 
-	public int getMin() {
-		return min;
+	public Card getMin() {
+		return minCard;
 	}
 }

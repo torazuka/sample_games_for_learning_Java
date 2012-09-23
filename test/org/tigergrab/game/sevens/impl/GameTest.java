@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Player;
 
 public class GameTest {
@@ -61,24 +63,36 @@ public class GameTest {
 		game.getFirstPlayer();
 
 		List<Card> spadeList = game.space.getCardsBySuite(Suite.Spade);
-		assertEquals(true, spadeList.get(5) == null);
-		assertEquals(true, spadeList.get(6) != null);
-		assertEquals(true, spadeList.get(7) == null);
+		assertEquals("[S-06]は場にない。", false,
+				spadeList.contains(new Card(Suite.Spade, 6)));
+		assertEquals("[S-07]は場にある。", true,
+				spadeList.contains(new Card(Suite.Spade, 7)));
+		assertEquals("[S-08]は場にない。", false,
+				spadeList.contains(new Card(Suite.Spade, 8)));
 
 		List<Card> heartList = game.space.getCardsBySuite(Suite.Heart);
-		assertEquals(true, heartList.get(5) == null);
-		assertEquals(true, heartList.get(6) != null);
-		assertEquals(true, heartList.get(7) == null);
+		assertEquals("[H-06]は場にない。", false,
+				heartList.contains(new Card(Suite.Heart, 6)));
+		assertEquals("[H-07]は場にある。", true,
+				heartList.contains(new Card(Suite.Heart, 7)));
+		assertEquals("[H-08]は場にない。", false,
+				heartList.contains(new Card(Suite.Heart, 8)));
 
-		List<Card> diaList = game.space.getCardsBySuite(Suite.Heart);
-		assertEquals(true, diaList.get(5) == null);
-		assertEquals(true, diaList.get(6) != null);
-		assertEquals(true, diaList.get(7) == null);
+		List<Card> diaList = game.space.getCardsBySuite(Suite.Dia);
+		assertEquals("[D-06]は場にない。", false,
+				diaList.contains(new Card(Suite.Dia, 6)));
+		assertEquals("[D-07]は場にある。", true,
+				diaList.contains(new Card(Suite.Dia, 7)));
+		assertEquals("[D-08]は場にない。", false,
+				diaList.contains(new Card(Suite.Dia, 8)));
 
-		List<Card> clubList = game.space.getCardsBySuite(Suite.Heart);
-		assertEquals(true, clubList.get(5) == null);
-		assertEquals(true, clubList.get(6) != null);
-		assertEquals(true, clubList.get(7) == null);
+		List<Card> clubList = game.space.getCardsBySuite(Suite.Club);
+		assertEquals("[C-06]は場にない。", false,
+				clubList.contains(new Card(Suite.Club, 6)));
+		assertEquals("[C-07]は場にない。", true,
+				clubList.contains(new Card(Suite.Club, 7)));
+		assertEquals("[C-08]は場にない。", false,
+				clubList.contains(new Card(Suite.Club, 8)));
 
 		Card spadeSeven = new Card(Suite.Spade, 7);
 		Card heartSeven = new Card(Suite.Heart, 7);

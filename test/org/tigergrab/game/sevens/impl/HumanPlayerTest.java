@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.slf4j.Logger;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 
 public class HumanPlayerTest {
 

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 
 public class DeckTest {
 
@@ -24,13 +26,13 @@ public class DeckTest {
 		int clubNum = 0;
 		for (; iterator.hasNext();) {
 			Card tmp = iterator.next();
-			if (tmp.suite.equals(Suite.Spade)) {
+			if (tmp.filter(Suite.Spade)) {
 				spadeNum++;
-			} else if (tmp.suite.equals(Suite.Heart)) {
+			} else if (tmp.filter(Suite.Heart)) {
 				heartNum++;
-			} else if (tmp.suite.equals(Suite.Dia)) {
+			} else if (tmp.filter(Suite.Dia)) {
 				diaNum++;
-			} else if (tmp.suite.equals(Suite.Club)) {
+			} else if (tmp.filter(Suite.Club)) {
 				clubNum++;
 			} else {
 				fail("SPADEでもHEARTでもDIAでもCLUBでもないSuiteは存在しない。");

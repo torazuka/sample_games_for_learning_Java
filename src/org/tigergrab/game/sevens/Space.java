@@ -2,8 +2,8 @@ package org.tigergrab.game.sevens;
 
 import java.util.List;
 
-import org.tigergrab.game.sevens.impl.Card;
-import org.tigergrab.game.sevens.impl.Suite;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 
 public interface Space {
 
@@ -22,7 +22,4 @@ public interface Space {
 	 * @return trueなら場に出せる
 	 */
 	public boolean canLead(Card card);
-
-	public void setCards(List<Card> list, Suite suite);
-
 }

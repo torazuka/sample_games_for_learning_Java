@@ -2,7 +2,7 @@ package org.tigergrab.game.sevens;
 
 import java.util.List;
 
-import org.tigergrab.game.sevens.impl.Card;
+import org.tigergrab.game.playingcards.impl.Card;
 
 /**
  * プレイヤーを表わす．実体が人間かコンピュータかを問わない．

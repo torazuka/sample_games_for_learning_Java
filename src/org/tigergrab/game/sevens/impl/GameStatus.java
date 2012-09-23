@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.PlayerState;
 import org.tigergrab.game.sevens.Space;
@@ -185,22 +187,17 @@ public class GameStatus implements Status {
 
 	@Override
 	public void registerRecord(Turn turn) {
-
 		Space tmpSpace = turn.getCurrentSpace();
-
 		Space currentSpace = new DefaultSpace();
 		EnumSet<Suite> allSuites = EnumSet.allOf(Suite.class);
 		for (Suite s : allSuites) {
 			List<Card> cardsBySuite = tmpSpace.getCardsBySuite(s);
 			if (cardsBySuite != null) {
-				List<Card> tmp = new ArrayList<>();
 				for (Card card : cardsBySuite) {
-					tmp.add(card);
+					currentSpace.putCard(card);
 				}
-				currentSpace.setCards(tmp, s);
 			}
 		}
-
 		Turn thisTurn = new DefaultTurn(currentSpace, turn.getCurrentPlayer());
 		gameRecord.add(thisTurn);
 	}

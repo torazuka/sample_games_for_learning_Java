@@ -8,6 +8,9 @@ import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Rank;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.PlayerState;
 
@@ -21,7 +24,7 @@ public class Deck {
 	List<Card> cards;
 
 	public Deck() {
-		cards = new ArrayList<Card>(Card.CARD_MAX);
+		cards = new ArrayList<Card>();
 
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
 		for (Suite s : allSuite) {

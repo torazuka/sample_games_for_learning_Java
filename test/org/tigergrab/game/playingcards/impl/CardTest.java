@@ -1,9 +1,11 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.playingcards.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 
 public class CardTest {
 

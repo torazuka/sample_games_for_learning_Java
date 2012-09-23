@@ -1,4 +1,4 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.playingcards.impl;
 
 /**
  * トランプの4つのSuite（Spade, Heart, Dia, Club）を表わす．

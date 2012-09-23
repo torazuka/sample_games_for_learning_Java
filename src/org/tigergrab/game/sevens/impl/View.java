@@ -1,11 +1,15 @@
 package org.tigergrab.game.sevens.impl;
 
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.CardFactory;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Space;
 
 /**
@@ -116,22 +120,28 @@ public class View {
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
 		for (Suite suite : allSuite) {
 			sb.append("> ");
-			sb.append(viewCards(space.getCardsBySuite(suite)));
+			sb.append(viewCards(suite, space.getCardsBySuite(suite)));
 			sb.append("\n");
 		}
 		logger.info(new String(sb));
 	}
 
-	protected String viewCards(List<Card> cardList) {
-		StringBuilder sb = new StringBuilder();
-		for (Card card : cardList) {
-			if (card != null) {
-				sb.append(card.toShortString());
+	protected String viewCards(Suite s, List<Card> cardList) {
+		StringBuilder result = new StringBuilder();
+
+		CardFactory factory = new CardFactory();
+		List<Card> suiteList = factory.getCardList(s);
+		Iterator<Card> compite = suiteList.iterator();
+		for (; compite.hasNext();) {
+			Card tmp = compite.next();
+			if (cardList.contains(tmp)) {
+				result.append(tmp.toShortString());
 			} else {
-				sb.append(Card.EMPTY);
+				result.append(Card.EMPTY);
 			}
 		}
-		return new String(sb);
+
+		return new String(result);
 	}
 
 }

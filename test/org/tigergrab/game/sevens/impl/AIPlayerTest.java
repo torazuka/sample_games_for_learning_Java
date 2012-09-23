@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.slf4j.Logger;
+import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 
@@ -91,20 +93,28 @@ public class AIPlayerTest {
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
-		assertEquals("場にランク7の札しかない状態では、Spadeの最大は7。", 7, spadeLimit.getMax());
-		assertEquals("場にランク7の札しかない状態では、Spadeの最小は7。", 7, spadeLimit.getMin());
+		assertEquals("場にランク7の札しかない状態では、Spadeの最大は7。", new Card(Suite.Spade, 7),
+				spadeLimit.getMax());
+		assertEquals("場にランク7の札しかない状態では、Spadeの最小は7。", new Card(Suite.Spade, 7),
+				spadeLimit.getMin());
 
 		SuiteLimit heartLimit = suiteLimit.get(Suite.Heart);
-		assertEquals("場にランク7の札しかない状態では、Heartの最大は7。", 7, heartLimit.getMax());
-		assertEquals("場にランク7の札しかない状態では、Heartの最小は7。", 7, heartLimit.getMin());
+		assertEquals("場にランク7の札しかない状態では、Heartの最大は7。", new Card(Suite.Heart, 7),
+				heartLimit.getMax());
+		assertEquals("場にランク7の札しかない状態では、Heartの最小は7。", new Card(Suite.Heart, 7),
+				heartLimit.getMin());
 
-		SuiteLimit diaLimit = suiteLimit.get(Suite.Heart);
-		assertEquals("場にランク7の札しかない状態では、Diaの最大は7。", 7, diaLimit.getMax());
-		assertEquals("場にランク7の札しかない状態では、Diaの最小は7。", 7, diaLimit.getMin());
+		SuiteLimit diaLimit = suiteLimit.get(Suite.Dia);
+		assertEquals("場にランク7の札しかない状態では、Diaの最大は7。", new Card(Suite.Dia, 7),
+				diaLimit.getMax());
+		assertEquals("場にランク7の札しかない状態では、Diaの最小は7。", new Card(Suite.Dia, 7),
+				diaLimit.getMin());
 
-		SuiteLimit clubLimit = suiteLimit.get(Suite.Heart);
-		assertEquals("場にランク7の札しかない状態では、Clubの最大は7。", 7, clubLimit.getMax());
-		assertEquals("場にランク7の札しかない状態では、Clubの最小は7。", 7, clubLimit.getMin());
+		SuiteLimit clubLimit = suiteLimit.get(Suite.Club);
+		assertEquals("場にランク7の札しかない状態では、Clubの最大は7。", new Card(Suite.Club, 7),
+				clubLimit.getMax());
+		assertEquals("場にランク7の札しかない状態では、Clubの最小は7。", new Card(Suite.Club, 7),
+				clubLimit.getMin());
 	}
 
 	@Test
@@ -149,20 +159,28 @@ public class AIPlayerTest {
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
-		assertEquals("場にSpadeの7～8の札が出ているとき、Spadeの最大は8。", 8, spadeLimit.getMax());
-		assertEquals("場にSpadeの7～8の札が出ているとき、Spadeの最小は7。", 7, spadeLimit.getMin());
+		assertEquals("場にSpadeの7～8の札が出ているとき、Spadeの最大は8。", new Card(Suite.Spade,
+				8), spadeLimit.getMax());
+		assertEquals("場にSpadeの7～8の札が出ているとき、Spadeの最小は7。", new Card(Suite.Spade,
+				7), spadeLimit.getMin());
 
 		SuiteLimit heartLimit = suiteLimit.get(Suite.Heart);
-		assertEquals("場にHeartの1～7の札が出ているとき、Heartの最大は7。", 7, heartLimit.getMax());
-		assertEquals("場にHeartの1～7の札が出ているとき、Heartの最小は1。", 1, heartLimit.getMin());
+		assertEquals("場にHeartの1～7の札が出ているとき、Heartの最大は7。", new Card(Suite.Heart,
+				7), heartLimit.getMax());
+		assertEquals("場にHeartの1～7の札が出ているとき、Heartの最小は1。", new Card(Suite.Heart,
+				1), heartLimit.getMin());
 
 		SuiteLimit diaLimit = suiteLimit.get(Suite.Dia);
-		assertEquals("場にDiaの5～13の札が出ているとき、Diaの最大は13。", 13, diaLimit.getMax());
-		assertEquals("場にDiaの5～13の札が出ているとき、Diaの最小は5。", 5, diaLimit.getMin());
+		assertEquals("場にDiaの5～13の札が出ているとき、Diaの最大は13。", new Card(Suite.Dia, 13),
+				diaLimit.getMax());
+		assertEquals("場にDiaの5～13の札が出ているとき、Diaの最小は5。", new Card(Suite.Dia, 5),
+				diaLimit.getMin());
 
 		SuiteLimit clubLimit = suiteLimit.get(Suite.Club);
-		assertEquals("場にClubの7の札が出ているとき、Clubの最大は7。", 7, clubLimit.getMax());
-		assertEquals("場にClubの7の札が出ているとき、Clubの最小は7。", 7, clubLimit.getMin());
+		assertEquals("場にClubの7の札が出ているとき、Clubの最大は7。", new Card(Suite.Club, 7),
+				clubLimit.getMax());
+		assertEquals("場にClubの7の札が出ているとき、Clubの最小は7。", new Card(Suite.Club, 7),
+				clubLimit.getMin());
 	}
 
 	@Test
