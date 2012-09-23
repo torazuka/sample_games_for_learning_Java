@@ -42,4 +42,9 @@ public class GainerState implements PlayerState {
 		return false;
 	}
 
+	@Override
+	public int getNum() {
+		return gainers.size();
+	}
+
 }

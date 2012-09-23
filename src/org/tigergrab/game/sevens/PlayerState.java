@@ -14,4 +14,6 @@ public interface PlayerState {
 	boolean remove(Player player);
 
 	boolean isGameOver();
+
+	int getNum();
 }

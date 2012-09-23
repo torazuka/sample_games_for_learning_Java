@@ -41,4 +41,9 @@ public class DefaultState implements PlayerState {
 	public boolean isGameOver() {
 		return 1 < players.size() ? false : true;
 	}
+
+	@Override
+	public int getNum() {
+		return players.size();
+	}
 }

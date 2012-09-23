@@ -51,4 +51,9 @@ public class LoserState implements PlayerState {
 		return false;
 	}
 
+	@Override
+	public int getNum() {
+		return losers.size();
+	}
+
 }

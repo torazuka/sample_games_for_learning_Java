@@ -11,10 +11,11 @@ import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.player.Player;
-import org.tigergrab.game.sevens.player.impl.AIPlayer;
-import org.tigergrab.game.sevens.player.impl.HumanPlayer;
+import org.tigergrab.game.sevens.player.impl.PlayerManager;
 
 public class GameStatus implements Status {
+
+	PlayerManager playerManager;
 
 	/** ターンカウンタ */
 	int turnCounter;
@@ -22,44 +23,24 @@ public class GameStatus implements Status {
 	/** 現在のプレイヤー */
 	Player currentPlayer;
 
-	/** 生存プレイヤー */
-	PlayerState players;
-
-	/** 脱落プレイヤー */
-	PlayerState losers;
-
-	/** 勝利プレイヤー */
-	PlayerState gainers;
-
 	/** ターンの記録 */
 	List<Turn> gameRecord;
 
 	View view;
 
 	public GameStatus() {
+		playerManager = new PlayerManager();
 		turnCounter = 0;
-
 		gameRecord = new ArrayList<>();
 		view = new View();
-
-		players = new DefaultState();
-		gainers = new GainerState();
-		losers = new LoserState();
 	}
 
 	/**
-	 * Playerのリストを作る． 1人目はユーザであるHumanPlayer、2人目以降はAIPlayer.
+	 * Playerを生成する.
 	 */
 	@Override
 	public void createPlayers(int numPlayer) {
-
-		Player user = new HumanPlayer(0);
-		players.add(user);
-
-		for (int i = 1; i < numPlayer; i++) {
-			Player p = new AIPlayer(i);
-			players.add(p);
-		}
+		playerManager.createPlayers(numPlayer);
 	}
 
 	/**
@@ -68,30 +49,23 @@ public class GameStatus implements Status {
 	@Override
 	public void initHands() {
 		Deck deck = new Deck();
-		deck.init(players);
+		PlayerState ps = playerManager.getPlayers();
+		deck.init(ps);
 	}
 
+	// TODO: テスト用暫定。
 	public void setLivePlayer(Player player) {
-		players.add(player);
+		playerManager.addPlayers(player);
 	}
 
 	@Override
 	public void moveToGainer(Player player) {
-		if (players.remove(player)) {
-			gainers.add(player);
-			view.putDescription("{}が勝利しました。", player.getScreenName());
-		}
-		if (players.isGameOver() != false) {
-			view.putDescription("全員の順位が決まるまで、ゲームを続行します。");
-		}
+		playerManager.moveToGainer(player);
 	}
 
 	@Override
 	public void moveToLoser(Player player) {
-		if (players.remove(player)) {
-			losers.add(player);
-			view.putDescription("{}がゲームから脱落しました。", player.getScreenName());
-		}
+		playerManager.moveToLoser(player);
 	}
 
 	@Override
@@ -101,72 +75,45 @@ public class GameStatus implements Status {
 
 	@Override
 	public List<Player> getPlayers() {
-		return players.getPlayers();
-	}
-
-	@Override
-	public List<Player> getLosers() {
-		return losers.getPlayers();
+		PlayerState ps = playerManager.getPlayers();
+		return ps.getPlayers();
 	}
 
 	@Override
 	public List<Player> getGainers() {
-		return gainers.getPlayers();
+		PlayerState ps = playerManager.getGainers();
+		return ps.getPlayers();
+	}
+
+	@Override
+	public List<Player> getLosers() {
+		PlayerState ps = playerManager.getLosers();
+		return ps.getPlayers();
 	}
 
 	@Override
 	public int getPlayersNum() {
-		return players.getPlayers().size();
+		return playerManager.getLivePlayerNum();
 	}
 
 	@Override
 	public int getLosersNum() {
-		return losers.getPlayers().size();
+		return playerManager.getLoserNum();
 	}
 
 	@Override
 	public int getGainersNum() {
-		return gainers.getPlayers().size();
+		return playerManager.getGainerNum();
 	}
 
 	@Override
 	public Player getLivePlayer(int id) {
-		List<Player> playerList = players.getPlayers();
-		if (playerList != null) {
-			for (Player player : playerList) {
-				if (player.getId() == id) {
-					return player;
-				}
-			}
-		}
-		return null;
+		return playerManager.getLivePlayer(id);
 	}
 
 	@Override
 	public List<Player> getPlayersRank() {
-		List<Player> result = new ArrayList<>();
-
-		List<Player> gainerRanking = gainers.getRanking();
-		if (gainerRanking != null) {
-			for (Player player : gainerRanking) {
-				result.add(player);
-			}
-		}
-
-		List<Player> playerRanking = players.getRanking();
-		if (playerRanking != null) {
-			for (Player player : playerRanking) {
-				result.add(player);
-			}
-		}
-
-		List<Player> loserRanking = losers.getRanking();
-		if (loserRanking != null) {
-			for (Player player : loserRanking) {
-				result.add(player);
-			}
-		}
-		return result;
+		return playerManager.getPlayersRank();
 	}
 
 	@Override
