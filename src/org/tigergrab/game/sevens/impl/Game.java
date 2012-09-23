@@ -12,10 +12,10 @@ import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.GameEvent;
 import org.tigergrab.game.sevens.GameEventDispatcher;
 import org.tigergrab.game.sevens.GameEventListener;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
+import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.util.InputOutputUtil;
 
 /**

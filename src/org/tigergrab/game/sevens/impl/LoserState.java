@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.PlayerState;
+import org.tigergrab.game.sevens.player.Player;
 
 public class LoserState implements PlayerState {
 

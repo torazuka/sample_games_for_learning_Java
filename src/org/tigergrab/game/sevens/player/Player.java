@@ -1,8 +1,12 @@
-package org.tigergrab.game.sevens;
+package org.tigergrab.game.sevens.player;
 
 import java.util.List;
 
 import org.tigergrab.game.playingcards.impl.Card;
+import org.tigergrab.game.sevens.Space;
+import org.tigergrab.game.sevens.Status;
+import org.tigergrab.game.sevens.Turn;
+import org.tigergrab.game.sevens.TurnAction;
 
 /**
  * プレイヤーを表わす．実体が人間かコンピュータかを問わない．

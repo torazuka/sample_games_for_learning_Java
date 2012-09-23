@@ -1,15 +1,18 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens.player.impl;
 
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tigergrab.game.playingcards.impl.Card;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.impl.DefaultTurn;
+import org.tigergrab.game.sevens.impl.Hand;
+import org.tigergrab.game.sevens.impl.View;
+import org.tigergrab.game.sevens.player.Player;
 
 /**
  * ゲームのプレイヤーのデフォルト実装．プレイヤー種別は，このクラスのサブクラスで表現する．

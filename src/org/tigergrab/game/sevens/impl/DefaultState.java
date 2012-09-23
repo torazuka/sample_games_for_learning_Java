@@ -3,8 +3,8 @@ package org.tigergrab.game.sevens.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.PlayerState;
+import org.tigergrab.game.sevens.player.Player;
 
 public class DefaultState implements PlayerState {
 

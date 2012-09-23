@@ -1,10 +1,10 @@
 package org.tigergrab.game.sevens.impl;
 
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.player.Player;
 
 /**
  * Turnインタフェースのデフォルト実装．

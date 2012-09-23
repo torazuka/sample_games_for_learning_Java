@@ -5,8 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.Test;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Status;
+import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.impl.AIPlayer;
+import org.tigergrab.game.sevens.player.impl.HumanPlayer;
 
 public class GameStatusTest {
 

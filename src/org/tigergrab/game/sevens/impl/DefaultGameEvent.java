@@ -3,9 +3,9 @@ package org.tigergrab.game.sevens.impl;
 import org.slf4j.Logger;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.sevens.GameEvent;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
+import org.tigergrab.game.sevens.player.Player;
 
 public class DefaultGameEvent implements GameEvent {
 

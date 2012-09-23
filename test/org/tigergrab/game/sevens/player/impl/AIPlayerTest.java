@@ -1,4 +1,4 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens.player.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -13,8 +13,12 @@ import org.slf4j.Logger;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.playingcards.impl.SuiteLimit;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
+import org.tigergrab.game.sevens.impl.DefaultSpace;
+import org.tigergrab.game.sevens.impl.View;
+import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.impl.AIPlayer;
+import org.tigergrab.game.sevens.player.impl.HumanPlayer;
 
 public class AIPlayerTest {
 	@Test

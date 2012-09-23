@@ -1,4 +1,4 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens.player.impl;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -9,10 +9,10 @@ import java.util.Map;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Rank;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.util.InputOutputUtil;
 
 /**

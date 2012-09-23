@@ -2,8 +2,9 @@ package org.tigergrab.game.sevens.impl;
 
 import org.tigergrab.game.sevens.GameEvent;
 import org.tigergrab.game.sevens.GameEventListener;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Turn;
+import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.player.impl.AIPlayer;
 
 /**
  * 七並べを開始するmainメソッドを持つ．
