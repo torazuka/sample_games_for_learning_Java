@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
+import org.tigergrab.game.playingcards.impl.SuiteLimit;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;

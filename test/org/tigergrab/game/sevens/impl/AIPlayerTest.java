@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
+import org.tigergrab.game.playingcards.impl.SuiteLimit;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 

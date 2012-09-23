@@ -1,6 +1,5 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.playingcards.impl;
 
-import org.tigergrab.game.playingcards.impl.Card;
 
 public class SuiteLimit {
 	Card maxCard;
