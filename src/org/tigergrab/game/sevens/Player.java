@@ -21,11 +21,14 @@ public interface Player {
 
 	public void setHand(List<Card> next);
 
-	public List<Card> getHand();
-
 	public void leadCard(Space space, Status status, Card card);
 
-	public boolean isInHand(Card card);
+	public boolean hasCard(Card card);
 
+	/**
+	 * プレイヤーの手札を表示する．
+	 */
 	public void showHand();
+
+	public int getRestHand();
 }

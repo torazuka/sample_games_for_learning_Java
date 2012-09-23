@@ -1,8 +1,9 @@
 package org.tigergrab.game.sevens.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
@@ -14,13 +15,13 @@ import org.tigergrab.game.sevens.TurnAction;
  */
 public abstract class DefaultPlayer implements Player {
 
-	int id;
+	private static Logger logger = LoggerFactory.getLogger(DefaultPlayer.class);
+
+	protected int id;
+	protected Hand hand;
 
 	/** パスした回数 */
 	protected int numPass;
-
-	/** プレイヤーの手札 */
-	List<Card> hand;
 
 	View view;
 
@@ -28,7 +29,12 @@ public abstract class DefaultPlayer implements Player {
 		id = i;
 		numPass = 0;
 		view = new View();
-		hand = new ArrayList<Card>();
+		hand = new Hand();
+	}
+
+	public DefaultPlayer(int i, Logger logger) {
+		this(i);
+		this.logger = logger;
 	}
 
 	@Override
@@ -52,15 +58,7 @@ public abstract class DefaultPlayer implements Player {
 
 	@Override
 	public void setHand(List<Card> cardList) {
-		if (hand == null) {
-			hand = new ArrayList<Card>();
-		}
-
-		if (cardList != null) {
-			for (Card card : cardList) {
-				hand.add(card);
-			}
-		}
+		hand = new Hand(cardList);
 	}
 
 	/**
@@ -69,23 +67,14 @@ public abstract class DefaultPlayer implements Player {
 	 * @return trueなら含まれている．
 	 */
 	@Override
-	public boolean isInHand(Card target) {
-		boolean result = false;
-		if (hand != null && 0 < hand.size()) {
-			for (Card card : hand) {
-				if (card.equals(target)) {
-					result = true;
-					break;
-				}
-			}
-		}
-		return result;
+	public boolean hasCard(Card target) {
+		return hand.has(target);
 	}
 
 	@Override
 	public void leadCard(Space space, Status status, Card card) {
 
-		if (hand.remove(card)) {
+		if (hand.lead(card)) {
 			view.putResourceDescription("tell.leadedCard", getScreenName(),
 					card.toShortString());
 			space.putCard(card);
@@ -94,19 +83,22 @@ public abstract class DefaultPlayer implements Player {
 		}
 
 		// 手札がなくなった場合、プレイヤーを勝利者リストに移動
-		if (this.getHand().size() == 0) {
+		if (this.hasRestHand() == false) {
 			status.moveToGainer(this);
 		}
+	}
+
+	public int getRestHand() {
+		return hand.getHandNum();
+	}
+
+	public boolean hasRestHand() {
+		return hand.hasRest();
 	}
 
 	@Override
 	public int getId() {
 		return id;
-	}
-
-	@Override
-	public List<Card> getHand() {
-		return hand;
 	}
 
 	@Override

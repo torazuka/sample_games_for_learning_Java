@@ -4,12 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.tigergrab.game.sevens.Player;
 
 public class ViewTest {
 
@@ -92,39 +88,6 @@ public class ViewTest {
 						+ ">       [H-02]                                                                  \n"
 						+ ">                   [D-04]                                                      \n"
 						+ ">                                                             [C-11]            \n");
-	}
-
-	@Test
-	public void testPutHand() throws Exception {
-		Logger logger = mock(Logger.class);
-		View view = new View(logger);
-
-		List<Player> players = new ArrayList<Player>();
-		Player p0 = new HumanPlayer(0);
-		players.add(p0);
-		Player p1 = new AIPlayer(1);
-		players.add(p1);
-		setDataForPutHand(players);
-
-		view.putHand(p0);
-		verify(logger).info("> [S-01] [H-01]");
-
-		view.putHand(p1);
-		verify(logger).info("> プレイヤーID 1 さんの手札はもうありません。");
-	}
-
-	protected void setDataForPutHand(List<Player> players) {
-
-		List<Card> list0 = new ArrayList<Card>();
-		list0.add(new Card(Suite.Spade, 1));
-		list0.add(new Card(Suite.Heart, 1));
-
-		// no hand
-		List<Card> list1 = new ArrayList<Card>();
-		list1.clear();
-
-		players.get(0).setHand(list0);
-		players.get(1).setHand(list1);
 	}
 
 }

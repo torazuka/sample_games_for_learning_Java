@@ -10,6 +10,7 @@ import java.util.Map;
 
 import org.junit.Test;
 import org.slf4j.Logger;
+import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 
 public class AIPlayerTest {
@@ -170,19 +171,40 @@ public class AIPlayerTest {
 		assertEquals("PlayerID1のAIPlayerの表示名は、「プレイヤーID 1 さん」", "プレイヤーID 1 さん",
 				player.getScreenName());
 	}
-	
+
 	@Test
 	public void testShowHand() throws Exception {
-		AIPlayer player = new AIPlayer(1);
-		List<Card> cardList = new ArrayList<>();
-		cardList.add(new Card(Suite.Spade, 3));
-		player.setHand(cardList);
 
-		Logger logger = mock(Logger.class);
-		player.view = new View(logger);
-		
-		player.showHand();
-		verify(logger).debug("  [S-03]");
+		List<Player> players = new ArrayList<Player>();
+		HumanPlayer p0 = new HumanPlayer(0);
+		players.add(p0);
+
+		Logger logger1 = mock(Logger.class);
+		AIPlayer p1 = new AIPlayer(1, logger1);
+		players.add(p1);
+		setDataForPutHand(players);
+
+		Logger logger0 = mock(Logger.class);
+		p0.view = new View(logger0);
+		p0.showHand();
+		verify(logger0).info("> {}の手札: ", "あなた");
+
+		p1.showHand();
+		verify(logger1).debug("{}の手札: ", "プレイヤーID 1 さん");
+		verify(logger1).debug(" もうありません。");
 	}
 
+	protected void setDataForPutHand(List<Player> players) {
+
+		List<Card> list0 = new ArrayList<Card>();
+		list0.add(new Card(Suite.Spade, 1));
+		list0.add(new Card(Suite.Heart, 1));
+
+		// no hand
+		List<Card> list1 = new ArrayList<Card>();
+		list1.clear();
+
+		players.get(0).setHand(list0);
+		players.get(1).setHand(list1);
+	}
 }

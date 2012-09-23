@@ -74,7 +74,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 			if (card != null) {
 
 				// 手札に存在するかを確認する
-				if (this.isInHand(card) == false) {
+				if (this.hasCard(card) == false) {
 					view.putAlert("手札にあるカードを選んでください。");
 					continue;
 				}
@@ -123,7 +123,9 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	@Override
 	public void showHand() {
-		view.putHand(this);
+		view.putDescription("{}の手札: ", getScreenName());
+		if (hand.show() == false) {
+			view.putDescription(" もうありません。");
+		}
 	}
-
 }

@@ -36,8 +36,7 @@ public class GameStatusTest {
 
 		List<Player> livePlayers = status.getPlayers();
 		for (Player p : livePlayers) {
-			List<Card> list = p.getHand();
-			assertEquals("個々の手札は26枚。", 26, list.size());
+			assertEquals("個々の手札は26枚。", 26, p.getRestHand());
 		}
 	}
 

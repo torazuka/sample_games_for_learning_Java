@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
@@ -17,8 +19,15 @@ import org.tigergrab.game.sevens.TurnAction;
  */
 public class AIPlayer extends DefaultPlayer implements Player {
 
+	private static Logger logger = LoggerFactory.getLogger(AIPlayer.class);
+
 	public AIPlayer(int i) {
 		super(i);
+	}
+
+	public AIPlayer(int i, Logger logger) {
+		this(i);
+		this.logger = logger;
 	}
 
 	@Override
@@ -64,10 +73,8 @@ public class AIPlayer extends DefaultPlayer implements Player {
 			view.putInteraction("出せる札がありません。");
 		} else {
 			for (Card next : nextCards) {
-				for (Card card : hand) {
-					if (next.equals(card)) {
-						result.add(card);
-					}
+				if (hand.has(next)) {
+					result.add(next);
 				}
 			}
 		}
@@ -140,7 +147,10 @@ public class AIPlayer extends DefaultPlayer implements Player {
 	@Override
 	public void showHand() {
 		// 手札をユーザに見せない
-		view.putHandForDebug(this);
+		logger.debug("{}の手札: ", getScreenName());
+		if (hand.show() == false) {
+			logger.debug(" もうありません。");
+		}
 	}
 
 }

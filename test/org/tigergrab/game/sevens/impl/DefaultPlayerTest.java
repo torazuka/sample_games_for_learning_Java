@@ -14,19 +14,19 @@ import org.tigergrab.game.sevens.Status;
 
 public class DefaultPlayerTest {
 	@Test
-	public void testIsInHand() throws Exception {
+	public void testHasCard() throws Exception {
 		Player player = new AIPlayer(1);
 
 		List<Card> hand = new ArrayList<>();
 		hand.add(new Card(Suite.Spade, 7));
 		player.setHand(hand);
 		assertEquals("手札が[S-07]のとき、[H-07]は手札にない。", false,
-				player.isInHand(new Card(Suite.Heart, 7)));
+				player.hasCard(new Card(Suite.Heart, 7)));
 
 		hand.add(new Card(Suite.Heart, 7));
 		player.setHand(hand);
 		assertEquals("手札が[S-07][H-07]のとき、[H-07]は手札にある。", true,
-				player.isInHand(new Card(Suite.Heart, 7)));
+				player.hasCard(new Card(Suite.Heart, 7)));
 	}
 
 	@Test

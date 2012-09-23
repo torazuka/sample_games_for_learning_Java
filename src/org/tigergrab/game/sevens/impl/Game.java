@@ -82,7 +82,7 @@ public class Game {
 		if (logger.isDebugEnabled()) {
 			List<Player> livePlayers = status.getPlayers();
 			for (Player player : livePlayers) {
-				view.putHandForDebug(player);
+				player.showHand();
 			}
 		}
 	}
@@ -119,24 +119,24 @@ public class Game {
 		for (Player player : livePlayers) {
 
 			Card spade7 = new Card(Suite.Spade, 7);
-			if (player.isInHand(spade7)) {
+			if (player.hasCard(spade7)) {
 				player.leadCard(space, status, spade7);
 			}
 
 			Card heart7 = new Card(Suite.Heart, 7);
-			if (player.isInHand(heart7)) {
+			if (player.hasCard(heart7)) {
 				player.leadCard(space, status, heart7);
 			}
 
 			Card dia7 = new Card(Suite.Dia, 7);
-			if (player.isInHand(dia7)) {
+			if (player.hasCard(dia7)) {
 				player.leadCard(space, status, dia7);
 
 				result = player;
 			}
 
 			Card club7 = new Card(Suite.Club, 7);
-			if (player.isInHand(club7)) {
+			if (player.hasCard(club7)) {
 				player.leadCard(space, status, club7);
 			}
 		}

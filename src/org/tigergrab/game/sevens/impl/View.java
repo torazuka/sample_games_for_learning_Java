@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tigergrab.game.sevens.Player;
 import org.tigergrab.game.sevens.Space;
 
 /**
@@ -133,41 +132,6 @@ public class View {
 			}
 		}
 		return new String(sb);
-	}
-
-	/**
-	 * 1人のプレイヤーの手札を表示
-	 */
-	public void putHand(Player player) {
-		StringBuffer sb = new StringBuffer();
-		sb.append(">");
-
-		List<Card> hand = player.getHand();
-		if (hand != null && 0 < hand.size()) {
-			for (Card card : hand) {
-				sb.append(" " + card.toShortString());
-			}
-			putDescription("{}の手札: ", player.getScreenName());
-		} else {
-			sb.append(" ");
-			sb.append(player.getScreenName());
-			sb.append("の手札はもうありません。");
-		}
-		logger.info(new String(sb));
-	}
-
-	/**
-	 * 1人のプレイヤーの手札をデバッグ表示
-	 */
-	public void putHandForDebug(Player player) {
-		StringBuffer sb = new StringBuffer();
-		sb.append(" ");
-		List<Card> hand = player.getHand();
-		for (Card card : hand) {
-			sb.append(" " + card.toShortString());
-		}
-		logger.debug("{}の手札: ", player.getScreenName());
-		logger.debug(new String(sb));
 	}
 
 }

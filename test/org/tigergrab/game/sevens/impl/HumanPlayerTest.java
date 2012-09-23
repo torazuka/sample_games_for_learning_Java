@@ -62,19 +62,19 @@ public class HumanPlayerTest {
 
 		Logger logger = mock(Logger.class);
 		player.view = new View(logger);
-		
 		player.showHand();
-		verify(logger).info("> [H-07]");
-		
+		verify(logger).info("> {}の手札: ", "あなた");
 
 		HumanPlayer player1 = new HumanPlayer(0);
 		List<Card> cardList1 = new ArrayList<>();
-		player.setHand(cardList1);
-		
+		player1.setHand(cardList1);
+
+		Logger logger1 = mock(Logger.class);
+		player1.view = new View(logger1);
 		player1.showHand();
 		verify(logger).info("> {}の手札: ", "あなた");
 	}
-	
+
 	@Test
 	public void testLeadCard() throws Exception {
 		// Game game = new Game();

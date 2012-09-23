@@ -86,11 +86,12 @@ public class GameTest {
 		Card clubSeven = new Card(Suite.Club, 7);
 		List<Player> livePlayers = game.status.getPlayers();
 		for (Player player : livePlayers) {
-			List<Card> list = player.getHand();
-			assertEquals("手札にSpadeの7は残っていない。", -1, list.indexOf(spadeSeven));
-			assertEquals("手札にHeartの7は残っていない。", -1, list.indexOf(heartSeven));
-			assertEquals("手札にDiaの7は残っていない。", -1, list.indexOf(diaSeven));
-			assertEquals("手札にClubの7は残っていない。", -1, list.indexOf(clubSeven));
+			assertEquals("手札にSpadeの7は残っていない。", false,
+					player.hasCard(spadeSeven));
+			assertEquals("手札にHeartの7は残っていない。", false,
+					player.hasCard(heartSeven));
+			assertEquals("手札にDiaの7は残っていない。", false, player.hasCard(diaSeven));
+			assertEquals("手札にClubの7は残っていない。", false, player.hasCard(clubSeven));
 		}
 	}
 
