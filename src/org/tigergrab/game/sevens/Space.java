@@ -5,6 +5,9 @@ import java.util.List;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
 
+/**
+ * 場札を表わす．
+ */
 public interface Space {
 
 	public void viewCurrentSpace();

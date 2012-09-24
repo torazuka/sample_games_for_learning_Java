@@ -71,4 +71,18 @@ public class GameStatusTest {
 		assertEquals("プレイヤーID 2 さん", playerRank.get(1).getScreenName());
 		assertEquals("あなた", playerRank.get(2).getScreenName());
 	}
+
+	@Test
+	public void testGetNextPlayer() throws Exception {
+		Status status = new GameStatus();
+		status.createPlayers(3);
+		List<Player> livePlayers = status.getPlayers();
+
+		assertEquals("id==0のユーザの次のユーザは、id==1。", 1,
+				status.getNextPlayer(livePlayers.get(0)).getId());
+		assertEquals("id==2のユーザの次のユーザは、id==0。", 0,
+				status.getNextPlayer(livePlayers.get(2)).getId());
+
+		// TODO: プレイヤーが脱落していたり勝利していたりする場合のテストケースを追加。
+	}
 }

@@ -108,17 +108,4 @@ public class GameTest {
 			assertEquals("手札にClubの7は残っていない。", false, player.hasCard(clubSeven));
 		}
 	}
-
-	@Test
-	public void testGetNextPlayer() throws Exception {
-		Game game = new Game();
-		game.status.createPlayers(3);
-		List<Player> livePlayers = game.status.getPlayers();
-
-		assertEquals("id==0のユーザの次のユーザは、id==1。", 1,
-				game.getNextPlayer(livePlayers.get(0)).getId());
-		assertEquals("id==2のユーザの次のユーザは、id==0。", 0,
-				game.getNextPlayer(livePlayers.get(2)).getId());
-	}
-
 }

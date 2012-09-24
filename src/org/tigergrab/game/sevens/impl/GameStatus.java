@@ -64,6 +64,11 @@ public class GameStatus implements Status {
 		}
 	}
 
+	@Override
+	public Player getNextPlayer(Player currentPlayer) {
+		return playerManager.getNextPlayer(currentPlayer);
+	}
+
 	// TODO: テスト用暫定。
 	public void setLivePlayer(Player player) {
 		playerManager.addPlayers(player);

@@ -112,6 +112,21 @@ public class PlayerManager {
 		}
 	}
 
+	public Player getNextPlayer(Player currentPlayer) {
+		PlayerState ps = getPlayers();
+		List<Player> players = ps.getPlayers();
+
+		int index = players.indexOf(currentPlayer);
+		if (1 < getLivePlayerNum()) {
+			if (index < getLivePlayerNum() - 1) {
+				index++;
+			} else {
+				index = 0;
+			}
+		}
+		return players.get(index);
+	}
+
 	public PlayerState getPlayers() {
 		return players;
 	}

@@ -25,10 +25,7 @@ public class Game {
 
 	private static Logger logger = LoggerFactory.getLogger(Game.class);
 
-	/** 場札 */
 	Space space;
-
-	/** ゲームの状態 */
 	Status status;
 
 	View view;
@@ -67,10 +64,8 @@ public class Game {
 					String.valueOf(turnCounter), currentPlayer.getScreenName());
 
 			executeTurn(currentPlayer.createTurn(space));
-
-			currentPlayer = getNextPlayer(currentPlayer);
+			currentPlayer = status.getNextPlayer(currentPlayer);
 		}
-
 		endGame();
 	}
 
@@ -91,6 +86,9 @@ public class Game {
 		}
 	}
 
+	/**
+	 * 引数のターンを実行する．
+	 */
 	public void executeTurn(Turn turn) {
 		dispatch(new DefaultGameEvent(GameEventKinds.beginTurn, this, turn));
 
@@ -142,16 +140,6 @@ public class Game {
 		if (player.hasCard(card)) {
 			player.leadCard(space, status, card);
 		}
-	}
-
-	protected Player getNextPlayer(Player current) {
-		int id = current.getId();
-		if (id < status.getPlayersNum() - 1) {
-			id++;
-		} else {
-			id = 0;
-		}
-		return status.getLivePlayer(id);
 	}
 
 	protected String read() {
