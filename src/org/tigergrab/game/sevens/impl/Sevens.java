@@ -11,14 +11,17 @@ import org.tigergrab.game.sevens.player.impl.AIPlayer;
  * 
  */
 public class Sevens {
-	
+
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.addListener(getTurnListener());
-		game.execute();
+		boolean isContinue = game.execute();
+		for (; isContinue;) {
+			isContinue = game.execute();
+		}
 	}
-	
-	protected static GameEventListener getTurnListener(){
+
+	protected static GameEventListener getTurnListener() {
 		return new GameEventListener() {
 
 			@Override

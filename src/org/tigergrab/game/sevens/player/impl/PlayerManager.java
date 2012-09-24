@@ -123,6 +123,8 @@ public class PlayerManager {
 			} else {
 				index = 0;
 			}
+		} else {
+			index = 0;
 		}
 		return players.get(index);
 	}

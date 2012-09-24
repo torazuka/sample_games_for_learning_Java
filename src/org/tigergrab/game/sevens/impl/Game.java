@@ -34,9 +34,6 @@ public class Game {
 	protected Map<GameEventKinds, GameEventDispatcher> dispatchers;
 
 	public Game() {
-		space = new DefaultSpace();
-		status = new GameStatus();
-
 		view = new View();
 
 		listeners = new ArrayList<>();
@@ -52,7 +49,9 @@ public class Game {
 		return 2;
 	}
 
-	public void execute() {
+	public boolean execute() {
+		space = new DefaultSpace();
+		status = new GameStatus();
 		initGameStatus();
 		Player currentPlayer = getFirstPlayer();
 		leadSevens();
@@ -66,7 +65,7 @@ public class Game {
 			executeTurn(currentPlayer.createTurn(space));
 			currentPlayer = status.getNextPlayer(currentPlayer);
 		}
-		endGame();
+		return endGame();
 	}
 
 	protected void initGameStatus() {
@@ -98,14 +97,21 @@ public class Game {
 		dispatch(new DefaultGameEvent(GameEventKinds.endTurn, this, turn));
 	}
 
-	protected void endGame() {
+	protected boolean endGame() {
 		status.viewGameResult();
 
-		view.putInteraction("ゲームの様子を再生しますか？ (y: する)");
+		view.putInteraction("ゲームの様子を再生しますか？ (y: はい)");
 		String doReplay = read();
 		if (doReplay.equals("y")) {
 			status.playback();
 		}
+
+		view.putInteraction("ゲームを続けますか？ (y: はい)");
+		String doContinue = read();
+		if (doContinue.equals("y")) {
+			return true;
+		}
+		return false;
 	}
 
 	/**
