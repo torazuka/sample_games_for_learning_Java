@@ -2,6 +2,7 @@ package org.tigergrab.game.sevens.impl;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.List;
 
 import org.tigergrab.game.playingcards.impl.Card;
@@ -44,13 +45,23 @@ public class GameStatus implements Status {
 	}
 
 	/**
-	 * 山札の初期配布。事前条件として、プレイヤーのリストがすでに作成されていること。
+	 * 山札の初期配布。事前条件として、プレイヤーがすでに作成されていること。
 	 */
 	@Override
 	public void initHands() {
+		int livePlayerNum = playerManager.getLivePlayerNum();
 		Deck deck = new Deck();
+		List<List<Card>> cardsList = deck.divideCards(livePlayerNum);
+
 		PlayerState ps = playerManager.getPlayers();
-		deck.init(ps);
+		List<Player> players = ps.getPlayers();
+		// 分けたカードを個々のプレイヤーと関連づける
+		Iterator<Player> playersIterator = players.iterator();
+		Iterator<List<Card>> dealedIterator = cardsList.iterator();
+		for (; playersIterator.hasNext() && dealedIterator.hasNext();) {
+			Player player = playersIterator.next();
+			player.setHand(dealedIterator.next());
+		}
 	}
 
 	// TODO: テスト用暫定。

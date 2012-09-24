@@ -75,17 +75,19 @@ public class Game {
 	}
 
 	protected void initGameStatus() {
-
 		status.createPlayers(getNumPlayers());
 		status.initHands();
-
 		view.putResourceDescription("init.leads");
 
 		if (logger.isDebugEnabled()) {
 			List<Player> livePlayers = status.getPlayers();
-			for (Player player : livePlayers) {
-				player.showHand();
-			}
+			showHandFordebug(livePlayers);
+		}
+	}
+
+	protected void showHandFordebug(List<Player> livePlayers) {
+		for (Player player : livePlayers) {
+			player.showHand();
 		}
 	}
 

@@ -2,7 +2,6 @@ package org.tigergrab.game.sevens.impl;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -11,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Rank;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.player.Player;
-import org.tigergrab.game.sevens.player.PlayerState;
 
 /**
  * 山札と，山札に関する操作を表わす． 七並べではゲーム開始時点にだけ山札が存在するため、このクラスはゲーム開始時に行う処理を持つ．
@@ -36,7 +33,7 @@ public class Deck {
 
 	/**
 	 * 指定した人数に、山札を均一に配る。割り切れない場合は、一部のプレイヤーの枚数が、1枚多く（少なく）なってもよい。
-	 * 戻り値の要素数（カードリスト）は、プレイヤー人数と等しくなる。
+	 * 戻り値の要素数（CardのList）は、プレイヤー人数と等しくなる。
 	 * 
 	 * @param numPlayer
 	 *            プレイヤーの数
@@ -99,23 +96,4 @@ public class Deck {
 		// 2人なら26+26枚、3人なら18+17+17枚、4人なら13+13+13+13枚...となるようにする。
 		return cardIndex % numPlayer;
 	}
-
-	/**
-	 * プレイヤーに山札を配布する
-	 */
-	public void init(PlayerState playerState) {
-
-		// 山札をプレイヤー人数に分ける
-		List<Player> players = playerState.getPlayers();
-		List<List<Card>> cardsList = divideCards(players.size());
-
-		// 分けたカードを個々のプレイヤーと関連づける
-		Iterator<Player> playersIterator = players.iterator();
-		Iterator<List<Card>> dealedIterator = cardsList.iterator();
-		for (; playersIterator.hasNext() && dealedIterator.hasNext();) {
-			Player player = playersIterator.next();
-			player.setHand(dealedIterator.next());
-		}
-	}
-
 }

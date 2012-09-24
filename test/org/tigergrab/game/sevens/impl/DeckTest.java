@@ -80,7 +80,7 @@ public class DeckTest {
 	}
 
 	@Test
-	public void testInitDeal() throws Exception {
+	public void testdevideCards() throws Exception {
 		Deck deck1 = new Deck();
 		List<List<Card>> dealed = deck1.divideCards(4);
 		assertEquals("52枚を4人に配ったら、1人（目）の手札は13枚。", 13, dealed.get(0).size());
