@@ -56,9 +56,9 @@ public class Game {
 	}
 
 	public void execute() {
-
 		initGameStatus();
 		Player currentPlayer = getFirstPlayer();
+		leadSevens();
 
 		int turnCounter = 0;
 		for (; status.isGameOver() == false;) {
@@ -111,44 +111,37 @@ public class Game {
 	}
 
 	/**
-	 * ゲームの最初にランク7のカードを場に出す。 ダイヤの7を出したプレイヤーを、最初のプレイヤーとして返す。
+	 * ダイヤの7を手札に持つプレイヤーを、最初のプレイヤーとして返す．ゲームの最初に一度だけ行う．
 	 */
-	public Player getFirstPlayer() {
-
+	protected Player getFirstPlayer() {
 		Player result = null;
-
-		view.putDescription("すべてのプレイヤーは、7のカードが手札にある場合、場に出します。");
-
 		List<Player> livePlayers = status.getPlayers();
 		for (Player player : livePlayers) {
-
-			Card spade7 = new Card(Suite.Spade, 7);
-			if (player.hasCard(spade7)) {
-				player.leadCard(space, status, spade7);
-			}
-
-			Card heart7 = new Card(Suite.Heart, 7);
-			if (player.hasCard(heart7)) {
-				player.leadCard(space, status, heart7);
-			}
-
-			Card dia7 = new Card(Suite.Dia, 7);
-			if (player.hasCard(dia7)) {
-				player.leadCard(space, status, dia7);
-
-				result = player;
-			}
-
-			Card club7 = new Card(Suite.Club, 7);
-			if (player.hasCard(club7)) {
-				player.leadCard(space, status, club7);
-			}
+			result = (player.hasCard(new Card(Suite.Dia, 7))) ? player : result;
 		}
-
-		view.putSpace(space);
 		view.putDescription("最初の手番は、ダイヤの7を出した{}です。", result.getScreenName());
-
 		return result;
+	}
+
+	/**
+	 * 各プレイヤーの手札を調べ、ランク7のカードを場に出す．ゲームの最初に一度だけ行う．
+	 */
+	protected void leadSevens() {
+		view.putDescription("すべてのプレイヤーは、7のカードが手札にある場合、場に出します。");
+		List<Player> livePlayers = status.getPlayers();
+		for (Player player : livePlayers) {
+			lead(player, new Card(Suite.Spade, 7));
+			lead(player, new Card(Suite.Heart, 7));
+			lead(player, new Card(Suite.Dia, 7));
+			lead(player, new Card(Suite.Club, 7));
+		}
+		view.putSpace(space);
+	}
+
+	protected void lead(Player player, Card card) {
+		if (player.hasCard(card)) {
+			player.leadCard(space, status, card);
+		}
 	}
 
 	protected Player getNextPlayer(Player current) {

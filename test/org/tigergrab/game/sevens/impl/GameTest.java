@@ -60,8 +60,7 @@ public class GameTest {
 		game.status.createPlayers(2);
 		game.status.initHands();
 
-		// これが7を場に出す動作になる。
-		game.getFirstPlayer();
+		game.leadSevens();
 
 		List<Card> spadeList = game.space.getCardsBySuite(Suite.Spade);
 		assertEquals("[S-06]は場にない。", false,

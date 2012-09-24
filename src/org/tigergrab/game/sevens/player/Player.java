@@ -25,6 +25,9 @@ public interface Player {
 
 	public void setHand(List<Card> next);
 
+	/**
+	 * 引数で指定したカードが手札にあれば，場に出す．手札になければ，何もしない．
+	 */
 	public void leadCard(Space space, Status status, Card card);
 
 	public boolean hasCard(Card card);

@@ -82,8 +82,6 @@ public abstract class DefaultPlayer implements Player {
 			view.putResourceDescription("tell.leadedCard", getScreenName(),
 					card.toShortString());
 			space.putCard(card);
-		} else {
-			// 手札にターゲットの札がないときは何もしない。
 		}
 
 		// 手札がなくなった場合、プレイヤーを勝利者リストに移動
