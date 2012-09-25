@@ -34,20 +34,6 @@ public class View {
 	}
 
 	/**
-	 * ユーザに入力を促すメッセージを表示
-	 */
-	public void putInteraction(String str) {
-		logger.info("> " + str);
-	}
-
-	/**
-	 * ユーザに入力を促すメッセージを表示
-	 */
-	public void putInteraction(String str, String arg) {
-		logger.info("> " + str, arg);
-	}
-
-	/**
 	 * ユーザに入力を促すメッセージをリソースから表示
 	 */
 	public void putResourceInteraction(String str) {
@@ -55,10 +41,10 @@ public class View {
 	}
 
 	/**
-	 * ユーザへの警告を表示
+	 * ユーザに入力を促すメッセージをリソースから表示
 	 */
-	public void putAlert(String str) {
-		logger.info("> ******** " + str + " ******** ");
+	public void putResourceInteraction(String str, String arg) {
+		logger.info("> " + resources.getString(str), arg);
 	}
 
 	/**
@@ -66,27 +52,6 @@ public class View {
 	 */
 	public void putResourceAlert(String str) {
 		logger.info("> ******** " + resources.getString(str) + " ******** ");
-	}
-
-	/**
-	 * 説明を表示
-	 */
-	public void putDescription(String str) {
-		logger.info("> " + str);
-	}
-
-	/**
-	 * 説明を表示
-	 */
-	public void putDescription(String str, String arg) {
-		logger.info("> " + str, arg);
-	}
-
-	/**
-	 * 説明を表示
-	 */
-	public void putDescription(String str, String arg1, String arg2) {
-		logger.info("> " + str, arg1, arg2);
 	}
 
 	/**
@@ -114,7 +79,7 @@ public class View {
 	 * 場札を表示する
 	 */
 	public void putSpace(Space space) {
-		logger.info("> 場札");
+		this.putResourceDescription("space");
 		StringBuilder sb = new StringBuilder();
 
 		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);

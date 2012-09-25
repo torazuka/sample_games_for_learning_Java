@@ -73,7 +73,7 @@ public class AIPlayer extends DefaultPlayer implements Player {
 
 		List<Card> nextCards = getNextCards(space);
 		if (nextCards == null || nextCards.size() == 0) {
-			view.putInteraction("出せる札がありません。");
+			view.putResourceDescription("info.nohand");
 		} else {
 			for (Card next : nextCards) {
 				if (hand.has(next)) {

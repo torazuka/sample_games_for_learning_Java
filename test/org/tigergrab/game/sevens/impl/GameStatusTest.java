@@ -67,8 +67,8 @@ public class GameStatusTest {
 
 		List<Player> playerRank = status.getPlayersRank();
 		assertEquals(3, playerRank.size());
-		assertEquals("プレイヤーID 1 さん", playerRank.get(0).getScreenName());
-		assertEquals("プレイヤーID 2 さん", playerRank.get(1).getScreenName());
+		assertEquals("ID 1 ", playerRank.get(0).getScreenName());
+		assertEquals("ID 2 ", playerRank.get(1).getScreenName());
 		assertEquals("あなた", playerRank.get(2).getScreenName());
 	}
 

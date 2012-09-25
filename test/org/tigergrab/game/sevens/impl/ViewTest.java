@@ -13,63 +13,53 @@ import org.tigergrab.game.playingcards.impl.Suite;
 public class ViewTest {
 
 	@Test
-	public void testPutAlert() throws Exception {
+	public void testPutResourceAlert() throws Exception {
 		Logger logger = mock(Logger.class);
 
 		View view = new View(logger);
-		view.putAlert("test");
+		view.putResourceAlert("test.arg0");
 
-		verify(logger).info("> ******** test ******** ");
+		verify(logger).info("> ******** ほげ ******** ");
 	}
 
 	@Test
-	public void testPutInteraction() throws Exception {
+	public void testPutResourceInteraction() throws Exception {
 		Logger logger = mock(Logger.class);
 
 		View view = new View(logger);
-		view.putInteraction("test");
+		view.putResourceInteraction("test.arg0");
 
-		verify(logger).info("> test");
+		verify(logger).info("> ほげ");
 	}
 
 	@Test
-	public void testPutDescription() throws Exception {
+	public void testPutResourceDescription() throws Exception {
 		Logger logger = mock(Logger.class);
 
 		View view = new View(logger);
-		view.putDescription("test");
+		view.putResourceDescription("test.arg0");
 
-		verify(logger).info("> test");
+		verify(logger).info("> ほげ");
 	}
 
 	@Test
-	public void testPutDescriptionArg1() throws Exception {
+	public void testPutResourceDescriptionArg1() throws Exception {
 		Logger logger = mock(Logger.class);
 
 		View view = new View(logger);
-		view.putDescription("test {}", "hoge");
+		view.putResourceDescription("test.arg1", "hoge");
 
-		verify(logger).info("> test {}", "hoge");
+		verify(logger).info("> ほげ:{}", "hoge");
 	}
 
 	@Test
-	public void testPutDescriptionArg2() throws Exception {
+	public void testPutResourceDescriptionArg2() throws Exception {
 		Logger logger = mock(Logger.class);
 
 		View view = new View(logger);
-		view.putDescription("test {} {}", "hoge", "moga");
+		view.putResourceDescription("test.arg2", "hoge", "moga");
 
-		verify(logger).info("> test {} {}", "hoge", "moga");
-	}
-
-	@Test
-	public void testPutResourceDescription2() throws Exception {
-		Logger logger = mock(Logger.class);
-
-		View view = new View(logger);
-		view.putResourceDescription("test.description2", "hoge", "moga");
-
-		verify(logger).info("> desdes {} {}", "hoge", "moga");
+		verify(logger).info("> ほげ:{}-もが:{}", "hoge", "moga");
 	}
 
 	@Test

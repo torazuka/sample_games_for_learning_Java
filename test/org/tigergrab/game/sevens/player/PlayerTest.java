@@ -3,7 +3,6 @@ package org.tigergrab.game.sevens.player;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.sevens.player.impl.AIPlayer;
 import org.tigergrab.game.sevens.player.impl.HumanPlayer;
 
@@ -14,6 +13,6 @@ public class PlayerTest {
 		assertEquals("あなた", humanPlayer.getScreenName());
 
 		Player defaultPlayer = new AIPlayer(1);
-		assertEquals("プレイヤーID 1 さん", defaultPlayer.getScreenName());
+		assertEquals("ID 1 ", defaultPlayer.getScreenName());
 	}
 }

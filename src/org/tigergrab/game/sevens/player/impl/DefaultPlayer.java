@@ -53,9 +53,9 @@ public abstract class DefaultPlayer implements Player {
 	@Override
 	public void pass(Status status) {
 		if (numPass++ < 3) {
-			view.putResourceDescription("tell.numPass", String.valueOf(numPass));
+			view.putResourceDescription("info.numPass", String.valueOf(numPass));
 		} else {
-			view.putResourceDescription("tell.retire");
+			view.putResourceDescription("info.retire");
 			status.moveToLoser(this);
 		}
 	}
@@ -79,7 +79,7 @@ public abstract class DefaultPlayer implements Player {
 	public void leadCard(Space space, Status status, Card card) {
 
 		if (hand.lead(card)) {
-			view.putResourceDescription("tell.leadedCard", getScreenName(),
+			view.putResourceDescription("info.leadedCard", getScreenName(),
 					card.toShortString());
 			space.putCard(card);
 		}
@@ -105,7 +105,7 @@ public abstract class DefaultPlayer implements Player {
 
 	@Override
 	public String getScreenName() {
-		return "プレイヤーID " + this.getId() + " さん";
+		return "ID " + this.getId() + " ";
 	}
 
 	@Override

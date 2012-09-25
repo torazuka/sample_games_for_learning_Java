@@ -39,7 +39,7 @@ public class Sevens {
 				// プレイヤーがコンピュータの場合だけ、ドローポーズを設定する
 				Player currentPlayer = turn.getCurrentPlayer();
 				if (currentPlayer instanceof AIPlayer) {
-					game.view.putDescription("（Enterを入力すると進みます）");
+					game.view.putResourceInteraction("info.drawpause");
 					game.read();
 				}
 			}

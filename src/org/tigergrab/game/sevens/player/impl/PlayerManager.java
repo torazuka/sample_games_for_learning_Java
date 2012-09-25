@@ -98,17 +98,17 @@ public class PlayerManager {
 	public void moveToGainer(Player player) {
 		if (players.remove(player)) {
 			gainers.add(player);
-			view.putDescription("{}が勝利しました。", player.getScreenName());
+			view.putResourceDescription("info.gainer", player.getScreenName());
 		}
 		if (players.isGameOver() != false) {
-			view.putDescription("全員の順位が決まるまで、ゲームを続行します。");
+			view.putResourceDescription("info.gamecontinue");
 		}
 	}
 
 	public void moveToLoser(Player player) {
 		if (players.remove(player)) {
 			losers.add(player);
-			view.putDescription("{}がゲームから脱落しました。", player.getScreenName());
+			view.putResourceDescription("info.loser", player.getScreenName());
 		}
 	}
 

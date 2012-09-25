@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Rank;
@@ -20,13 +21,17 @@ import org.tigergrab.game.util.InputOutputUtil;
  */
 public class HumanPlayer extends DefaultPlayer implements Player {
 
+	ResourceBundle resources;
+
 	public HumanPlayer(int i) {
 		super(i);
+		resources = ResourceBundle
+				.getBundle("org.tigergrab.game.sevens.resources");
 	}
 
 	@Override
 	public String getScreenName() {
-		return "あなた";
+		return resources.getString("you");
 	}
 
 	protected void viewUsesForLead() {
@@ -78,18 +83,18 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 				// 手札に存在するかを確認する
 				if (this.hasCard(card) == false) {
-					view.putAlert("手札にあるカードを選んでください。");
+					view.putResourceAlert("alert.inhand");
 					continue;
 				}
 
 				// 場に出せるかを確認する
 				if (space.canLead(card) == false) {
-					view.putAlert("場札と隣り合ったRank、同じSuiteの札だけを出せます。");
+					view.putResourceAlert("alert.validcard");
 					continue;
 				}
 
 				// 最終確認
-				view.putInteraction("{}を場に出しますか？ （n: 考え直す, それ以外: 出す）",
+				view.putResourceInteraction("q.leadconfirm",
 						card.toShortString());
 				if (this.confirm()) {
 					// カードを出せる
@@ -126,9 +131,9 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	@Override
 	public void showHand() {
-		view.putDescription("{}の手札: ", getScreenName());
+		view.putResourceDescription("hand", getScreenName());
 		if (hand.show() == false) {
-			view.putDescription(" もうありません。");
+			view.putResourceDescription("nohand");
 		}
 	}
 }

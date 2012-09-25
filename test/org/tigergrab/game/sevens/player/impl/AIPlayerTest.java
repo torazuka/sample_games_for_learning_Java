@@ -17,8 +17,6 @@ import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.impl.DefaultSpace;
 import org.tigergrab.game.sevens.impl.View;
 import org.tigergrab.game.sevens.player.Player;
-import org.tigergrab.game.sevens.player.impl.AIPlayer;
-import org.tigergrab.game.sevens.player.impl.HumanPlayer;
 
 public class AIPlayerTest {
 	@Test
@@ -191,7 +189,7 @@ public class AIPlayerTest {
 	@Test
 	public void testGetScreenName() throws Exception {
 		AIPlayer player = new AIPlayer(1);
-		assertEquals("PlayerID1のAIPlayerの表示名は、「プレイヤーID 1 さん」", "プレイヤーID 1 さん",
+		assertEquals("PlayerID1のAIPlayerの表示名は、「ID 1 」", "ID 1 ",
 				player.getScreenName());
 	}
 
@@ -213,7 +211,7 @@ public class AIPlayerTest {
 		verify(logger0).info("> {}の手札: ", "あなた");
 
 		p1.showHand();
-		verify(logger1).debug("{}の手札: ", "プレイヤーID 1 さん");
+		verify(logger1).debug("{}の手札: ", "ID 1 ");
 		verify(logger1).debug(" もうありません。");
 	}
 

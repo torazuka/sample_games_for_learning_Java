@@ -61,7 +61,7 @@ public class Game {
 		int turnCounter = 0;
 		for (; status.isGameOver() == false;) {
 			++turnCounter;
-			view.putDescription("[{}ターン目] {}のターンを開始します。",
+			view.putResourceDescription("turn.begin",
 					String.valueOf(turnCounter), currentPlayer.getScreenName());
 
 			executeTurn(currentPlayer.createTurn(space));
@@ -102,13 +102,13 @@ public class Game {
 	protected boolean endGame() {
 		status.viewGameResult();
 
-		view.putInteraction("ゲームの様子を再生しますか？ (y: はい)");
+		view.putResourceInteraction("q.replay");
 		String doReplay = read();
 		if (doReplay.equals("y")) {
 			status.playback();
 		}
 
-		view.putInteraction("ゲームを続けますか？ (y: はい)");
+		view.putResourceInteraction("q.continue");
 		String doContinue = read();
 		if (doContinue.equals("y")) {
 			return true;
@@ -125,7 +125,7 @@ public class Game {
 		for (Player player : livePlayers) {
 			result = (player.hasCard(new Card(Suite.Dia, 7))) ? player : result;
 		}
-		view.putDescription("最初の手番は、ダイヤの7を出した{}です。", result.getScreenName());
+		view.putResourceDescription("info.firstplayer", result.getScreenName());
 		return result;
 	}
 
@@ -133,7 +133,7 @@ public class Game {
 	 * 各プレイヤーの手札を調べ、ランク7のカードを場に出す．ゲームの最初に一度だけ行う．
 	 */
 	protected void leadSevens() {
-		view.putDescription("すべてのプレイヤーは、7のカードが手札にある場合、場に出します。");
+		view.putResourceDescription("info.makedeck");
 		List<Player> livePlayers = status.getPlayers();
 		for (Player player : livePlayers) {
 			lead(player, new Card(Suite.Spade, 7));
@@ -159,7 +159,7 @@ public class Game {
 	 */
 	protected int getNumPlayers() {
 		int result = 0;
-		view.putResourceInteraction("get.numplayers");
+		view.putResourceInteraction("q.numplayers");
 		for (;;) {
 			String inputNum = read();
 
@@ -172,21 +172,20 @@ public class Game {
 			try {
 				initNumPlayer = Integer.valueOf(inputNum);
 			} catch (NumberFormatException e) {
-				view.putResourceInteraction("get.numplayers");
+				view.putResourceInteraction("q.numplayers");
 				logger.warn("warn: {}", inputNum);
 				continue;
 			}
 
 			if (initNumPlayer < 2 || 10 < initNumPlayer) {
-				view.putResourceInteraction("get.numplayers");
+				view.putResourceInteraction("q.numplayers");
 				continue;
 			} else {
 				result = initNumPlayer;
 				break;
 			}
 		}
-		// TODO ユーザへの説明表示が混じっているので何とかする
-		view.putResourceDescription("view.numplayers", String.valueOf(result));
+		view.putResourceDescription("info.numplayers", String.valueOf(result));
 		return result;
 	}
 
