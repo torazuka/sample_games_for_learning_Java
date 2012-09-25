@@ -34,6 +34,8 @@ public class Game {
 	protected Map<GameEventKinds, GameEventDispatcher> dispatchers;
 
 	public Game() {
+		space = new DefaultSpace();
+		status = new GameStatus();
 		view = new View();
 
 		listeners = new ArrayList<>();
