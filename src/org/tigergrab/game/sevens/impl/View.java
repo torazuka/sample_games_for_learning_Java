@@ -19,18 +19,20 @@ public class View {
 
 	private Logger logger;
 
+	ResourceBundle.Control control;
 	ResourceBundle resources;
 
 	public View() {
 		logger = LoggerFactory.getLogger(View.class);
+		control = ResourceBundle.Control
+				.getControl(ResourceBundle.Control.FORMAT_PROPERTIES);
 		resources = ResourceBundle
 				.getBundle("org.tigergrab.game.sevens.resources");
 	}
 
 	public View(Logger log) {
+		this();
 		logger = log;
-		resources = ResourceBundle
-				.getBundle("org.tigergrab.game.sevens.resources");
 	}
 
 	/**
