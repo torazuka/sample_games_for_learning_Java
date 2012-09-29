@@ -6,19 +6,32 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
+import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.impl.View;
-import org.tigergrab.game.sevens.player.impl.HumanPlayer;
+import org.tigergrab.game.sevens.impl.DefaultView;
 
 public class HumanPlayerTest {
 
+	static ResourceBundle resource;
+	static DefaultView view;
+
+	@BeforeClass
+	public static void beforeClass() {
+		LangConfigurationAction action = new LangConfigurationAction(PKG.SEVENS);
+		resource = action.getResourceBundle();
+		view = new DefaultView();
+	}
+
 	@Test
 	public void testConfirm() throws Exception {
-		HumanPlayer player0 = new HumanPlayer(0) {
+		HumanPlayer player0 = new HumanPlayer(view, 0) {
 			@Override
 			protected String read() {
 				return "n";
@@ -26,7 +39,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("「n」が入力されたとき、false.", false, player0.confirm());
 
-		HumanPlayer player1 = new HumanPlayer(0) {
+		HumanPlayer player1 = new HumanPlayer(view, 0) {
 			@Override
 			protected String read() {
 				return "";
@@ -34,7 +47,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("何も入力されなかったとき、true.", true, player1.confirm());
 
-		HumanPlayer player2 = new HumanPlayer(0) {
+		HumanPlayer player2 = new HumanPlayer(view, 0) {
 			@Override
 			protected String read() {
 				return "hoge";
@@ -42,7 +55,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("「n」以外の文字列が入力されたとき、true.", true, player2.confirm());
 
-		HumanPlayer player3 = new HumanPlayer(0) {
+		HumanPlayer player3 = new HumanPlayer(view, 0) {
 			@Override
 			protected String read() {
 				return " n ";
@@ -53,28 +66,29 @@ public class HumanPlayerTest {
 
 	@Test
 	public void testGetScreenName() throws Exception {
-		HumanPlayer player = new HumanPlayer(0);
-		assertEquals("HumanPlayerの表示名は「あなた」", "あなた", player.getScreenName());
+		HumanPlayer player = new HumanPlayer(view, 0);
+		assertEquals("HumanPlayerの表示名は「あなた」", resource.getString("you"),
+				player.getScreenName());
 	}
 
 	@Test
 	public void testShowHand() throws Exception {
-		HumanPlayer player = new HumanPlayer(0);
+		HumanPlayer player = new HumanPlayer(view, 0);
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Heart, 7));
 		player.setHand(cardList);
 
 		Logger logger = mock(Logger.class);
-		player.view = new View(logger);
+		player.view = new DefaultView(logger);
 		player.showHand();
 		verify(logger).info("> {}の手札: ", "あなた");
 
-		HumanPlayer player1 = new HumanPlayer(0);
+		HumanPlayer player1 = new HumanPlayer(view, 0);
 		List<Card> cardList1 = new ArrayList<>();
 		player1.setHand(cardList1);
 
 		Logger logger1 = mock(Logger.class);
-		player1.view = new View(logger1);
+		player1.view = new DefaultView(logger1);
 		player1.showHand();
 		verify(logger).info("> {}の手札: ", "あなた");
 	}

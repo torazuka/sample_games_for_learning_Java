@@ -3,7 +3,7 @@ package org.tigergrab.game.sevens.player.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.tigergrab.game.sevens.impl.View;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.sevens.player.PlayerState;
 
@@ -22,25 +22,25 @@ public class PlayerManager {
 	/** 勝利プレイヤー */
 	protected PlayerState gainers;
 
-	View view;
+	DefaultView view;
 
-	public PlayerManager() {
+	public PlayerManager(DefaultView view) {
+		this.view = view;
+
 		players = new DefaultState();
 		gainers = new GainerState();
 		losers = new LoserState();
-
-		view = new View();
 	}
 
 	/**
 	 * Playerを作る． 1人目はユーザであるHumanPlayer、2人目以降はAIPlayer.
 	 */
 	public void createPlayers(int num) {
-		Player user = new HumanPlayer(0);
+		Player user = new HumanPlayer(view, 0);
 		players.add(user);
 
 		for (int i = 1; i < num; i++) {
-			Player p = new AIPlayer(i);
+			Player p = new AIPlayer(view, i);
 			players.add(p);
 		}
 	}
@@ -98,17 +98,17 @@ public class PlayerManager {
 	public void moveToGainer(Player player) {
 		if (players.remove(player)) {
 			gainers.add(player);
-			view.putResourceDescription("info.gainer", player.getScreenName());
+			view.putDescription("info.gainer", player.getScreenName());
 		}
 		if (players.isGameOver() != false) {
-			view.putResourceDescription("info.gamecontinue");
+			view.putDescription("info.gamecontinue");
 		}
 	}
 
 	public void moveToLoser(Player player) {
 		if (players.remove(player)) {
 			losers.add(player);
-			view.putResourceDescription("info.loser", player.getScreenName());
+			view.putDescription("info.loser", player.getScreenName());
 		}
 	}
 

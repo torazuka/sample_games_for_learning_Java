@@ -11,7 +11,7 @@ import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.TurnAction;
 import org.tigergrab.game.sevens.impl.DefaultTurn;
 import org.tigergrab.game.sevens.impl.Hand;
-import org.tigergrab.game.sevens.impl.View;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 
 /**
@@ -27,17 +27,17 @@ public abstract class DefaultPlayer implements Player {
 	/** パスした回数 */
 	protected int numPass;
 
-	View view;
+	DefaultView view;
 
-	public DefaultPlayer(int i) {
+	public DefaultPlayer(DefaultView view, int i) {
 		id = i;
 		numPass = 0;
-		view = new View();
+		this.view = view;
 		hand = new Hand();
 	}
 
-	public DefaultPlayer(int i, Logger logger) {
-		this(i);
+	public DefaultPlayer(DefaultView view, int i, Logger logger) {
+		this(view, i);
 		this.logger = logger;
 	}
 
@@ -53,9 +53,9 @@ public abstract class DefaultPlayer implements Player {
 	@Override
 	public void pass(Status status) {
 		if (numPass++ < 3) {
-			view.putResourceDescription("info.numPass", String.valueOf(numPass));
+			view.putDescription("info.numPass", String.valueOf(numPass));
 		} else {
-			view.putResourceDescription("info.retire");
+			view.putDescription("info.retire");
 			status.moveToLoser(this);
 		}
 	}
@@ -79,7 +79,7 @@ public abstract class DefaultPlayer implements Player {
 	public void leadCard(Space space, Status status, Card card) {
 
 		if (hand.lead(card)) {
-			view.putResourceDescription("info.leadedCard", getScreenName(),
+			view.putDescription("info.leadedCard", getScreenName(),
 					card.toShortString());
 			space.putCard(card);
 		}

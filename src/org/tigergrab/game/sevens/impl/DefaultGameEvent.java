@@ -16,7 +16,7 @@ public class DefaultGameEvent implements GameEvent {
 	Player player;
 	Card card;
 	String message;
-	View view;
+	DefaultView view;
 	Status status;
 	Logger logger;
 
@@ -24,7 +24,7 @@ public class DefaultGameEvent implements GameEvent {
 		kind = k;
 	}
 
-	public DefaultGameEvent(GameEventKinds k, View v, Status s, Logger l) {
+	public DefaultGameEvent(GameEventKinds k, DefaultView v, Status s, Logger l) {
 		kind = k;
 		view = v;
 		status = s;
@@ -78,7 +78,7 @@ public class DefaultGameEvent implements GameEvent {
 	}
 
 	@Override
-	public View getView() {
+	public DefaultView getView() {
 		return view;
 	}
 

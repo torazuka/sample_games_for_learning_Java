@@ -13,13 +13,13 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.impl.GameStatus;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
-import org.tigergrab.game.sevens.player.impl.AIPlayer;
 
 public class DefaultPlayerTest {
 	@Test
 	public void testHasCard() throws Exception {
-		Player player = new AIPlayer(1);
+		Player player = new AIPlayer(new DefaultView(), 1);
 
 		List<Card> hand = new ArrayList<>();
 		hand.add(new Card(Suite.Spade, 7));
@@ -35,7 +35,7 @@ public class DefaultPlayerTest {
 
 	@Test
 	public void testPass() throws Exception {
-		Player player = new AIPlayer(1);
+		Player player = new AIPlayer(new DefaultView(), 1);
 		Status status = mock(GameStatus.class);
 
 		player.pass(status);

@@ -16,16 +16,8 @@ public class DefaultSpace implements Space {
 
 	protected List<Card> space;
 
-	protected View view;
-
 	public DefaultSpace() {
-		view = new View();
 		space = new ArrayList<>();
-	}
-
-	@Override
-	public void viewCurrentSpace() {
-		view.putSpace(this);
 	}
 
 	@Override

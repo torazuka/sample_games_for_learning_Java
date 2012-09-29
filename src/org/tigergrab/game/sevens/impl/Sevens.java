@@ -7,12 +7,12 @@ import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.sevens.player.impl.AIPlayer;
 
 /**
- * 七並べを開始するmainメソッドを持つ．
+ * 七並べを実行する．
  * 
  */
 public class Sevens {
 
-	public static void main(String[] args) {
+	public void execute() {
 		Game game = new Game();
 		game.addListener(getTurnListener());
 		boolean isContinue = game.execute();
@@ -39,7 +39,7 @@ public class Sevens {
 				// プレイヤーがコンピュータの場合だけ、ドローポーズを設定する
 				Player currentPlayer = turn.getCurrentPlayer();
 				if (currentPlayer instanceof AIPlayer) {
-					game.view.putResourceInteraction("info.drawpause");
+					game.view.putInteraction("info.drawpause");
 					game.read();
 				}
 			}

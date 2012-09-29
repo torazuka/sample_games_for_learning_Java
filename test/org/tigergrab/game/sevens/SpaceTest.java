@@ -10,14 +10,6 @@ public class SpaceTest {
 
 	@Ignore
 	@Test
-	public void testViewCurrentSpace() throws Exception {
-		target = new DefaultSpace();
-
-		target.viewCurrentSpace();
-	}
-
-	@Ignore
-	@Test
 	public void testSetCardToSpace() throws Exception {
 		target = new DefaultSpace();
 

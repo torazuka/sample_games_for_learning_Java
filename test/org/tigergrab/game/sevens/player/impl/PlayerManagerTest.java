@@ -7,12 +7,13 @@ import java.util.List;
 import org.junit.Test;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.impl.GameStatus;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 
 public class PlayerManagerTest {
 	@Test
 	public void testGetNextPlayer() throws Exception {
-		Status status = new GameStatus();
+		Status status = new GameStatus(new DefaultView());
 		status.createPlayers(3);
 		List<Player> livePlayers = status.getPlayers();
 

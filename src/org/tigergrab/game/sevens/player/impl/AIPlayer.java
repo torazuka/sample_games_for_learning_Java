@@ -15,6 +15,7 @@ import org.tigergrab.game.playingcards.impl.SuiteLimit;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 
 /**
@@ -24,12 +25,12 @@ public class AIPlayer extends DefaultPlayer implements Player {
 
 	private static Logger logger = LoggerFactory.getLogger(AIPlayer.class);
 
-	public AIPlayer(int i) {
-		super(i);
+	public AIPlayer(DefaultView view, int i) {
+		super(view, i);
 	}
 
-	public AIPlayer(int i, Logger logger) {
-		this(i);
+	public AIPlayer(DefaultView view, int i, Logger logger) {
+		this(view, i);
 		this.logger = logger;
 	}
 
@@ -73,7 +74,7 @@ public class AIPlayer extends DefaultPlayer implements Player {
 
 		List<Card> nextCards = getNextCards(space);
 		if (nextCards == null || nextCards.size() == 0) {
-			view.putResourceDescription("info.nohand");
+			view.putDescription("info.nohand");
 		} else {
 			for (Card next : nextCards) {
 				if (hand.has(next)) {

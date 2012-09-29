@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Rank;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.util.InputOutputUtil;
 
@@ -23,10 +26,11 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	ResourceBundle resources;
 
-	public HumanPlayer(int i) {
-		super(i);
-		resources = ResourceBundle
-				.getBundle("org.tigergrab.game.sevens.resources");
+	public HumanPlayer(DefaultView view, int i) {
+		super(view, i);
+
+		LangConfigurationAction action = new LangConfigurationAction(PKG.SEVENS);
+		resources = action.getResourceBundle();
 	}
 
 	@Override
@@ -35,7 +39,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 	}
 
 	protected void viewUsesForLead() {
-		view.putResourceInteraction("info.leadcard");
+		view.putInteraction("info.leadcard");
 	}
 
 	protected List<Card> getAllCard() {
@@ -83,19 +87,18 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 				// 手札に存在するかを確認する
 				if (this.hasCard(card) == false) {
-					view.putResourceAlert("alert.inhand");
+					view.putAlert("alert.inhand");
 					continue;
 				}
 
 				// 場に出せるかを確認する
 				if (space.canLead(card) == false) {
-					view.putResourceAlert("alert.validcard");
+					view.putAlert("alert.validcard");
 					continue;
 				}
 
 				// 最終確認
-				view.putResourceInteraction("q.leadconfirm",
-						card.toShortString());
+				view.putInteraction("q.leadconfirm", card.toShortString());
 				if (this.confirm()) {
 					// カードを出せる
 					final Card leadedCard = card;
@@ -131,9 +134,9 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	@Override
 	public void showHand() {
-		view.putResourceDescription("hand", getScreenName());
+		view.putDescription("hand", getScreenName());
 		if (hand.show() == false) {
-			view.putResourceDescription("nohand");
+			view.putDescription("nohand");
 		}
 	}
 }

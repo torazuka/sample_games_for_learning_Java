@@ -10,8 +10,6 @@ import org.tigergrab.game.playingcards.impl.Suite;
  */
 public interface Space {
 
-	public void viewCurrentSpace();
-
 	public void putCard(Card card);
 
 	public Card searchCard(Card card);

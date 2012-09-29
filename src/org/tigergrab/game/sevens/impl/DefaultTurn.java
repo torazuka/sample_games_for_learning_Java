@@ -13,11 +13,8 @@ public class DefaultTurn implements Turn {
 
 	Player currentPlayer;
 	Space currentSpace;
-	View view;
 
 	public DefaultTurn(Space space, Player player) {
-		view = new View();
-
 		currentPlayer = player;
 		currentSpace = space;
 	}
@@ -26,7 +23,6 @@ public class DefaultTurn implements Turn {
 	public void execute(Space space, Status status) {
 		TurnAction action = currentPlayer.decide(space, status);
 		action.execute();
-		view.putSpace(space);
 	}
 
 	@Override

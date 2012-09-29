@@ -5,16 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.Test;
-import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.sevens.player.impl.AIPlayer;
 import org.tigergrab.game.sevens.player.impl.HumanPlayer;
 
 public class GameStatusTest {
 
+	GameStatus status;
+
 	@Test
 	public void testCreatePlayer() throws Exception {
-		Status status = new GameStatus();
+		status = new GameStatus(new DefaultView());
 		status.createPlayers(3);
 
 		assertEquals("生成されたユーザリストの要素は3個。", 3, status.getPlayersNum());
@@ -30,7 +31,7 @@ public class GameStatusTest {
 
 	@Test
 	public void testInitHands() throws Exception {
-		Status status = new GameStatus();
+		status = new GameStatus(new DefaultView());
 		status.createPlayers(2);
 
 		status.initHands();
@@ -44,10 +45,10 @@ public class GameStatusTest {
 
 	@Test
 	public void testIsGameOver() throws Exception {
-		Status status = new GameStatus();
+		status = new GameStatus(new DefaultView());
 
-		Player player0 = new HumanPlayer(0);
-		Player player1 = new AIPlayer(1);
+		Player player0 = new HumanPlayer(new DefaultView(), 0);
+		Player player1 = new AIPlayer(new DefaultView(), 1);
 		status.setLivePlayer(player0);
 		status.setLivePlayer(player1);
 		assertEquals("生存プレイヤーリストに2人いるとき、ゲームはまだ終了しない。", false,
@@ -59,11 +60,11 @@ public class GameStatusTest {
 
 	@Test
 	public void testGetPlayerRank() throws Exception {
-		Status status = new GameStatus();
+		status = new GameStatus(new DefaultView());
 		status.createPlayers(3);
 
-		status.moveToLoser(new HumanPlayer(0));
-		status.moveToLoser(new AIPlayer(2));
+		status.moveToLoser(new HumanPlayer(new DefaultView(), 0));
+		status.moveToLoser(new AIPlayer(new DefaultView(), 2));
 
 		List<Player> playerRank = status.getPlayersRank();
 		assertEquals(3, playerRank.size());
@@ -74,7 +75,7 @@ public class GameStatusTest {
 
 	@Test
 	public void testGetNextPlayer() throws Exception {
-		Status status = new GameStatus();
+		status = new GameStatus(new DefaultView());
 		status.createPlayers(3);
 		List<Player> livePlayers = status.getPlayers();
 

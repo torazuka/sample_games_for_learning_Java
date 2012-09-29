@@ -27,13 +27,14 @@ public class GameStatus implements Status {
 	/** ターンの記録 */
 	List<Turn> gameRecord;
 
-	View view;
+	DefaultView view;
 
-	public GameStatus() {
-		playerManager = new PlayerManager();
+	public GameStatus(DefaultView view) {
+		this.view = view;
+
+		playerManager = new PlayerManager(this.view);
 		turnCounter = 0;
 		gameRecord = new ArrayList<>();
-		view = new View();
 	}
 
 	/**
@@ -134,10 +135,10 @@ public class GameStatus implements Status {
 
 	@Override
 	public void viewGameResult() {
-		view.putResourceDescription("game.result");
+		view.putDescription("game.result");
 		List<Player> playerList = getPlayersRank();
 		for (int i = 0; i < playerList.size(); i++) {
-			view.putResourceDescription("game.rank", String.valueOf(i + 1),
+			view.putDescription("game.rank", String.valueOf(i + 1),
 					playerList.get(i).getScreenName());
 		}
 	}

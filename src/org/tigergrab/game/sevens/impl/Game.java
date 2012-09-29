@@ -28,15 +28,15 @@ public class Game {
 	Space space;
 	Status status;
 
-	View view;
+	DefaultView view;
 
 	protected List<GameEventListener> listeners;
 	protected Map<GameEventKinds, GameEventDispatcher> dispatchers;
 
 	public Game() {
+		view = new DefaultView();
 		space = new DefaultSpace();
-		status = new GameStatus();
-		view = new View();
+		status = new GameStatus(view);
 
 		listeners = new ArrayList<>();
 		dispatchers = new HashMap<>();
@@ -53,7 +53,7 @@ public class Game {
 
 	public boolean execute() {
 		space = new DefaultSpace();
-		status = new GameStatus();
+		status = new GameStatus(view);
 		initGameStatus();
 		Player currentPlayer = getFirstPlayer();
 		leadSevens();
@@ -61,7 +61,7 @@ public class Game {
 		int turnCounter = 0;
 		for (; status.isGameOver() == false;) {
 			++turnCounter;
-			view.putResourceDescription("turn.begin",
+			view.putDescription("turn.begin",
 					String.valueOf(turnCounter), currentPlayer.getScreenName());
 
 			executeTurn(currentPlayer.createTurn(space));
@@ -73,7 +73,7 @@ public class Game {
 	protected void initGameStatus() {
 		status.createPlayers(getNumPlayers());
 		status.initHands();
-		view.putResourceDescription("init.leads");
+		view.putDescription("init.leads");
 
 		if (logger.isDebugEnabled()) {
 			List<Player> livePlayers = status.getPlayers();
@@ -94,6 +94,7 @@ public class Game {
 		dispatch(new DefaultGameEvent(GameEventKinds.beginTurn, this, turn));
 
 		turn.execute(space, status);
+		view.putSpace(space);
 		status.registerRecord(turn);
 
 		dispatch(new DefaultGameEvent(GameEventKinds.endTurn, this, turn));
@@ -102,13 +103,13 @@ public class Game {
 	protected boolean endGame() {
 		status.viewGameResult();
 
-		view.putResourceInteraction("q.replay");
+		view.putInteraction("q.replay");
 		String doReplay = read();
 		if (doReplay.equals("y")) {
 			status.playback();
 		}
 
-		view.putResourceInteraction("q.continue");
+		view.putInteraction("q.continue");
 		String doContinue = read();
 		if (doContinue.equals("y")) {
 			return true;
@@ -125,7 +126,7 @@ public class Game {
 		for (Player player : livePlayers) {
 			result = (player.hasCard(new Card(Suite.Dia, 7))) ? player : result;
 		}
-		view.putResourceDescription("info.firstplayer", result.getScreenName());
+		view.putDescription("info.firstplayer", result.getScreenName());
 		return result;
 	}
 
@@ -133,7 +134,7 @@ public class Game {
 	 * 各プレイヤーの手札を調べ、ランク7のカードを場に出す．ゲームの最初に一度だけ行う．
 	 */
 	protected void leadSevens() {
-		view.putResourceDescription("info.makedeck");
+		view.putDescription("info.makedeck");
 		List<Player> livePlayers = status.getPlayers();
 		for (Player player : livePlayers) {
 			lead(player, new Card(Suite.Spade, 7));
@@ -159,7 +160,7 @@ public class Game {
 	 */
 	protected int getNumPlayers() {
 		int result = 0;
-		view.putResourceInteraction("q.numplayers");
+		view.putInteraction("q.numplayers");
 		for (;;) {
 			String inputNum = read();
 
@@ -172,20 +173,20 @@ public class Game {
 			try {
 				initNumPlayer = Integer.valueOf(inputNum);
 			} catch (NumberFormatException e) {
-				view.putResourceInteraction("q.numplayers");
+				view.putInteraction("q.numplayers");
 				logger.warn("warn: {}", inputNum);
 				continue;
 			}
 
 			if (initNumPlayer < 2 || 10 < initNumPlayer) {
-				view.putResourceInteraction("q.numplayers");
+				view.putInteraction("q.numplayers");
 				continue;
 			} else {
 				result = initNumPlayer;
 				break;
 			}
 		}
-		view.putResourceDescription("info.numplayers", String.valueOf(result));
+		view.putDescription("info.numplayers", String.valueOf(result));
 		return result;
 	}
 
