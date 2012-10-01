@@ -1,12 +1,8 @@
 package org.tigergrab.game.conf.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -80,27 +76,5 @@ public class DefaultManager implements ConfigurationManager {
 			}
 		}
 		return langAction.getResourceBundle();
-	}
-
-	/**
-	 * ファイルシステムからプロパティファイルを読み込む．
-	 * 
-	 * @param properties
-	 *            読込んだプロパティを受け取るPropertiesオブジェクト
-	 * @param fileName
-	 *            ファイル名
-	 * @return Propertiesオブジェクト
-	 */
-	protected Properties readProperties(Properties properties, String fileName) {
-		try {
-			properties.load(new FileInputStream(fileName));
-		} catch (FileNotFoundException e) {
-			properties = null;
-			logger.info("設定ファイルがありません。");
-		} catch (IOException e) {
-			properties = null;
-			logger.info("設定ファイルの読み込みエラーです。");
-		}
-		return properties;
 	}
 }

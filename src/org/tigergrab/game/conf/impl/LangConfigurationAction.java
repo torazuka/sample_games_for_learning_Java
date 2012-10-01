@@ -23,6 +23,9 @@ public class LangConfigurationAction implements ConfigurationAction {
 	protected ResourceBundle langResources;
 	protected PKG pkg;
 
+	public LangConfigurationAction() {
+	}
+
 	public LangConfigurationAction(PKG pkg) {
 		this.pkg = pkg;
 		setConfigurationByFile();
@@ -193,6 +196,9 @@ public class LangConfigurationAction implements ConfigurationAction {
 	}
 
 	protected boolean isValidConfiguration(String lang) {
+		if (lang == null || lang.length() == 0) {
+			return false;
+		}
 		if (lang.equals("ja") || lang.equals("en")) {
 			return true;
 		}
