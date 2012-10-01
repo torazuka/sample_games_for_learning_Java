@@ -1,7 +1,5 @@
 package org.tigergrab.game.sevens.player.impl;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +8,7 @@ import java.util.ResourceBundle;
 import org.tigergrab.game.conf.impl.LangConfigurationAction;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
-import org.tigergrab.game.playingcards.impl.Rank;
-import org.tigergrab.game.playingcards.impl.Suite;
+import org.tigergrab.game.playingcards.impl.CardFactory;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.TurnAction;
@@ -42,18 +39,6 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		view.putInteraction("info.leadcard");
 	}
 
-	protected List<Card> getAllCard() {
-		List<Card> result = new ArrayList<>();
-		EnumSet<Suite> allSuite = EnumSet.allOf(Suite.class);
-		for (Suite s : allSuite) {
-			for (int i = Rank.MIN; i <= Rank.MAX; i++) {
-				Card c = new Card(s, i);
-				result.add(c);
-			}
-		}
-		return result;
-	}
-
 	protected String read() {
 		return InputOutputUtil.read();
 	}
@@ -64,7 +49,8 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		viewUsesForLead();
 
 		Map<String, Card> map = new HashMap<>();
-		List<Card> allCard = getAllCard();
+		CardFactory factory = new CardFactory();
+		List<Card> allCard = factory.getAllCard();
 		for (Card c : allCard) {
 			map.put(c.toMiniString(), c);
 		}
