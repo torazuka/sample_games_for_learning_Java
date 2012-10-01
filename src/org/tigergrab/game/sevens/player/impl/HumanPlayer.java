@@ -12,7 +12,6 @@ import org.tigergrab.game.playingcards.impl.CardFactory;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.TurnAction;
-import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.util.InputOutputUtil;
 
@@ -23,8 +22,8 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	ResourceBundle resources;
 
-	public HumanPlayer(DefaultView view, int i) {
-		super(view, i);
+	public HumanPlayer(int i) {
+		super(i);
 
 		LangConfigurationAction action = new LangConfigurationAction(PKG.SEVENS);
 		resources = action.getResourceBundle();

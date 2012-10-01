@@ -10,8 +10,8 @@ import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
 import org.tigergrab.game.sevens.TurnAction;
 import org.tigergrab.game.sevens.impl.DefaultTurn;
-import org.tigergrab.game.sevens.impl.Hand;
 import org.tigergrab.game.sevens.impl.DefaultView;
+import org.tigergrab.game.sevens.impl.Hand;
 import org.tigergrab.game.sevens.player.Player;
 
 /**
@@ -29,16 +29,11 @@ public abstract class DefaultPlayer implements Player {
 
 	DefaultView view;
 
-	public DefaultPlayer(DefaultView view, int i) {
+	public DefaultPlayer(int i) {
 		id = i;
 		numPass = 0;
-		this.view = view;
+		this.view = new DefaultView();
 		hand = new Hand();
-	}
-
-	public DefaultPlayer(DefaultView view, int i, Logger logger) {
-		this(view, i);
-		this.logger = logger;
 	}
 
 	@Override

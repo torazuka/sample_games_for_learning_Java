@@ -27,7 +27,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetLeadableCards() throws Exception {
-		AIPlayer player = new AIPlayer(new DefaultView(), 1);
+		AIPlayer player = new AIPlayer(1);
 
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Spade, 4));
@@ -45,7 +45,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetLeadableCardsNo() throws Exception {
-		AIPlayer player = new AIPlayer(new DefaultView(), 1);
+		AIPlayer player = new AIPlayer(1);
 
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Spade, 3));
@@ -63,7 +63,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetNextCards() throws Exception {
-		AIPlayer player = new AIPlayer(new DefaultView(), 1);
+		AIPlayer player = new AIPlayer(1);
 
 		Space space0 = new DefaultSpace();
 		space0.putCard(new Card(Suite.Spade, 7));
@@ -92,7 +92,7 @@ public class AIPlayerTest {
 		space.putCard(new Card(Suite.Dia, 7));
 		space.putCard(new Card(Suite.Club, 7));
 
-		AIPlayer ai = new AIPlayer(new DefaultView(), 1);
+		AIPlayer ai = new AIPlayer(1);
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
@@ -125,7 +125,7 @@ public class AIPlayerTest {
 		Space space = new DefaultSpace();
 		space.putCard(new Card(Suite.Spade, 7));
 
-		AIPlayer ai = new AIPlayer(new DefaultView(), 1);
+		AIPlayer ai = new AIPlayer(1);
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		assertEquals("場にSpadeの7だけ出ているときのSuiteLimitは1つだけ。", 1, suiteLimit.size());
@@ -135,7 +135,7 @@ public class AIPlayerTest {
 	public void testGetSuiteLimitNone() throws Exception {
 		Space space = new DefaultSpace();
 
-		AIPlayer ai = new AIPlayer(new DefaultView(), 1);
+		AIPlayer ai = new AIPlayer(1);
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		assertEquals("場にカードが出ていないときのSuiteLimitはなし。（起こりえない状況）", 0,
@@ -158,7 +158,7 @@ public class AIPlayerTest {
 
 		space.putCard(new Card(Suite.Club, 7));
 
-		AIPlayer ai = new AIPlayer(new DefaultView(), 1);
+		AIPlayer ai = new AIPlayer(1);
 
 		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
@@ -188,7 +188,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetScreenName() throws Exception {
-		AIPlayer player = new AIPlayer(new DefaultView(), 1);
+		AIPlayer player = new AIPlayer(1);
 		assertEquals("PlayerID1のAIPlayerの表示名は、「ID 1 」", "ID 1 ",
 				player.getScreenName());
 	}
@@ -197,11 +197,11 @@ public class AIPlayerTest {
 	public void testShowHand() throws Exception {
 
 		List<Player> players = new ArrayList<Player>();
-		HumanPlayer p0 = new HumanPlayer(new DefaultView(), 0);
+		HumanPlayer p0 = new HumanPlayer(0);
 		players.add(p0);
 
 		Logger logger1 = mock(Logger.class);
-		AIPlayer p1 = new AIPlayer(new DefaultView(), 1, logger1);
+		AIPlayer p1 = new AIPlayer(1, logger1);
 		players.add(p1);
 		setDataForPutHand(players);
 

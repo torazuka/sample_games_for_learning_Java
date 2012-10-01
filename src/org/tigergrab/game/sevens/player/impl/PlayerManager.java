@@ -36,11 +36,11 @@ public class PlayerManager {
 	 * Playerを作る． 1人目はユーザであるHumanPlayer、2人目以降はAIPlayer.
 	 */
 	public void createPlayers(int num) {
-		Player user = new HumanPlayer(view, 0);
+		Player user = new HumanPlayer(0);
 		players.add(user);
 
 		for (int i = 1; i < num; i++) {
-			Player p = new AIPlayer(view, i);
+			Player p = new AIPlayer(i);
 			players.add(p);
 		}
 	}

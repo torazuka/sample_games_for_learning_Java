@@ -31,7 +31,7 @@ public class HumanPlayerTest {
 
 	@Test
 	public void testConfirm() throws Exception {
-		HumanPlayer player0 = new HumanPlayer(view, 0) {
+		HumanPlayer player0 = new HumanPlayer(0) {
 			@Override
 			protected String read() {
 				return "n";
@@ -39,7 +39,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("「n」が入力されたとき、false.", false, player0.confirm());
 
-		HumanPlayer player1 = new HumanPlayer(view, 0) {
+		HumanPlayer player1 = new HumanPlayer(0) {
 			@Override
 			protected String read() {
 				return "";
@@ -47,7 +47,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("何も入力されなかったとき、true.", true, player1.confirm());
 
-		HumanPlayer player2 = new HumanPlayer(view, 0) {
+		HumanPlayer player2 = new HumanPlayer(0) {
 			@Override
 			protected String read() {
 				return "hoge";
@@ -55,7 +55,7 @@ public class HumanPlayerTest {
 		};
 		assertEquals("「n」以外の文字列が入力されたとき、true.", true, player2.confirm());
 
-		HumanPlayer player3 = new HumanPlayer(view, 0) {
+		HumanPlayer player3 = new HumanPlayer(0) {
 			@Override
 			protected String read() {
 				return " n ";
@@ -66,14 +66,14 @@ public class HumanPlayerTest {
 
 	@Test
 	public void testGetScreenName() throws Exception {
-		HumanPlayer player = new HumanPlayer(view, 0);
+		HumanPlayer player = new HumanPlayer(0);
 		assertEquals("HumanPlayerの表示名は「あなた」", resource.getString("you"),
 				player.getScreenName());
 	}
 
 	@Test
 	public void testShowHand() throws Exception {
-		HumanPlayer player = new HumanPlayer(view, 0);
+		HumanPlayer player = new HumanPlayer(0);
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Heart, 7));
 		player.setHand(cardList);
@@ -83,7 +83,7 @@ public class HumanPlayerTest {
 		player.showHand();
 		verify(logger).info("> {}の手札: ", "あなた");
 
-		HumanPlayer player1 = new HumanPlayer(view, 0);
+		HumanPlayer player1 = new HumanPlayer(0);
 		List<Card> cardList1 = new ArrayList<>();
 		player1.setHand(cardList1);
 

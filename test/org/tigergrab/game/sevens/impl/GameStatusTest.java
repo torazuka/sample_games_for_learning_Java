@@ -47,8 +47,8 @@ public class GameStatusTest {
 	public void testIsGameOver() throws Exception {
 		status = new GameStatus(new DefaultView());
 
-		Player player0 = new HumanPlayer(new DefaultView(), 0);
-		Player player1 = new AIPlayer(new DefaultView(), 1);
+		Player player0 = new HumanPlayer(0);
+		Player player1 = new AIPlayer(1);
 		status.setLivePlayer(player0);
 		status.setLivePlayer(player1);
 		assertEquals("生存プレイヤーリストに2人いるとき、ゲームはまだ終了しない。", false,
@@ -63,8 +63,8 @@ public class GameStatusTest {
 		status = new GameStatus(new DefaultView());
 		status.createPlayers(3);
 
-		status.moveToLoser(new HumanPlayer(new DefaultView(), 0));
-		status.moveToLoser(new AIPlayer(new DefaultView(), 2));
+		status.moveToLoser(new HumanPlayer(0));
+		status.moveToLoser(new AIPlayer(2));
 
 		List<Player> playerRank = status.getPlayersRank();
 		assertEquals(3, playerRank.size());

@@ -38,13 +38,13 @@ public class GameTest {
 		Game game = new Game();
 		game.status.createPlayers(2);
 
-		Player player0 = new AIPlayer(new DefaultView(), 0);
+		Player player0 = new AIPlayer(0);
 		List<Card> list0 = new ArrayList<>();
 		list0.add(new Card(Suite.Dia, 7));
 		player0.setHand(list0);
 		game.status.setLivePlayer(player0);
 
-		Player player1 = new AIPlayer(new DefaultView(), 1);
+		Player player1 = new AIPlayer(1);
 		List<Card> list1 = new ArrayList<>();
 		list1.add(new Card(Suite.Spade, 7));
 		player1.setHand(list1);
