@@ -43,7 +43,7 @@ public class Main {
 			if (isValid(selected) == false) {
 				continue;
 			}
-			continueFlag = menuManager(selected);
+			continueFlag = menuController(selected);
 		}
 	}
 
@@ -68,7 +68,7 @@ public class Main {
 	 * 
 	 * @param input
 	 */
-	protected boolean menuManager(String input) {
+	protected boolean menuController(String input) {
 		if (input.equals("1")) {
 			sevens();
 			return true;
