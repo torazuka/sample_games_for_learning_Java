@@ -36,12 +36,10 @@ public class DefaultState implements PlayerState {
 		return players;
 	}
 
-	@Override
 	public boolean remove(Player player) {
 		return players.remove(player);
 	}
 
-	@Override
 	public boolean isGameOver() {
 		return 1 < players.size() ? false : true;
 	}

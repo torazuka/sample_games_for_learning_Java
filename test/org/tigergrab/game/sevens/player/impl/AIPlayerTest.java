@@ -14,20 +14,36 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.playingcards.impl.SuiteLimit;
 import org.tigergrab.game.sevens.Space;
+import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.impl.DefaultSpace;
 import org.tigergrab.game.sevens.impl.DefaultView;
+import org.tigergrab.game.sevens.impl.GameStatus;
 import org.tigergrab.game.sevens.player.Player;
 
 public class AIPlayerTest {
+	AIPlayer player;
+
 	@Test
 	public void testDecide() throws Exception {
+		player = new AIPlayerMockForDecide(1);
 
-		// TODO target戻り値のインスタンスをtarget内で骨格実装している場合、どうやって評価するのか？
+		Space space = new DefaultSpace();
+		Status status = new GameStatus(new DefaultView());
+		player.decide(space, status);
+	}
+
+	@Test
+	public void testDecidePass() throws Exception {
+		player = new AIPlayerMockForDecidePass(1);
+
+		Space space = new DefaultSpace();
+		Status status = new GameStatus(new DefaultView());
+		player.decide(space, status);
 	}
 
 	@Test
 	public void testGetLeadableCards() throws Exception {
-		AIPlayer player = new AIPlayer(1);
+		player = new AIPlayer(1);
 
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Spade, 4));
@@ -45,7 +61,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetLeadableCardsNo() throws Exception {
-		AIPlayer player = new AIPlayer(1);
+		player = new AIPlayer(1);
 
 		List<Card> cardList = new ArrayList<>();
 		cardList.add(new Card(Suite.Spade, 3));
@@ -63,7 +79,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetNextCards() throws Exception {
-		AIPlayer player = new AIPlayer(1);
+		player = new AIPlayer(1);
 
 		Space space0 = new DefaultSpace();
 		space0.putCard(new Card(Suite.Spade, 7));
@@ -92,9 +108,9 @@ public class AIPlayerTest {
 		space.putCard(new Card(Suite.Dia, 7));
 		space.putCard(new Card(Suite.Club, 7));
 
-		AIPlayer ai = new AIPlayer(1);
+		player = new AIPlayer(1);
 
-		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
+		Map<Suite, SuiteLimit> suiteLimit = player.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
 		assertEquals("場にランク7の札しかない状態では、Spadeの最大は7。", new Card(Suite.Spade, 7),
 				spadeLimit.getMax());
@@ -125,9 +141,9 @@ public class AIPlayerTest {
 		Space space = new DefaultSpace();
 		space.putCard(new Card(Suite.Spade, 7));
 
-		AIPlayer ai = new AIPlayer(1);
+		player = new AIPlayer(1);
 
-		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
+		Map<Suite, SuiteLimit> suiteLimit = player.getSuiteLimit(space);
 		assertEquals("場にSpadeの7だけ出ているときのSuiteLimitは1つだけ。", 1, suiteLimit.size());
 	}
 
@@ -135,9 +151,9 @@ public class AIPlayerTest {
 	public void testGetSuiteLimitNone() throws Exception {
 		Space space = new DefaultSpace();
 
-		AIPlayer ai = new AIPlayer(1);
+		player = new AIPlayer(1);
 
-		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
+		Map<Suite, SuiteLimit> suiteLimit = player.getSuiteLimit(space);
 		assertEquals("場にカードが出ていないときのSuiteLimitはなし。（起こりえない状況）", 0,
 				suiteLimit.size());
 	}
@@ -158,9 +174,9 @@ public class AIPlayerTest {
 
 		space.putCard(new Card(Suite.Club, 7));
 
-		AIPlayer ai = new AIPlayer(1);
+		player = new AIPlayer(1);
 
-		Map<Suite, SuiteLimit> suiteLimit = ai.getSuiteLimit(space);
+		Map<Suite, SuiteLimit> suiteLimit = player.getSuiteLimit(space);
 		SuiteLimit spadeLimit = suiteLimit.get(Suite.Spade);
 		assertEquals("場にSpadeの7～8の札が出ているとき、Spadeの最大は8。", new Card(Suite.Spade,
 				8), spadeLimit.getMax());
@@ -188,7 +204,7 @@ public class AIPlayerTest {
 
 	@Test
 	public void testGetScreenName() throws Exception {
-		AIPlayer player = new AIPlayer(1);
+		player = new AIPlayer(1);
 		assertEquals("PlayerID1のAIPlayerの表示名は、「ID 1 」", "ID 1 ",
 				player.getScreenName());
 	}

@@ -6,58 +6,30 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.tigergrab.game.sevens.player.Player;
-import org.tigergrab.game.sevens.player.PlayerState;
 
 /**
  * 脱落したプレイヤーを管理します．
  * 
  */
-public class LoserState implements PlayerState {
-
-	protected List<Player> losers;
+public class LoserState extends DefaultState {
 
 	public LoserState() {
-		losers = new ArrayList<>();
-	}
-
-	@Override
-	public void add(Player player) {
-		losers.add(player);
+		players = new ArrayList<>();
 	}
 
 	@Override
 	public List<Player> getRanking() {
-		if (losers != null && 0 < losers.size()) {
-			Collections.reverse(losers);
+		if (players != null && 0 < players.size()) {
+			Collections.reverse(players);
 			List<Player> result = new ArrayList<>();
-			ListIterator<Player> iterator = losers.listIterator();
+			ListIterator<Player> iterator = players.listIterator();
 			for (; iterator.hasNext();) {
 				result.add(iterator.next());
 			}
-			Collections.reverse(losers);
+			Collections.reverse(players);
 			return result;
 		}
 		return null;
-	}
-
-	@Override
-	public List<Player> getPlayers() {
-		return losers;
-	}
-
-	@Override
-	public boolean remove(Player player) {
-		return losers.remove(player);
-	}
-
-	@Override
-	public boolean isGameOver() {
-		return false;
-	}
-
-	@Override
-	public int getNum() {
-		return losers.size();
 	}
 
 }

@@ -14,7 +14,7 @@ import org.tigergrab.game.sevens.player.PlayerState;
 public class PlayerManager {
 
 	/** 生存プレイヤー */
-	protected PlayerState players;
+	protected DefaultState players;
 
 	/** 脱落プレイヤー */
 	protected PlayerState losers;
