@@ -82,7 +82,7 @@ public class LangConfigurationAction implements ConfigurationAction {
 	protected boolean readConfigurationFromInput() {
 		logger.info("> " + langResources.getString("q.lang"));
 		String input = read();
-		if (input == null || 0 == input.length()) {
+		if (0 == input.length()) {
 			return false;
 		}
 		String lang = convertToLang(input);

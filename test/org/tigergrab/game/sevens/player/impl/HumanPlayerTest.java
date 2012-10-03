@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.tigergrab.game.conf.impl.LangConfigurationAction;
@@ -91,6 +92,25 @@ public class HumanPlayerTest {
 		player1.view = new DefaultView(logger1);
 		player1.showHand();
 		verify(logger).info("> {}の手札: ", "あなた");
+	}
+
+	@Ignore("途中")
+	@Test
+	public void testDecide() throws Exception {
+		// HumanPlayer player = new HumanPlayer(0);
+		// Status status = new GameStatus(new DefaultView());
+		//
+		// String input = null;
+		// assertNull("渡す文字列がnullのとき、戻り値もnull",
+		// player.createPassAction(status, input));
+		//
+		// input = "foo";
+		// assertNull("渡す文字列がpass以外のとき、戻り値はnull",
+		// player.createPassAction(status, input));
+		//
+		// input = "pass";
+		// assertNotNull("渡す文字列がpassのとき、戻り値はnullでない。",
+		// player.createPassAction(status, input));
 	}
 
 	@Test

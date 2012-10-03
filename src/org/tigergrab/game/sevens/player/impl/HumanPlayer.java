@@ -34,84 +34,97 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		return resources.getString("you");
 	}
 
-	protected void viewUsesForLead() {
-		view.putInteraction("info.leadcard");
-	}
-
 	protected String read() {
 		return InputOutputUtil.read();
+	}
+
+	protected Map<String, Card> getCardMapForSearch() {
+		Map<String, Card> result = new HashMap<>();
+		CardFactory factory = new CardFactory();
+		List<Card> allCard = factory.getAllCard();
+		for (Card c : allCard) {
+			result.put(c.toMiniString(), c);
+		}
+		return result;
+	}
+
+	protected TurnAction createPassAction(final Status status) {
+		return new TurnAction() {
+			@Override
+			public void execute() {
+				pass(status);
+			}
+		};
+	}
+
+	/**
+	 * カードが手札に存在するかを返す．存在しなければアラートを出す．
+	 */
+	@Override
+	public boolean hasCard(Card target) {
+		if (super.hasCard(target)) {
+			return true;
+		}
+		view.putAlert("alert.inhand");
+		return false;
+	}
+
+	@Override
+	public boolean checkSpace(Space space, Card card) {
+		if (super.checkSpace(space, card)) {
+			return true;
+		}
+		view.putAlert("alert.validcard");
+		return false;
 	}
 
 	@Override
 	public TurnAction decide(final Space space, final Status status) {
 
-		viewUsesForLead();
-
-		Map<String, Card> map = new HashMap<>();
-		CardFactory factory = new CardFactory();
-		List<Card> allCard = factory.getAllCard();
-		for (Card c : allCard) {
-			map.put(c.toMiniString(), c);
-		}
-
+		Map<String, Card> map = getCardMapForSearch();
 		for (;;) {
-			String str = read();
+			view.putInteraction("info.leadcard");
+			String input = read();
 
-			// passの場合
-			if (str != null && str.equals("pass")) {
-				return new TurnAction() {
-					@Override
-					public void execute() {
-						pass(status);
-					}
-				};
+			if ("pass".equals(input)) {
+				return createPassAction(status);
 			}
 
-			Card card = map.get(str);
-			if (card != null) {
-
-				// 手札に存在するかを確認する
-				if (this.hasCard(card) == false) {
-					view.putAlert("alert.inhand");
-					continue;
-				}
-
-				// 場に出せるかを確認する
-				if (space.canLead(card) == false) {
-					view.putAlert("alert.validcard");
-					continue;
-				}
-
-				// 最終確認
-				view.putInteraction("q.leadconfirm", card.toShortString());
-				if (this.confirm()) {
-					// カードを出せる
-					final Card leadedCard = card;
-					return new TurnAction() {
-						@Override
-						public void execute() {
-							leadCard(space, status, leadedCard);
-						}
-					};
-				} else {
-					// 確認で「n」を入力した場合
-					viewUsesForLead();
-					continue;
-				}
-			} else {
-				viewUsesForLead();
-				continue;
+			Card card = map.get(input);
+			if (hasCard(card) && checkSpace(space, card) && confirm()) {
+				return createLeadAction(space, status, card);
 			}
+			continue;
 		}
-
 	}
 
+	/**
+	 * カードを引くアクションを作成して返す．
+	 * 
+	 * @return
+	 */
+	protected TurnAction createLeadAction(final Space space,
+			final Status status, final Card card) {
+		return new TurnAction() {
+			@Override
+			public void execute() {
+				leadCard(space, status, card);
+			}
+		};
+	}
+
+	/**
+	 * カードを出す最終確認を行う．
+	 * 
+	 * @return 出せるときはtrueを返す
+	 */
 	protected boolean confirm() {
 		boolean result = false;
-		String confirm = read();
+		view.putInteraction("q.leadconfirm");
 
+		String confirm = read();
 		// n（前後の空白がある場合も含む）以外のときは、一律true
-		if ((confirm != null && confirm.trim().equals("n")) == false) {
+		if ((confirm.trim().equals("n")) == false) {
 			result = true;
 		}
 		return result;

@@ -61,8 +61,8 @@ public class Game {
 		int turnCounter = 0;
 		for (; status.isGameOver() == false;) {
 			++turnCounter;
-			view.putDescription("turn.begin",
-					String.valueOf(turnCounter), currentPlayer.getScreenName());
+			view.putDescription("turn.begin", String.valueOf(turnCounter),
+					currentPlayer.getScreenName());
 
 			executeTurn(currentPlayer.createTurn(space));
 			currentPlayer = status.getNextPlayer(currentPlayer);
@@ -164,7 +164,7 @@ public class Game {
 		for (;;) {
 			String inputNum = read();
 
-			if (inputNum == null || inputNum.equals("")) {
+			if (inputNum.equals("")) {
 				result = getDefaultPlayerNum();
 				break;
 			}

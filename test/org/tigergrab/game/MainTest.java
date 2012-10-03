@@ -39,7 +39,6 @@ public class MainTest {
 	@Test
 	public void testIsValid() throws Exception {
 		main = new Main();
-		assertEquals("nullのとき、false。", false, main.isValid(null));
 		assertEquals("空文字のとき、false。", false, main.isValid(""));
 		assertEquals("1のとき、true。", true, main.isValid("1"));
 		assertEquals("3のとき、false。", false, main.isValid("3"));

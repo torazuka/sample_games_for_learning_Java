@@ -17,7 +17,7 @@ public class GameTest {
 	public void testGetNumPlayer() throws Exception {
 		Game game0 = new Game() {
 			public String read() {
-				return null;
+				return "";
 			}
 		};
 		int numPlayers = game0.getNumPlayers();

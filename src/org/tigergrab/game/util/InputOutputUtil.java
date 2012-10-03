@@ -32,6 +32,10 @@ public class InputOutputUtil {
 		} catch (IOException e) {
 			logger.error("入力を読み込めませんでした。");
 		}
+
+		if (result == null) {
+			result = "";
+		}
 		return result;
 	}
 

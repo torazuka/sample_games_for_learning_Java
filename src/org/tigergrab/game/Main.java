@@ -54,7 +54,7 @@ public class Main {
 	 * @return 妥当ならtrue
 	 */
 	protected boolean isValid(String input) {
-		if (input == null || input.length() == 0) {
+		if (input.length() == 0) {
 			return false;
 		}
 		if (input.equals("1") || input.endsWith("2") || input.equals("0")) {

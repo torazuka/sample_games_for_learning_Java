@@ -120,4 +120,9 @@ public abstract class DefaultPlayer implements Player {
 		}
 		return result;
 	}
+
+	@Override
+	public boolean checkSpace(Space space, Card card) {
+		return space.canLead(card);
+	}
 }

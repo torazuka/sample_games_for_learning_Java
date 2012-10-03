@@ -38,4 +38,11 @@ public interface Player {
 	public void showHand();
 
 	public int getRestHand();
+
+	/**
+	 * カードを場に出せるかを返す．出せないときはアラートを出す．
+	 * 
+	 * @return 場に出せるならtrue
+	 */
+	public boolean checkSpace(Space space, Card card);
 }
