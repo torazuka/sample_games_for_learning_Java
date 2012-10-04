@@ -146,9 +146,7 @@ public class Game {
 	}
 
 	protected void lead(Player player, Card card) {
-		if (player.hasCard(card)) {
-			player.leadCard(space, card);
-		}
+		player.leadCard(space, card);
 	}
 
 	protected String read() {

@@ -35,7 +35,7 @@ public class Hand {
 	}
 
 	public boolean lead(Card card) {
-		if (hand != null && hand.contains(card)) {
+		if (has(card)) {
 			hand.remove(card);
 			return true;
 		}
