@@ -1,7 +1,6 @@
-package org.tigergrab.game.sevens.impl;
+package org.tigergrab.game.sevens;
 
 import org.tigergrab.game.conf.ConfigurationManager;
-import org.tigergrab.game.sevens.Space;
 
 public interface View {
 	public ConfigurationManager createConf();

@@ -18,6 +18,7 @@ import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
+import org.tigergrab.game.sevens.View;
 import org.tigergrab.game.util.InputOutputUtil;
 
 public class DefaultViewTest {

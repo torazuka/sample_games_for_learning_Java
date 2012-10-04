@@ -14,8 +14,10 @@ import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.playingcards.impl.SuiteLimit;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
-import org.tigergrab.game.sevens.TurnAction;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.turnaction.TurnAction;
+import org.tigergrab.game.sevens.turnaction.impl.LeadAction;
+import org.tigergrab.game.sevens.turnaction.impl.PassAction;
 
 /**
  * コンピュータが扮するユーザ．自動でゲームをプレイする．
@@ -43,23 +45,19 @@ public class AIPlayer extends DefaultPlayer implements Player {
 
 			// ひとまず: 1枚以上ある場合は、リストの先頭のカードを出す
 			final Card tmpCard = leadableCards.get(0);
-
-			return new TurnAction() {
-				@Override
-				public void execute() {
-					leadCard(space, status, tmpCard);
-				}
-			};
-
+			return createLeadAction(space, tmpCard);
 		} else {
 			// 1枚もない場合は、passを選択する/passできない時はリタイアになる
-			return new TurnAction() {
-				@Override
-				public void execute() {
-					pass(status);
-				}
-			};
+			return createPassAction(status);
 		}
+	}
+
+	protected TurnAction createLeadAction(Space space, Card card) {
+		return new LeadAction(this, space, card);
+	}
+
+	protected TurnAction createPassAction(Status status) {
+		return new PassAction(this, status);
 	}
 
 	/**

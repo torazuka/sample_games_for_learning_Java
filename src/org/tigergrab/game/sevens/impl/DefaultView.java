@@ -15,6 +15,7 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.CardFactory;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.Space;
+import org.tigergrab.game.sevens.View;
 
 /**
  * 情報の出力を扱う．ユーザに見せるためにコンソールに出したり，ログとしてファイルに出したりする．

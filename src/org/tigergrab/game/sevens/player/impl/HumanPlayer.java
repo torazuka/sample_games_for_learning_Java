@@ -11,8 +11,10 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.CardFactory;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
-import org.tigergrab.game.sevens.TurnAction;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.turnaction.TurnAction;
+import org.tigergrab.game.sevens.turnaction.impl.LeadAction;
+import org.tigergrab.game.sevens.turnaction.impl.PassAction;
 import org.tigergrab.game.util.InputOutputUtil;
 
 /**
@@ -46,13 +48,8 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 		return result;
 	}
 
-	protected TurnAction createPassAction(final Status status) {
-		return new TurnAction() {
-			@Override
-			public void execute() {
-				pass(status);
-			}
-		};
+	protected TurnAction createPassAction(Status status) {
+		return new PassAction(this, status);
 	}
 
 	/**
@@ -90,7 +87,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 			Card card = map.get(input);
 			if (hasCard(card) && checkSpace(space, card) && confirm()) {
-				return createLeadAction(space, status, card);
+				return createLeadAction(space, card);
 			}
 			continue;
 		}
@@ -101,14 +98,8 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 	 * 
 	 * @return
 	 */
-	protected TurnAction createLeadAction(final Space space,
-			final Status status, final Card card) {
-		return new TurnAction() {
-			@Override
-			public void execute() {
-				leadCard(space, status, card);
-			}
-		};
+	protected TurnAction createLeadAction(Space space, Card card) {
+		return new LeadAction(this, space, card);
 	}
 
 	/**

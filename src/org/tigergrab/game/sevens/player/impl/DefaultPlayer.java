@@ -8,11 +8,11 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
-import org.tigergrab.game.sevens.TurnAction;
 import org.tigergrab.game.sevens.impl.DefaultTurn;
 import org.tigergrab.game.sevens.impl.DefaultView;
 import org.tigergrab.game.sevens.impl.Hand;
 import org.tigergrab.game.sevens.player.Player;
+import org.tigergrab.game.sevens.turnaction.TurnAction;
 
 /**
  * ゲームのプレイヤーのデフォルト実装．プレイヤー種別は，このクラスのサブクラスで表現する．
@@ -71,17 +71,11 @@ public abstract class DefaultPlayer implements Player {
 	}
 
 	@Override
-	public void leadCard(Space space, Status status, Card card) {
-
+	public void leadCard(Space space, Card card) {
 		if (hand.lead(card)) {
 			view.putDescription("info.leadedCard", getScreenName(),
 					card.toShortString());
 			space.putCard(card);
-		}
-
-		// 手札がなくなった場合、プレイヤーを勝利者リストに移動
-		if (this.hasRestHand() == false) {
-			status.moveToGainer(this);
 		}
 	}
 
@@ -89,6 +83,7 @@ public abstract class DefaultPlayer implements Player {
 		return hand.getHandNum();
 	}
 
+	@Override
 	public boolean hasRestHand() {
 		return hand.hasRest();
 	}

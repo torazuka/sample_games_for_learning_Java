@@ -26,7 +26,7 @@ public class AIPlayerMockForDecide extends AIPlayer {
 	}
 
 	@Override
-	public void leadCard(Space space, Status status, Card card) {
+	public void leadCard(Space space, Card card) {
 		assertEquals("getLeadableCards戻り値のリストの1枚目。", new Card(Suite.Spade, 1),
 				card);
 	}

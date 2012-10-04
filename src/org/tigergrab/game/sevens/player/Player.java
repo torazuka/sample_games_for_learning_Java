@@ -6,7 +6,7 @@ import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.sevens.Space;
 import org.tigergrab.game.sevens.Status;
 import org.tigergrab.game.sevens.Turn;
-import org.tigergrab.game.sevens.TurnAction;
+import org.tigergrab.game.sevens.turnaction.TurnAction;
 
 /**
  * プレイヤーを表わす．実体が人間かコンピュータかを問わない．
@@ -28,7 +28,7 @@ public interface Player {
 	/**
 	 * 引数で指定したカードが手札にあれば，場に出す．手札になければ，何もしない．
 	 */
-	public void leadCard(Space space, Status status, Card card);
+	public void leadCard(Space space, Card card);
 
 	public boolean hasCard(Card card);
 
@@ -45,4 +45,6 @@ public interface Player {
 	 * @return 場に出せるならtrue
 	 */
 	public boolean checkSpace(Space space, Card card);
+
+	public boolean hasRestHand();
 }
