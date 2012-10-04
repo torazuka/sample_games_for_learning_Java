@@ -162,30 +162,41 @@ public class Game {
 		for (;;) {
 			String inputNum = read();
 
-			if (inputNum.equals("")) {
+			if (isEmptyPlayerNum(inputNum)) {
 				result = getDefaultPlayerNum();
 				break;
 			}
-
-			int initNumPlayer = 0;
-			try {
-				initNumPlayer = Integer.valueOf(inputNum);
-			} catch (NumberFormatException e) {
-				view.putInteraction("q.numplayers");
-				logger.warn("warn: {}", inputNum);
+			if (isValidPlayerNum(inputNum) == false) {
 				continue;
 			}
-
-			if (initNumPlayer < 2 || 10 < initNumPlayer) {
-				view.putInteraction("q.numplayers");
-				continue;
-			} else {
-				result = initNumPlayer;
-				break;
-			}
+			result = Integer.valueOf(inputNum);
+			break;
 		}
 		view.putDescription("info.numplayers", String.valueOf(result));
 		return result;
+	}
+
+	protected boolean isEmptyPlayerNum(String num) {
+		if (num == "") {
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean isValidPlayerNum(String num) {
+		int tmp = 0;
+		try {
+			tmp = Integer.parseInt(num);
+		} catch (NumberFormatException e) {
+			view.putInteraction("q.numplayers");
+			logger.warn("warn: {}", num);
+			return false;
+		}
+		if (tmp < 2 || 10 < tmp) {
+			view.putInteraction("q.numplayers");
+			return false;
+		}
+		return true;
 	}
 
 	protected void setUpDispatchers() {

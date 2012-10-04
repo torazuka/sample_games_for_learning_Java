@@ -20,17 +20,6 @@ public class DefaultGameEvent implements GameEvent {
 	Status status;
 	Logger logger;
 
-	public DefaultGameEvent(GameEventKinds k) {
-		kind = k;
-	}
-
-	public DefaultGameEvent(GameEventKinds k, DefaultView v, Status s, Logger l) {
-		kind = k;
-		view = v;
-		status = s;
-		logger = l;
-	}
-
 	public DefaultGameEvent(GameEventKinds k, Game g, Turn t) {
 		kind = k;
 		game = g;
