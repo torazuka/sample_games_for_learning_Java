@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tigergrab.game.conf.ConfigurationManager;
 import org.tigergrab.game.conf.impl.DefaultManager;
-import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.CardFactory;
@@ -30,9 +30,7 @@ public class DefaultView implements View {
 
 		logger = LoggerFactory.getLogger(DefaultView.class);
 
-		ConfigurationManager conf = createConf();
-		conf.addConfigurationAction(new LangConfigurationAction(PKG.SEVENS));
-		resources = conf.getResource();
+		resources = ResourceFactory.getConfigurationByFile(PKG.SEVENS);
 	}
 
 	public DefaultView(Logger log) {

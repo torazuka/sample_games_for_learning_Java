@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tigergrab.game.conf.impl.DefaultManager;
 import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.sevens.impl.Sevens;
 import org.tigergrab.game.util.InputOutputUtil;
@@ -21,10 +22,10 @@ public class Main {
 
 	public Main() {
 		conf = new DefaultManager();
-		conf.addConfigurationAction(new LangConfigurationAction(PKG.ROOT));
+		conf.addConfigurationAction(new LangConfigurationAction());
 
 		// 設定ファイルに言語設定があれば読み込む（なければデフォルト言語でメニューを表示する）
-		resource = conf.getResource();
+		resource = ResourceFactory.getConfigurationByFile(PKG.ROOT);
 	}
 
 	public static void main(String[] args) {
@@ -87,7 +88,7 @@ public class Main {
 
 	protected void setting() {
 		conf.execute();
-		resource = conf.getMenuResource();
+		resource = ResourceFactory.getConfigurationByFile(PKG.ROOT);
 	}
 
 	protected String read() {

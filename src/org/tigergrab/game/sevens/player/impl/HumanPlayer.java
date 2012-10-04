@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.CardFactory;
@@ -24,9 +24,7 @@ public class HumanPlayer extends DefaultPlayer implements Player {
 
 	public HumanPlayer(int i) {
 		super(i);
-
-		LangConfigurationAction action = new LangConfigurationAction(PKG.SEVENS);
-		resources = action.getResourceBundle();
+		resources = ResourceFactory.getConfigurationByFile(PKG.SEVENS);
 	}
 
 	@Override

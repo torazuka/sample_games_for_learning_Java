@@ -39,15 +39,19 @@ public class InputOutputUtil {
 		return result;
 	}
 
-	public static boolean createFile(String fileName) {
+	public static boolean createNewFile(String fileName) {
 		boolean result = false;
-		File file = new File(fileName);
+		File file = createFile(fileName);
 		try {
 			result = file.createNewFile();
 		} catch (IOException e) {
 			logger.error("ファイルを作成できませんでした。");
 		}
 		return result;
+	}
+
+	protected static File createFile(String fileName) {
+		return new File(fileName);
 	}
 
 	public static void writeFile(String fileName, String string) {

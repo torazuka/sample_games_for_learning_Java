@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.tigergrab.game.conf.ConfigurationManager;
 import org.tigergrab.game.conf.impl.DefaultManagerMock;
 import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
@@ -29,11 +30,11 @@ public class DefaultViewTest {
 		// TODO テストに使う設定ファイルを指定
 
 		ConfigurationManager conf = new DefaultManagerMock();
-		conf.addConfigurationAction(new LangConfigurationAction(PKG.SEVENS));
+		conf.addConfigurationAction(new LangConfigurationAction());
 		conf.createConfigFile();
 		InputOutputUtil.writeFile(conf.getConfigFileName(), "lang-ja");
 
-		resource = conf.getResource();
+		resource = ResourceFactory.getConfigurationByFile(PKG.SEVENS);
 
 		view = new DefaultViewMock();
 	}

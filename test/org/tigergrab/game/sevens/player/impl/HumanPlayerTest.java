@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
@@ -25,8 +25,7 @@ public class HumanPlayerTest {
 
 	@BeforeClass
 	public static void beforeClass() {
-		LangConfigurationAction action = new LangConfigurationAction(PKG.SEVENS);
-		resource = action.getResourceBundle();
+		resource = ResourceFactory.getConfigurationByFile(PKG.SEVENS);
 		view = new DefaultView();
 	}
 

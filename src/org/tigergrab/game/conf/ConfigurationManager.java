@@ -1,6 +1,5 @@
 package org.tigergrab.game.conf;
 
-import java.util.ResourceBundle;
 
 public interface ConfigurationManager {
 
@@ -35,17 +34,4 @@ public interface ConfigurationManager {
 	 */
 	public void addConfigurationAction(ConfigurationAction action);
 
-	/**
-	 * 設定ファイルを参照して、言語設定に基づくResourceBundleを返す．
-	 * 
-	 * @return ResourceBundle 言語設定が存在しない場合は、デフォルトのResourceBundleを返す．
-	 */
-	public ResourceBundle getResource();
-
-	/**
-	 * メニュー表示用のResourceBundleを返す．
-	 * 
-	 * @return
-	 */
-	public ResourceBundle getMenuResource();
 }

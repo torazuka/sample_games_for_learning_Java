@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.EnumSet;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -14,23 +15,21 @@ import org.tigergrab.game.conf.ConfigurationAction;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.util.InputOutputUtil;
 
+/**
+ * 言語設定をユーザやファイルに関して、ユーザと対話的なやり取りを行う．
+ * 
+ */
 public class LangConfigurationAction implements ConfigurationAction {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger("LangConfigurationAction.class");
 
-	protected String language = "";
-	protected ResourceBundle langResources;
-	protected PKG pkg;
+	/** 現在設定されている言語 */
+	protected Lang language;
 
-	public LangConfigurationAction() {
-	}
-
-	public LangConfigurationAction(PKG pkg) {
-		this.pkg = pkg;
-		setConfigurationByFile();
-	}
-
+	/**
+	 * 対話的に言語設定を行う．
+	 */
 	@Override
 	public void execute() {
 		boolean continueFlag = true;
@@ -41,29 +40,24 @@ public class LangConfigurationAction implements ConfigurationAction {
 	}
 
 	/**
-	 * ユーザ入力に応じて言語を設定する．
+	 * ユーザ入力に応じて、言語設定を保存する．
 	 * 
 	 * @return 設定完了のとき，trueを返す．
 	 */
 	protected boolean setConfigrationByInput() {
 		Properties properties = new Properties();
-		String resourceName = ResourceFactory.getFamily(PKG.ROOT);
-
 		if (readConfigurationFromInput()) {
 			storeFile(properties);
-
-			resourceName += ("_" + language);
-			if (readPropertyFile(properties, getConfigFileName()) == null) {
-				InputOutputUtil.createFile(getConfigFileName());
+			if (readPropertyFile(properties, getConfigFileName()) == false) {
+				InputOutputUtil.createNewFile(getConfigFileName());
 			}
-			langResources = ResourceBundle.getBundle(resourceName);
 			return true;
 		}
 		return false;
 	}
 
 	protected void storeFile(Properties properties) {
-		properties.setProperty("lang", language);
+		properties.setProperty("lang", language.name());
 		try {
 			properties.store(new FileOutputStream(getConfigFileName()), null);
 		} catch (FileNotFoundException e) {
@@ -80,14 +74,17 @@ public class LangConfigurationAction implements ConfigurationAction {
 	 * @return 正しく読み取れたとき，trueを返す．
 	 */
 	protected boolean readConfigurationFromInput() {
+		ResourceBundle langResources = ResourceFactory
+				.getConfigurationByFile(PKG.ROOT);
 		logger.info("> " + langResources.getString("q.lang"));
+
 		String input = read();
 		if (0 == input.length()) {
 			return false;
 		}
 		String lang = convertToLang(input);
 		if (isValidConfiguration(lang)) {
-			language = lang;
+			language = Lang.valueOf(lang);
 			return true;
 		}
 		return false;
@@ -97,29 +94,21 @@ public class LangConfigurationAction implements ConfigurationAction {
 	 * ユーザ入力を言語に変換する．
 	 * 
 	 * @param input
-	 * @return 変換した後の値．変換不可能なときは0を返す．
+	 * @return 変換した後の値．変換不可能なときは空文字を返す．
 	 */
 	protected String convertToLang(String input) {
-		if (input.equals("1")) {
-			return "ja";
-		} else if (input.equals("2")) {
-			return "en";
+		EnumSet<Lang> langs = EnumSet.allOf(Lang.class);
+		for (Lang lang : langs) {
+			if (input.equals(lang.getKey())) {
+				return lang.name();
+			}
 		}
 		// bad input
-		return "0";
+		return "";
 	}
 
 	protected String read() {
 		return InputOutputUtil.read();
-	}
-
-	/**
-	 * 設定ファイルの言語設定に基づくResourceBundleを返す．
-	 * 
-	 * @return ResourceBundle 言語設定が存在しない場合は、デフォルトのResourceBundleを返す．
-	 */
-	public ResourceBundle getResourceBundle() {
-		return langResources;
 	}
 
 	/**
@@ -130,10 +119,10 @@ public class LangConfigurationAction implements ConfigurationAction {
 	protected boolean readConfigurationFromFile() {
 		String fileName = getConfigFileName();
 		Properties properties = new Properties();
-		if (readPropertyFile(properties, fileName) != null) {
+		if (readPropertyFile(properties, fileName)) {
 			String lang = properties.getProperty("lang");
 			if (lang != null && isValidConfiguration(lang)) {
-				language = lang;
+				language = Lang.valueOf(lang);
 				return true;
 			}
 		}
@@ -141,16 +130,8 @@ public class LangConfigurationAction implements ConfigurationAction {
 		return false;
 	}
 
-	/**
-	 * 設定ファイルの言語設定をインスタンスフィールドに反映する．設定が存在しない場合は，デフォルトの設定とする．
-	 * 
-	 */
-	protected void setConfigurationByFile() {
-		String resourceName = ResourceFactory.getFamily(pkg);
-		if (readConfigurationFromFile()) {
-			resourceName += ("_" + language);
-		}
-		langResources = ResourceBundle.getBundle(resourceName);
+	public Lang getLanguage() {
+		return language;
 	}
 
 	/**
@@ -159,7 +140,7 @@ public class LangConfigurationAction implements ConfigurationAction {
 	 * @param properties
 	 */
 	protected void setDefaultProperty(Properties properties) {
-		language = "ja";
+		language = Lang.ja;
 		storeFile(properties);
 	}
 
@@ -182,25 +163,34 @@ public class LangConfigurationAction implements ConfigurationAction {
 	 *            ファイル名
 	 * @return Propertiesオブジェクト
 	 */
-	protected Properties readPropertyFile(Properties properties, String fileName) {
+	protected boolean readPropertyFile(Properties properties, String fileName) {
+		boolean result = false;
 		try {
 			properties.load(new FileInputStream(fileName));
+			result = true;
 		} catch (FileNotFoundException e) {
-			properties = null;
 			logger.info("設定ファイルがありません。");
 		} catch (IOException e) {
-			properties = null;
 			logger.info("設定ファイルの読み込みエラーです。");
 		}
-		return properties;
+		return result;
 	}
 
-	protected boolean isValidConfiguration(String lang) {
-		if (lang == null || lang.length() == 0) {
+	/**
+	 * 文字列が言語の設定値として妥当かを返す．
+	 * 
+	 * @param input
+	 * @return trueなら妥当
+	 */
+	protected boolean isValidConfiguration(String input) {
+		if (input == null || 0 == input.length()) {
 			return false;
 		}
-		if (lang.equals("ja") || lang.equals("en")) {
-			return true;
+		EnumSet<Lang> langs = EnumSet.allOf(Lang.class);
+		for (Lang lang : langs) {
+			if (input.equals(lang.name())) {
+				return true;
+			}
 		}
 		return false;
 	}

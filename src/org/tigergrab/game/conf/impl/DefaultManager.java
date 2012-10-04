@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.tigergrab.game.conf.ConfigurationAction;
 import org.tigergrab.game.conf.ConfigurationManager;
 import org.tigergrab.game.util.InputOutputUtil;
@@ -16,8 +14,6 @@ import org.tigergrab.game.util.InputOutputUtil;
  */
 public class DefaultManager implements ConfigurationManager {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(DefaultManager.class);
 	ResourceBundle resources;
 	List<ConfigurationAction> actionList;
 
@@ -27,7 +23,7 @@ public class DefaultManager implements ConfigurationManager {
 
 	@Override
 	public void createConfigFile() {
-		InputOutputUtil.createFile(getConfigFileName());
+		InputOutputUtil.createNewFile(getConfigFileName());
 	}
 
 	@Override
@@ -44,9 +40,7 @@ public class DefaultManager implements ConfigurationManager {
 
 	@Override
 	public void addConfigurationAction(ConfigurationAction action) {
-		if (action != null) {
-			actionList.add(action);
-		}
+		actionList.add(action);
 	}
 
 	@Override
@@ -54,27 +48,5 @@ public class DefaultManager implements ConfigurationManager {
 		for (ConfigurationAction action : actionList) {
 			action.execute();
 		}
-	}
-
-	@Override
-	public ResourceBundle getResource() {
-		LangConfigurationAction langAction = null;
-		for (ConfigurationAction action : actionList) {
-			if (action instanceof LangConfigurationAction) {
-				langAction = (LangConfigurationAction) action;
-			}
-		}
-		return langAction.getResourceBundle();
-	}
-
-	@Override
-	public ResourceBundle getMenuResource() {
-		LangConfigurationAction langAction = null;
-		for (ConfigurationAction action : actionList) {
-			if (action instanceof LangConfigurationAction) {
-				langAction = (LangConfigurationAction) action;
-			}
-		}
-		return langAction.getResourceBundle();
 	}
 }
