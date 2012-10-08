@@ -3,7 +3,7 @@ package org.tigergrab.game.conf.impl;
 import static org.junit.Assert.assertEquals;
 
 public class LangConfigurationActionMockForExecute extends
-		LangConfigurationAction {
+		LangConfiguration {
 
 	public LangConfigurationActionMockForExecute() {
 		super();

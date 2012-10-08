@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tigergrab.game.conf.ConfigurationManager;
-import org.tigergrab.game.conf.impl.DefaultManager;
+import org.tigergrab.game.conf.Controller;
+import org.tigergrab.game.conf.impl.ConfigurationController;
 import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
@@ -40,8 +40,8 @@ public class DefaultView implements View {
 	}
 
 	@Override
-	public ConfigurationManager createConf() {
-		return new DefaultManager();
+	public Controller createConf() {
+		return new ConfigurationController();
 	}
 
 	@Override

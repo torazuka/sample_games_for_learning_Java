@@ -1,9 +1,9 @@
 package org.tigergrab.game.sevens;
 
-import org.tigergrab.game.conf.ConfigurationManager;
+import org.tigergrab.game.conf.Controller;
 
 public interface View {
-	public ConfigurationManager createConf();
+	public Controller createConf();
 
 	/**
 	 * ユーザ入力を促すメッセージをリソースから表示する

@@ -21,7 +21,7 @@ public class ResourceFactory {
 	 */
 	public static ResourceBundle getConfigurationByFile(PKG pkg) {
 		String family = getFamily(pkg);
-		LangConfigurationAction action = new LangConfigurationAction();
+		LangConfiguration action = new LangConfiguration();
 		if (action.readConfigurationFromFile()) {
 			Lang lang = action.getLanguage();
 			family += ("_" + lang.name());

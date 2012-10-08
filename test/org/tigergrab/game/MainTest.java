@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.tigergrab.game.conf.impl.DefaultManager;
+import org.tigergrab.game.conf.impl.ConfigurationController;
 
 public class MainTest {
 	Main main;
@@ -16,7 +16,7 @@ public class MainTest {
 
 		assertNotNull("フィールドconfがセットされている。", main.conf);
 		assertEquals("confの型がDefaultManagerである。", true,
-				main.conf instanceof DefaultManager);
+				main.conf instanceof ConfigurationController);
 
 		assertNotNull("フィールドresourceがセットされている。", main.resource);
 	}

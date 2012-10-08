@@ -11,15 +11,11 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
-import org.tigergrab.game.conf.ConfigurationManager;
-import org.tigergrab.game.conf.impl.DefaultManagerMock;
-import org.tigergrab.game.conf.impl.LangConfigurationAction;
 import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
 import org.tigergrab.game.sevens.View;
-import org.tigergrab.game.util.InputOutputUtil;
 
 public class DefaultViewTest {
 
@@ -30,13 +26,7 @@ public class DefaultViewTest {
 	public static void beforeClass() {
 		// TODO テストに使う設定ファイルを指定
 
-		ConfigurationManager conf = new DefaultManagerMock();
-		conf.addConfigurationAction(new LangConfigurationAction());
-		conf.createConfigFile();
-		InputOutputUtil.writeFile(conf.getConfigFileName(), "lang-ja");
-
 		resource = ResourceFactory.getConfigurationByFile(PKG.SEVENS);
-
 		view = new DefaultViewMock();
 	}
 

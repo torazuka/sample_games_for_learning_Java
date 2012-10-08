@@ -35,12 +35,20 @@ public class Game {
 
 	public Game() {
 		view = new DefaultView();
-		space = new DefaultSpace();
-		status = new GameStatus(view);
+		space = createSpace();
+		status = createStatus(view);
 
 		listeners = new ArrayList<>();
 		dispatchers = new HashMap<>();
 		setUpDispatchers();
+	}
+
+	protected Space createSpace() {
+		return new DefaultSpace();
+	}
+
+	protected Status createStatus(DefaultView view) {
+		return new GameStatus(view);
 	}
 
 	protected void addListener(GameEventListener listener) {
@@ -52,8 +60,8 @@ public class Game {
 	}
 
 	public boolean execute() {
-		space = new DefaultSpace();
-		status = new GameStatus(view);
+		space = createSpace();
+		status = createStatus(view);
 		initGameStatus();
 		Player currentPlayer = getFirstPlayer();
 		leadSevens();

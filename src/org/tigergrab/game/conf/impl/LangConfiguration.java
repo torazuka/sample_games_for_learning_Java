@@ -11,15 +11,15 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tigergrab.game.conf.ConfigurationAction;
+import org.tigergrab.game.conf.Configuration;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.util.InputOutputUtil;
 
 /**
- * 言語設定をユーザやファイルに関して、ユーザと対話的なやり取りを行う．
+ * 言語設定の読取りと書込みを行う．
  * 
  */
-public class LangConfigurationAction implements ConfigurationAction {
+public class LangConfiguration implements Configuration {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger("LangConfigurationAction.class");
@@ -47,10 +47,11 @@ public class LangConfigurationAction implements ConfigurationAction {
 	protected boolean setConfigrationByInput() {
 		Properties properties = new Properties();
 		if (readConfigurationFromInput()) {
-			storeFile(properties);
-			if (readPropertyFile(properties, getConfigFileName()) == false) {
-				InputOutputUtil.createNewFile(getConfigFileName());
+			ConfigurationFileUtil util = new ConfigurationFileUtil();
+			if (util.existConfigFile() == false) {
+				util.createConfigFile();
 			}
+			storeFile(properties);
 			return true;
 		}
 		return false;
@@ -62,7 +63,6 @@ public class LangConfigurationAction implements ConfigurationAction {
 			properties.store(new FileOutputStream(getConfigFileName()), null);
 		} catch (FileNotFoundException e) {
 			logger.error("ファイルが見つかりません。");
-			e.printStackTrace();
 		} catch (IOException e) {
 			logger.error("入出力エラーです。");
 		}

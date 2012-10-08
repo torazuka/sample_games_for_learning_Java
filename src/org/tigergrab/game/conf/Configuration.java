@@ -1,6 +1,6 @@
 package org.tigergrab.game.conf;
 
-public interface ConfigurationAction {
+public interface Configuration {
 
 	public void execute();
 

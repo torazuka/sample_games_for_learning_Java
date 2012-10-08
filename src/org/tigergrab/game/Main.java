@@ -4,8 +4,8 @@ import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.tigergrab.game.conf.impl.DefaultManager;
-import org.tigergrab.game.conf.impl.LangConfigurationAction;
+import org.tigergrab.game.conf.impl.ConfigurationController;
+import org.tigergrab.game.conf.impl.LangConfiguration;
 import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.sevens.impl.Sevens;
@@ -17,12 +17,12 @@ import org.tigergrab.game.util.InputOutputUtil;
 public class Main {
 
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
-	DefaultManager conf;
+	ConfigurationController conf;
 	ResourceBundle resource;
 
 	public Main() {
-		conf = new DefaultManager();
-		conf.addConfigurationAction(new LangConfigurationAction());
+		conf = new ConfigurationController();
+		conf.append(new LangConfiguration());
 
 		// 設定ファイルに言語設定があれば読み込む（なければデフォルト言語でメニューを表示する）
 		resource = ResourceFactory.getConfigurationByFile(PKG.ROOT);
