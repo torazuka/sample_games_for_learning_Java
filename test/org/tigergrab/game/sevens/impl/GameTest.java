@@ -108,4 +108,28 @@ public class GameTest {
 			assertEquals("手札にClubの7は残っていない。", false, player.hasCard(clubSeven));
 		}
 	}
+
+	@Test
+	public void testReplay() throws Exception {
+		Game game = new GameMockForReplay();
+		game.replay();
+	}
+
+	@Test
+	public void testReplayNo() throws Exception {
+		Game game = new GameMockForReplayNo();
+		game.replay();
+	}
+
+	@Test
+	public void testDoContinue() throws Exception {
+		Game game = new GameMockForReplay();
+		assertEquals("「y」の入力を受けて、trueが戻ってくる。", true, game.doContinue());
+	}
+
+	@Test
+	public void testDoContinueNo() throws Exception {
+		Game game = new GameMockForReplayNo();
+		assertEquals("「n」の入力を受けて、falseが戻ってくる。", false, game.doContinue());
+	}
 }

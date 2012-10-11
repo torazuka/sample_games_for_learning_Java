@@ -1,13 +1,6 @@
 package org.tigergrab.game.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +21,7 @@ public class InputOutputUtil {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(System.in));
 		try {
-			result = bufferedReader.readLine();
+			result = readLine(bufferedReader);
 		} catch (IOException e) {
 			logger.error("入力を読み込めませんでした。");
 		}
@@ -37,6 +30,11 @@ public class InputOutputUtil {
 			result = "";
 		}
 		return result;
+	}
+
+	protected static String readLine(BufferedReader bufferedReader)
+			throws IOException {
+		return bufferedReader.readLine();
 	}
 
 	public static boolean createNewFile(String fileName) {

@@ -1,20 +1,12 @@
 package org.tigergrab.game.sevens.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
-import org.tigergrab.game.sevens.GameEvent;
-import org.tigergrab.game.sevens.GameEventDispatcher;
-import org.tigergrab.game.sevens.GameEventListener;
-import org.tigergrab.game.sevens.Space;
-import org.tigergrab.game.sevens.Status;
-import org.tigergrab.game.sevens.Turn;
+import org.tigergrab.game.sevens.*;
 import org.tigergrab.game.sevens.player.Player;
 import org.tigergrab.game.util.InputOutputUtil;
 
@@ -110,13 +102,19 @@ public class Game {
 
 	protected boolean endGame() {
 		status.viewGameResult();
+		replay();
+		return doContinue();
+	}
 
+	protected void replay() {
 		view.putInteraction("q.replay");
 		String doReplay = read();
 		if (doReplay.equals("y")) {
 			status.playback();
 		}
+	}
 
+	protected boolean doContinue() {
 		view.putInteraction("q.continue");
 		String doContinue = read();
 		if (doContinue.equals("y")) {

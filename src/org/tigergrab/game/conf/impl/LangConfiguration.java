@@ -1,10 +1,6 @@
 package org.tigergrab.game.conf.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.EnumSet;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -51,21 +47,10 @@ public class LangConfiguration implements Configuration {
 			if (util.existConfigFile() == false) {
 				util.createConfigFile();
 			}
-			storeFile(properties);
+			util.storeFile(properties, language.name());
 			return true;
 		}
 		return false;
-	}
-
-	protected void storeFile(Properties properties) {
-		properties.setProperty("lang", language.name());
-		try {
-			properties.store(new FileOutputStream(getConfigFileName()), null);
-		} catch (FileNotFoundException e) {
-			logger.error("ファイルが見つかりません。");
-		} catch (IOException e) {
-			logger.error("入出力エラーです。");
-		}
 	}
 
 	/**
@@ -119,7 +104,8 @@ public class LangConfiguration implements Configuration {
 	protected boolean readConfigurationFromFile() {
 		String fileName = getConfigFileName();
 		Properties properties = new Properties();
-		if (readPropertyFile(properties, fileName)) {
+		ConfigurationFileUtil util = new ConfigurationFileUtil();
+		if (util.readPropertyFile(properties, fileName)) {
 			String lang = properties.getProperty("lang");
 			if (lang != null && isValidConfiguration(lang)) {
 				language = Lang.valueOf(lang);
@@ -141,7 +127,8 @@ public class LangConfiguration implements Configuration {
 	 */
 	protected void setDefaultProperty(Properties properties) {
 		language = Lang.ja;
-		storeFile(properties);
+		ConfigurationFileUtil util = new ConfigurationFileUtil();
+		util.storeFile(properties, language.name());
 	}
 
 	/**
@@ -152,28 +139,6 @@ public class LangConfiguration implements Configuration {
 	protected String getConfigFileName() {
 		String parent = new File(".").getAbsoluteFile().getParent();
 		return parent + File.separator + "game.ini";
-	}
-
-	/**
-	 * ファイルシステムからプロパティファイルを読み込む．
-	 * 
-	 * @param properties
-	 *            読込んだプロパティを受け取るPropertiesオブジェクト
-	 * @param fileName
-	 *            ファイル名
-	 * @return Propertiesオブジェクト
-	 */
-	protected boolean readPropertyFile(Properties properties, String fileName) {
-		boolean result = false;
-		try {
-			properties.load(new FileInputStream(fileName));
-			result = true;
-		} catch (FileNotFoundException e) {
-			logger.info("設定ファイルがありません。");
-		} catch (IOException e) {
-			logger.info("設定ファイルの読み込みエラーです。");
-		}
-		return result;
 	}
 
 	/**

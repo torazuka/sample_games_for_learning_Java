@@ -18,7 +18,7 @@ public class Hand {
 	List<Card> hand;
 
 	public Hand() {
-		hand = new ArrayList<Card>();
+		hand = new ArrayList<>();
 	}
 
 	public Hand(List<Card> cardList) {
@@ -48,7 +48,7 @@ public class Hand {
 	 * @return trueなら含まれている．
 	 */
 	public boolean has(Card target) {
-		if (hand != null && 0 < hand.size()) {
+		if (0 < hand.size()) {
 			return hand.contains(target);
 		}
 		return false;
@@ -60,7 +60,7 @@ public class Hand {
 	 * @return trueなら1枚以上残っている．
 	 */
 	public boolean hasRest() {
-		if (hand != null && 0 < hand.size()) {
+		if (0 < hand.size()) {
 			return true;
 		}
 		return false;
@@ -89,10 +89,7 @@ public class Hand {
 	}
 
 	public int getHandNum() {
-		if (hand != null) {
-			return hand.size();
-		}
-		return 0;
+		return hand.size();
 	}
 
 	@Override
@@ -113,9 +110,7 @@ public class Hand {
 		}
 
 		Hand other = (Hand) obj;
-		if (hand == null && other.hand != null) {
-			return false;
-		} else if (hand.equals(other.hand) == false) {
+		if (hand.equals(other.hand) == false) {
 			return false;
 		}
 		return true;

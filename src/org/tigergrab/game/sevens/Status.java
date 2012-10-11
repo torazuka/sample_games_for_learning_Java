@@ -34,26 +34,11 @@ public interface Status {
 	/** 生存リストを返す */
 	public List<Player> getPlayers();
 
-	/** idで指定した生存リストのプレイヤーを返す */
-	public Player getLivePlayer(int id);
-
 	/** 生存リストの人数を返す */
 	public int getPlayersNum();
 
-	/** 脱落リストを返す */
-	public List<Player> getLosers();
-
 	/** プレイヤーをゲーム結果順位の昇順で返す */
 	public List<Player> getPlayersRank();
-
-	/** 脱落リストの人数を返す */
-	public int getLosersNum();
-
-	/** 勝利リストを返す */
-	public List<Player> getGainers();
-
-	/** 勝利リストの人数を返す */
-	public int getGainersNum();
 
 	public void viewGameResult();
 

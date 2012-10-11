@@ -45,28 +45,8 @@ public class PlayerManager {
 		}
 	}
 
-	public Player getLivePlayer(int id) {
-		List<Player> playerList = players.getPlayers();
-		if (playerList != null) {
-			for (Player player : playerList) {
-				if (player.getId() == id) {
-					return player;
-				}
-			}
-		}
-		return null;
-	}
-
 	public int getLivePlayerNum() {
 		return players.getNum();
-	}
-
-	public int getGainerNum() {
-		return gainers.getNum();
-	}
-
-	public int getLoserNum() {
-		return losers.getNum();
 	}
 
 	public List<Player> getPlayersRank() {

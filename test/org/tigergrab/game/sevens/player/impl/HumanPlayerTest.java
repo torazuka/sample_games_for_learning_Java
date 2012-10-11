@@ -4,19 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.tigergrab.game.conf.impl.ResourceFactory;
 import org.tigergrab.game.conf.impl.ResourceFactory.PKG;
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
+import org.tigergrab.game.sevens.Space;
+import org.tigergrab.game.sevens.Status;
+import org.tigergrab.game.sevens.impl.DefaultSpace;
 import org.tigergrab.game.sevens.impl.DefaultView;
+import org.tigergrab.game.sevens.impl.GameStatus;
 
 public class HumanPlayerTest {
 
@@ -72,6 +73,13 @@ public class HumanPlayerTest {
 	}
 
 	@Test
+	public void testGetCardMapForSearch() throws Exception {
+		HumanPlayer player = new HumanPlayer(0);
+		Map<String, Card> map = player.getCardMapForSearch();
+		assertEquals("要素は全部で52個。", 52, map.size());
+	}
+
+	@Test
 	public void testShowHand() throws Exception {
 		HumanPlayer player = new HumanPlayer(0);
 		List<Card> cardList = new ArrayList<>();
@@ -93,23 +101,20 @@ public class HumanPlayerTest {
 		verify(logger).info("> {}の手札: ", "あなた");
 	}
 
-	@Ignore("途中")
 	@Test
 	public void testDecide() throws Exception {
-		// HumanPlayer player = new HumanPlayer(0);
-		// Status status = new GameStatus(new DefaultView());
-		//
-		// String input = null;
-		// assertNull("渡す文字列がnullのとき、戻り値もnull",
-		// player.createPassAction(status, input));
-		//
-		// input = "foo";
-		// assertNull("渡す文字列がpass以外のとき、戻り値はnull",
-		// player.createPassAction(status, input));
-		//
-		// input = "pass";
-		// assertNotNull("渡す文字列がpassのとき、戻り値はnullでない。",
-		// player.createPassAction(status, input));
+		HumanPlayer player = new HumanPlayerMockForDecide(0);
+		Space space = new DefaultSpace();
+		Status status = new GameStatus(new DefaultView());
+		player.decide(space, status);
+	}
+
+	@Test
+	public void testDecidePass() throws Exception {
+		HumanPlayer player = new HumanPlayerMockForDecidePass(0);
+		Space space = new DefaultSpace();
+		Status status = new GameStatus(new DefaultView());
+		player.decide(space, status);
 	}
 
 	@Test

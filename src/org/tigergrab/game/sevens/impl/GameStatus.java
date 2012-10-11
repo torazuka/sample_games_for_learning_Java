@@ -1,9 +1,6 @@
 package org.tigergrab.game.sevens.impl;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.tigergrab.game.playingcards.impl.Card;
 import org.tigergrab.game.playingcards.impl.Suite;
@@ -97,35 +94,8 @@ public class GameStatus implements Status {
 	}
 
 	@Override
-	public List<Player> getGainers() {
-		PlayerState ps = playerManager.getGainers();
-		return ps.getPlayers();
-	}
-
-	@Override
-	public List<Player> getLosers() {
-		PlayerState ps = playerManager.getLosers();
-		return ps.getPlayers();
-	}
-
-	@Override
 	public int getPlayersNum() {
 		return playerManager.getLivePlayerNum();
-	}
-
-	@Override
-	public int getLosersNum() {
-		return playerManager.getLoserNum();
-	}
-
-	@Override
-	public int getGainersNum() {
-		return playerManager.getGainerNum();
-	}
-
-	@Override
-	public Player getLivePlayer(int id) {
-		return playerManager.getLivePlayer(id);
 	}
 
 	@Override
@@ -138,8 +108,8 @@ public class GameStatus implements Status {
 		view.putDescription("game.result");
 		List<Player> playerList = getPlayersRank();
 		for (int i = 0; i < playerList.size(); i++) {
-			view.putDescription("game.rank", String.valueOf(i + 1),
-					playerList.get(i).getScreenName());
+			view.putDescription("game.rank", String.valueOf(i + 1), playerList
+					.get(i).getScreenName());
 		}
 	}
 
