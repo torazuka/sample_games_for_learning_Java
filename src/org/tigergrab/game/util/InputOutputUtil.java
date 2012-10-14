@@ -1,9 +1,18 @@
 package org.tigergrab.game.util;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.io.Closeables;
 
 public class InputOutputUtil {
 
@@ -64,8 +73,8 @@ public class InputOutputUtil {
 		} catch (FileNotFoundException e) {
 			logger.error("ファイル" + fileName + "が見つかりません。");
 		} finally {
-			closeOutoputStream(os);
-			closeWriter(writer);
+			Closeables.closeQuietly(os);
+			Closeables.closeQuietly(writer);
 		}
 	}
 
@@ -74,26 +83,6 @@ public class InputOutputUtil {
 			writer.write(string);
 		} catch (IOException e) {
 			logger.error("書き込みエラーです。");
-		}
-	}
-
-	protected static void closeOutoputStream(FileOutputStream os) {
-		if (os != null) {
-			try {
-				os.close();
-			} catch (IOException e) {
-				logger.error("FileOusputStreamを閉じようとしてエラーが発生しました。");
-			}
-		}
-	}
-
-	protected static void closeWriter(OutputStreamWriter writer) {
-		if (writer != null) {
-			try {
-				writer.close();
-			} catch (IOException e) {
-				logger.error("OutputStreamWriterを閉じようとしてエラーが発生しました。");
-			}
 		}
 	}
 }
